@@ -4,7 +4,7 @@ body, html {
   padding: 0;
   width: 100%;
   user-select: text;
-  min-width: 1200px;
+  height: 100%;
   font-size: 14px;
   font-family: 'pingfang SC','helvetica neue',arial,'hiragino sans gb','microsoft yahei ui','microsoft yahei','simsun',sans-serif;
   -webkit-overflow-scrolling: touch;

@@ -27,9 +27,212 @@
   </head>
   <body>
     
+    <!-- 页面[login]-->
+    <div class="login page" template="login" style="display: none;"><div class="router" view="loginContent"><div class="view-login" route="login"><div class="image-box"><img src="http://cunchu.site/upload/3e79ef2ca1c387e7.png"></div><div class="hellow-text">嗨，欢迎回来!</div><div class="user-name-bar input-bar"><img class="bar-icon" src="https://cunchu.site/puge/login/user.png"><input type="text" o-value="this.data.username" placeholder="用户名"></div><div class="pass-word-bar input-bar"><img class="bar-icon" src="https://cunchu.site/puge/login/password.png"><input type="password" o-value="this.data.password" placeholder="密码"></div><div class="button-box"><div class="button" o-tap="login" o-hover="radial-out">登录</div><div class="button" o-hover="radial-out" style=" background-color: burlywood;" go="/view-loginContent=register">注册</div></div><div class="tool-bar"><div class="left"></div><div class="right" go-route="">忘记密码</div></div></div><div class="view-register" route="register"><img class="bg-1" src="https://cunchu.site/puge/login/art.png"><p>欢迎注册PUGE账号</p><input class="register-input" type="text" o-value="this.data.registerusername" placeholder="用户名"><input class="register-input" type="password" o-value="this.data.registerPassWord" placeholder="密码"><input class="register-input" type="password" o-value="this.data.registerPassWordR" placeholder="确认密码"><div class="mini-box clear"><input class="register-input" type="text" o-value="this.data.registerPhone" placeholder="手机号码"><div class="button" o-tap="sendSMS">发送验证码</div></div><input class="register-input" type="text" o-value="this.data.registerCode" placeholder="验证码"><div class="button" o-tap="register">注册</div></div></div></div>
     <!-- 页面[page]-->
-    <div class="home page" template="page" style="display: block;"></div>
+    <div class="home page" template="page" style="display: none;"></div>
     
+<!-- 框架script文件 -->
+<script src="./static/js/owo.core.js" type="text/javascript" charset="UTF-8"></script>
+<script type="text/javascript" charset="UTF-8">
+// 模块 login 的script代码
+var appType = 'qhjs';
+var userInfo = localStorage.getItem("owoUserInfo_" + appType);
+
+if (userInfo) {
+  console.log(userInfo);
+  owo.state.userInfo = JSON.parse(userInfo);
+
+  if (typeof owo.state.userInfo.data == "string") {
+    if (owo.state.userInfo.data == '') owo.state.userInfo.data = {};else owo.state.userInfo.data = JSON.parse(owo.state.userInfo.data);
+  }
+
+  setTimeout(function () {
+    if (owo.notice) owo.notice('loadInfo');
+  }, 200); // getDataFormSession(owo.state.userInfo.username, owo.state.userInfo.session)
+}
+
+var serverURL = 'http://127.0.0.1:8080';
+
+function getDataFormSession(username, session) {
+  fetch(serverURL + "/userServer?route=loginSession", {
+    method: 'POST',
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      type: appType,
+      username: username,
+      session: session
+    })
+  }).then(function (response) {
+    return response.json();
+  }).then(function (res) {
+    console.log(res);
+
+    if (res.err === 0) {
+      owo.tool.toast('登陆成功');
+      owo.state.userInfo = res.data;
+      localStorage.setItem('owoUserInfo_' + appType, JSON.stringify(res.data));
+
+      if (owo.event.login) {
+        owo.event.login(res.data);
+      }
+    } else {
+      owo.go('login');
+      owo.tool.toast(res.message);
+    }
+  });
+}
+
+owo.script = {
+  "login": {
+    "data": {
+      "registerusername": "",
+      "registerPassWord": "",
+      "registerPassWordR": "",
+      "registerPhone": "",
+      "registerCode": "",
+      "username": "",
+      "password": "",
+      "toast": null,
+      "session": null
+    },
+    "created": function created() {
+      var _arguments = arguments,
+          _this = this;
+
+      if (owo.tool.toast) toast = owo.tool.toast;else toast = alert; // 按钮点击事件
+
+      this.$el.onkeydown = function (event) {
+        var e = event || window.event || _arguments.callee.caller.arguments[0];
+
+        if (e && e.keyCode == 13) {
+          _this.login();
+        }
+      };
+    },
+    "login": function login() {
+      fetch(serverURL + "/login", {
+        method: 'POST',
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          type: appType,
+          username: this.data.username,
+          password: this.data.password
+        })
+      }).then(function (response) {
+        return response.json();
+      }).then(function (res) {
+        console.log(res);
+
+        if (res.err === 0) {
+          toast('登陆成功'); // do something
+
+          owo.state.userInfo = res.data;
+          localStorage.setItem('owoUserInfo_' + appType, JSON.stringify(res.data));
+          setTimeout(function () {
+            owo.go('route');
+          }, 0);
+        } else {
+          toast(res.message);
+        }
+      });
+    },
+    "register": function register() {
+      if (!this.data.registerusername) {
+        toast('用户名不能为空哦!');
+        return;
+      }
+
+      if (!this.data.registerPassWord) {
+        toast('密码不能为空哦!');
+        return;
+      }
+
+      if (!this.data.registerPassWordR) {
+        toast('重复密码不能为空哦!');
+        return;
+      }
+
+      if (!this.data.registerPhone) {
+        toast('手机号码不能为空!');
+        return;
+      }
+
+      if (this.data.registerPassWord !== this.data.registerPassWordR) {
+        toast('两次输入的密码不一致哦!');
+        return;
+      }
+
+      fetch(serverURL + "/register", {
+        method: 'POST',
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          phone: this.data.registerPhone,
+          username: this.data.registerusername,
+          password: this.data.registerPassWord,
+          code: this.data.registerCode
+        })
+      }).then(function (response) {
+        return response.json();
+      }).then(function (res) {
+        if (res.err === 0) {
+          toast('注册成功!');
+          owo.go('/view-loginContent=login');
+        } else {
+          toast("\u6CE8\u518C\u5931\u8D25: " + res.message);
+        }
+      });
+    },
+    "sendSMS": function sendSMS() {
+      if (!this.data.registerPhone) {
+        alert('手机号码不能为空!');
+        return;
+      }
+
+      fetch(serverURL + "/sendSMS", {
+        method: 'POST',
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          phone: this.data.registerPhone
+        })
+      }).then(function (response) {
+        return response.json();
+      }).then(function (res) {
+        if (res.err === 0) {
+          toast('短信已发送!');
+        } else {
+          toast("\u77ED\u4FE1\u53D1\u9001\u5931\u8D25: " + res.message);
+        }
+      });
+    },
+    "notice": {
+      "loadInfo": function loadInfo() {
+        console.log(this);
+        this.query('.user-name-bar input').value = owo.state.userInfo.username;
+        this.data.username = owo.state.userInfo.username;
+      }
+    },
+    "view": {
+      "loginContent": [{
+        "_name": "login",
+        "_inherit": true
+      }, {
+        "_name": "register",
+        "_inherit": true
+      }]
+    }
+  },
+  "page": {}
+};
+</script>
 
     <script src="https://cunchu.site/owo/script/idangerous.swiper2.7.6.min.js" type="text/javascript"  charset="UTF-8"></script>
     <script src="./static/js/main.js" type="text/javascript"  charset="UTF-8"></script>

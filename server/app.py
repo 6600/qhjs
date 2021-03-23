@@ -1,6 +1,7 @@
 from flask import Flask, jsonify, request
+from flask_cors import CORS
 app = Flask(__name__)
-
+CORS(app, supports_credentials=True)
 import json
 import time
 import base64
@@ -87,11 +88,11 @@ def sendMessage(phone, num):
 
 config = {
   "dataBase": {
-    "server": "cdb-iphpadts.cd.tencentcdb.com",
-    "port": 10035,
-    "user": "puge",
-    "password": "puge",
-    "name": "PUGE"
+    "server": "bj-cynosdbmysql-grp-kqvvbnw0.sql.tencentcdb.com",
+    "port": 28556,
+    "user": "test",
+    "password": "test",
+    "name": "QHealthier"
   }
 }
 
@@ -146,7 +147,7 @@ def login():
             
             userID = result['id']
             # 执行sql语句，进行查询
-            sql = "select * from `data` where userID = '%s' and type = '%s'" % (userID, type)
+            sql = "select * from `userData` where userID = '%s' and type = '%s'" % (userID, type)
             cursor.execute(sql)
             result2 = cursor.fetchone()
             connection.commit()
@@ -163,13 +164,69 @@ def login():
                     dataTemp = '{}'
                 return json.dumps({"err": 0, "data": {"data": json.loads(dataTemp), "username": result['username'], "session": session, "sourceIp": sourceIp, "userID": userID, "sub": sub}})
             else:
-                sql = "INSERT INTO `data` (userID, type) VALUES ('%s', '%s')" % (userID, type)
+                sql = "INSERT INTO `userData` (userID, type) VALUES ('%s', '%s')" % (userID, type)
                 cursor.execute(sql)
                 connection.commit()
                 connection.close()
                 return json.dumps({"err": 0, "data": {"data": '', "username": result['username'], "session": session, "sourceIp": sourceIp, "userID": userID}})
         else:
-            return json.dumps({"err": 1, "message": "账号或密码不正确!"})
+          return json.dumps({"err": 1, "message": "账号或密码不正确!"})
+  else:
+    return json.dumps({"err": 1, "message": "账号或密码不能为空!"})
 
 
-app.run(host='0.0.0.0', port=8080, debug=True)
+@app.route("/sendSMS", methods=['POST'])
+def sendSMS():
+  global config
+  body = json.loads(request.get_data())
+  phone = body['phone']
+  if phone:
+    # 打开数据库连接
+    connection = pymysql.connect(host=config["dataBase"]["server"], port=config["dataBase"]["port"], user=config["dataBase"]["user"], password=config["dataBase"]["password"], db=config["dataBase"]["name"], charset='utf8mb4', cursorclass=pymysql.cursors.DictCursor)
+    with connection.cursor() as cursor:
+        cursor.execute("select * from `user` where phone = '%s'" % (phone))
+        # 获取查询结果
+        userExist = cursor.fetchone()
+        code = random.randint(1000, 9999)
+        
+        sql = "INSERT INTO `user` (username, phone, verification, verificationTime) VALUES ('待注册', '%s', '%s', '%s')" % (phone, str(code), str(time.time()))
+        if (not userExist):
+            cursor.execute(sql)
+            #   解码
+            connection.commit()
+            connection.close()
+        sendMessage(phone, str(code))
+        return json.dumps({"err": 0, "message": "短信已发送!"})
+
+@app.route("/register", methods=['POST'])
+def register():
+  global config
+  body = json.loads(request.get_data())
+  phone = body['phone']
+  code = body['code']
+  username = body['username']
+  password = body['password']
+  if username and password and phone:
+    # 打开数据库连接
+    connection = pymysql.connect(host=config["dataBase"]["server"], port=config["dataBase"]["port"], user=config["dataBase"]["user"], password=config["dataBase"]["password"], db=config["dataBase"]["name"], charset='utf8mb4', cursorclass=pymysql.cursors.DictCursor)
+    with connection.cursor() as cursor:
+      cursor.execute("select * from `user` where phone = '%s'" % (phone))
+      # 获取查询结果
+      userExist = cursor.fetchone()
+      if (not userExist):
+        return {"err": 1, "message": "请先获取验证码!"}
+      if (userExist['verification'] != code):
+        return {"err": 1, "message": "验证码错误!"}
+      # 执行sql语句，进行查询
+      sql = "UPDATE user SET username = '%s', password='%s' where phone = '%s'" % (username, password, phone)
+      print(sql)
+      cursor.execute(sql)
+      # 获取查询结果
+    #   result = cursor.fetchone()
+      connection.commit()
+      connection.close()
+      return json.dumps({"err": 0, "message": "注册成功!"})
+  return json.dumps({"err": 1, "message": "缺少必填信息!"})
+
+
+# app.run(host='0.0.0.0', port=8080, debug=True)

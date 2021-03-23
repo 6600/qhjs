@@ -1,0 +1,371 @@
+<template lang="pug">
+.login
+  view.router(name="loginContent")
+    .view-login(route="login")
+      .image-box
+        img(src="http://cunchu.site/upload/3e79ef2ca1c387e7.png")
+      .hellow-text 嗨，欢迎回来!
+      .user-name-bar.input-bar
+        img.bar-icon(src="https://cunchu.site/puge/login/user.png")
+        input(type="text" o-value="this.data.username" placeholder="用户名")
+      .pass-word-bar.input-bar
+        img.bar-icon(src="https://cunchu.site/puge/login/password.png")
+        input(type="password" o-value="this.data.password" placeholder="密码")
+      .button-box
+        .button(o-tap="login" o-hover="radial-out") 登录
+        .button(o-hover="radial-out" style=" background-color: burlywood;" go="/view-loginContent=register") 注册
+      .tool-bar
+        .left
+        .right(go-route="") 忘记密码
+    .view-register(route="register")
+      //- 装饰背景
+      img.bg-1(src="https://cunchu.site/puge/login/art.png")
+      p 欢迎注册PUGE账号
+      input.register-input(type="text" o-value="this.data.registerusername" placeholder="用户名")
+      input.register-input(type="password" o-value="this.data.registerPassWord" placeholder="密码")
+      input.register-input(type="password" o-value="this.data.registerPassWordR" placeholder="确认密码")
+      .mini-box.clear
+        input.register-input(type="text" o-value="this.data.registerPhone" placeholder="手机号码")
+        .button(o-tap="sendSMS") 发送验证码
+      input.register-input(type="text" o-value="this.data.registerCode" placeholder="验证码")
+      .button(o-tap="register") 注册
+</template>
+
+<script>
+  var appType = 'qhjs'
+  var userInfo = localStorage.getItem("owoUserInfo_" + appType)
+  if (userInfo) {
+    console.log(userInfo)
+    owo.state.userInfo = JSON.parse(userInfo)
+    if (typeof owo.state.userInfo.data == "string") {
+      if (owo.state.userInfo.data == '') owo.state.userInfo.data = {}
+      else owo.state.userInfo.data = JSON.parse(owo.state.userInfo.data)
+    }
+    setTimeout(() => {
+      if (owo.notice) owo.notice('loadInfo')
+    }, 200);
+    // getDataFormSession(owo.state.userInfo.username, owo.state.userInfo.session)
+  }
+  const serverURL = 'http://127.0.0.1:8080'
+  function getDataFormSession (username, session) {
+    fetch(`${serverURL}/userServer?route=loginSession`, {
+      method: 'POST',
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        type: appType,
+        username: username,
+        session: session
+      })
+    }).then((response) => {return response.json();}).then((res) => {
+      console.log(res)
+      if (res.err === 0) {
+        owo.tool.toast('登陆成功')
+        owo.state.userInfo = res.data
+        localStorage.setItem('owoUserInfo_' + appType, JSON.stringify(res.data))
+        if (owo.event.login) {
+          owo.event.login(res.data)
+        }
+      } else {
+        owo.go('login')
+        owo.tool.toast(res.message)
+      }
+    })
+  }
+  module.exports = {
+    data: {
+      registerusername: "",
+      registerusername: "",
+      registerPassWord: "",
+      registerPassWordR: "",
+      registerPhone: "",
+      registerCode: "",
+      username: "",
+      password: "",
+      toast: null,
+      session: null
+    },
+    created: function () {
+      if (owo.tool.toast) toast = owo.tool.toast
+      else toast = alert
+      // 按钮点击事件
+      this.$el.onkeydown = (event) => {
+        var e = event || window.event || arguments.callee.caller.arguments[0];
+        if (e && e.keyCode == 13){
+          this.login()
+        }
+      }
+    },
+    login: function () {
+      fetch(`${serverURL}/login`, {
+        method: 'POST',
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          type: appType,
+          username: this.data.username,
+          password: this.data.password
+        })
+      }).then((response) => {return response.json();}).then((res) => {
+        console.log(res)
+        if (res.err === 0) {
+          toast('登陆成功')
+          // do something
+          
+          owo.state.userInfo = res.data
+          localStorage.setItem('owoUserInfo_' + appType, JSON.stringify(res.data))
+          setTimeout(() => {
+            owo.go('route')
+          }, 0);
+        } else {
+          toast(res.message)
+        }
+      })
+    },
+    register: function () {
+      if (!this.data.registerusername) {
+        toast('用户名不能为空哦!')
+        return
+      }
+      if (!this.data.registerPassWord) {
+        toast('密码不能为空哦!')
+        return
+      }
+      if (!this.data.registerPassWordR) {
+        toast('重复密码不能为空哦!')
+        return
+      }
+      if (!this.data.registerPhone) {
+        toast('手机号码不能为空!')
+        return
+      }
+      if (this.data.registerPassWord !== this.data.registerPassWordR) {
+        toast('两次输入的密码不一致哦!')
+        return
+      }
+      fetch(`${serverURL}/register`, {
+        method: 'POST',
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          phone: this.data.registerPhone,
+          username: this.data.registerusername,
+          password: this.data.registerPassWord,
+          code: this.data.registerCode
+        })
+      }).then((response) => {return response.json();}).then((res) => {
+        if (res.err === 0) {
+          toast('注册成功!')
+          owo.go('/view-loginContent=login')
+        } else {
+          toast(`注册失败: ${res.message}`)
+        }
+      })
+    },
+    sendSMS: function () {
+      if (!this.data.registerPhone) {
+        alert('手机号码不能为空!')
+        return
+      }
+      fetch(`${serverURL}/sendSMS`, {
+        method: 'POST',
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          phone: this.data.registerPhone,
+        })
+      }).then((response) => {return response.json();}).then((res) => {
+        if (res.err === 0) {
+          toast('短信已发送!')
+        } else {
+          toast(`短信发送失败: ${res.message}`)
+        }
+      })
+    },
+    notice: {
+      loadInfo: function () {
+        console.log(this)
+        this.query('.user-name-bar input').value = owo.state.userInfo.username
+        this.data.username = owo.state.userInfo.username
+      }
+    }
+  }
+</script>
+
+
+<style lang="less">
+.login {
+  width: 100%;
+  height: 100%;
+  background-color: white;
+}
+.login-title-bar {
+  display: flex;
+  justify-content: space-between;
+  height: 45px;
+  align-items: center;
+  .back {
+    width: 12px;
+    margin: 13px;
+    display: block;
+  }
+  .register {
+    font-size: 20px;
+    line-height: 45px;
+    padding-right: 10px;
+  }
+  .active {
+    opacity: 0;
+    user-select: none;
+    pointer-events: none;
+  }
+}
+.button-box {
+  margin-top: 35px;
+}
+.image-box img {
+  height: 160px;
+  display: block;
+  margin: 40px auto;
+}
+.hellow-text {
+  color: #5fccff;
+  font-size: 22px;
+  width: 100%;
+  text-align: center;
+  line-height: 40px;
+}
+.button {
+  background-color: #5fccff;
+  line-height: 50px;
+  text-align: center;
+  color: white;
+  font-size: 20px;
+  cursor: pointer;
+  width: 84%;
+  margin: 0 auto;
+  border-radius: 25px;
+  display: block;
+  margin-top: 15px;
+}
+input {
+  border: none;
+  display: block;
+  width: 83%;
+  font-size: 18px;
+  border-radius: 25px;
+  outline: none;
+}
+.view-login {
+  input {
+    border: none;
+    background-color: transparent;
+    height: 100%;
+    padding-left: 17%;
+    display: block;
+    width: 83%;
+    font-size: 18px;
+    border-radius: 25px;
+    outline: none;
+  }
+  input:active {
+    box-shadow: 1px 1px 5px #ccc;
+  }
+  .input-bar {
+    background-color: #f7f8fa;
+    height: 50px;
+    border-radius: 25px;
+    width: 84%;
+    margin: 20px auto;
+    position: relative;
+    overflow: hidden;
+    .bar-icon {
+      width: 20px;
+      position: absolute;
+      left: 20px;
+      top: 0px;
+      bottom: 0;
+      margin: auto;
+    }
+  }
+}
+
+.tool-bar {
+  line-height: 50px;
+  display: flex;
+  justify-content: space-between;
+  width: 84%;
+  margin: 0 auto;
+  color: #262626;
+  font-size: 14px;
+}
+.router {
+  height: calc(100% - 45px);
+  overflow: hidden;
+  width: 100%;
+  max-width: 500px;
+  margin: 0 auto;
+  [route] {
+    width: 100%;
+    height: 100%;
+  }
+}
+.view-register {
+  width: 100%;
+  height: 100%;
+  .bg-1 {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 47vw;
+  }
+  p {
+    line-height: 40px;
+    font-size: 23px;
+    padding-top: 60px;
+    z-index: 99;
+    background-image: url(https://cunchu.site/puge/login/Signup.png);
+    background-size: 91vw;
+    background-repeat: no-repeat;
+    background-position-y: 15px;
+    padding-left: 20px;
+    font-weight: bold;
+    margin-bottom: 40px;
+  }
+  .register-input {
+    height: 50px;
+    background-color: #f7f7fb;
+    margin: 0 auto;
+    margin-top: 20px;
+    padding: 0 5%;
+    width: 74%;
+  }
+  .button {
+    background-color: #fa4169;
+  }
+}
+.mini-box {
+  width: 84%;
+  margin: 0 auto;
+  .button {
+    background-color: #009fe9;
+    float: right;
+    width: 24%;
+    display: block;
+    font-size: 14px;
+    height: 40px;
+    line-height: 40px;
+    margin-top: 23px;
+  }
+  .register-input {
+    float: left;
+    width: 60%;
+    display: block;
+  }
+}
+
+</style>
