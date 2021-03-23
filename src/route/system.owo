@@ -1,0 +1,18 @@
+<template lang="pug">
+.system
+  .moudle-title
+    h4 系统管理
+  .panel
+    .title 在线系统
+</template>
+
+<script>
+  module.exports = {
+
+  }
+</script>
+
+
+<style lang="less">
+
+</style>

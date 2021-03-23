@@ -1,4 +1,4 @@
-// Tue Mar 23 2021 16:04:58 GMT+0800 (GMT+08:00)
+// Tue Mar 23 2021 23:39:52 GMT+0800 (GMT+08:00)
 var owo = {tool: {},state: {},event: {}};
 /* 方法合集 */
 var _owo = {
@@ -209,6 +209,18 @@ _owo.addEvent = function (tempDom, moudleScript) {
           }   
           default: {
             
+            if (attribute.name.slice(0, 8) == 'o-class-') {
+              var bindClassName = attribute.name.slice(8)
+              if (bindClassName) {
+                var value = shaheRun.apply(moudleScript, [eventFor])
+                if (Boolean(value)) {
+                  tempDom.classList.add(bindClassName)
+                } else {
+                  tempDom.classList.remove(bindClassName)
+                }
+              }
+            }
+            
             _owo.bindEvent(eventName, eventFor, tempDom, moudleScript)
           }
         }
@@ -402,22 +414,6 @@ _owo.animation = function (oldDom, newDom, animationIn, animationOut, forward) {
 
 // 判断是否为手机
 _owo.isMobi = navigator.userAgent.toLowerCase().match(/(ipod|ipad|iphone|android|coolpad|mmp|smartphone|midp|wap|xoom|symbian|j2me|blackberry|wince)/i) != null
-// 向各个组件发送通知，暂时不支持参数
-owo.notice = function (str) {
-  function check (el) {
-    for (const key in el) {
-      if (Object.hasOwnProperty.call(el, key)) {
-        const element = el[key];
-        if (element.notice && element.notice[str]) {
-          element.notice[str].apply(element)
-        }
-        if (element.template) check(element.template)
-        console.log(element)
-      }
-    }
-  }
-  check(owo.script)
-}
 function Page(pageScript, parentScript) {
   for (var key in pageScript) {
     this[key] = pageScript[key]

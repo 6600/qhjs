@@ -61,10 +61,6 @@
 	],
 	"scriptList": [
 		{
-			"name": "idangerous.swiper2.7.6.min",
-			"src": "https://cunchu.site/owo/script/idangerous.swiper2.7.6.min.js"
-		},
-		{
 			"name": "main",
 			"src": "./src/main.js",
 			"resource": true
@@ -75,10 +71,6 @@
 			"name": "main",
 			"src": "./src/main.css",
 			"resource": true
-		},
-		{
-			"name": "idangerous.swiper2.7.6",
-			"src": "https://cunchu.site/owo/style/idangerous.swiper2.7.6.css"
 		}
 	],
 	"pageList": [

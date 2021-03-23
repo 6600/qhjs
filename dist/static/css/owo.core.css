@@ -282,3 +282,43 @@ li {
 }
 
 
+
+.home {
+  width: 100%;
+  height: 100%;
+}
+
+.home .menu {
+  width: 200px;
+  height: 100%;
+  background-color: #192b5d;
+  font-size: 18px;
+  color: #eae9ef;
+  line-height: 52px;
+  letter-spacing: 2px;
+}
+
+.home .menu .item {
+  display: flex;
+  padding: 0 10px;
+  cursor: pointer;
+  border-left: 3px solid #192b5d;
+}
+
+.home .menu .item .icon {
+  width: 40px;
+  text-align: center;
+  font-size: 30px;
+}
+
+.home .menu .item.active {
+  background-color: #274078;
+  border-left: 3px solid #2c88c7;
+}
+
+.home .view {
+  background-color: #ebf3f6;
+  width: calc(100% - 200px);
+  height: 100%;
+}
+

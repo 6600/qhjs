@@ -22,7 +22,6 @@
       
     <!-- 附属css文件 -->
     <link rel="stylesheet" href="./static/css/main.css" charset="utf-8">
-    <link rel="stylesheet" href="https://cunchu.site/owo/style/idangerous.swiper2.7.6.css" charset="utf-8">
       
   </head>
   <body>
@@ -30,7 +29,7 @@
     <!-- 页面[login]-->
     <div class="login page" template="login" style="display: none;"><div class="router" view="loginContent"><div class="view-login" route="login"><div class="image-box"><img src="http://cunchu.site/upload/3e79ef2ca1c387e7.png"></div><div class="hellow-text">嗨，欢迎回来!</div><div class="user-name-bar input-bar"><img class="bar-icon" src="https://cunchu.site/puge/login/user.png"><input type="text" o-value="this.data.username" placeholder="用户名"></div><div class="pass-word-bar input-bar"><img class="bar-icon" src="https://cunchu.site/puge/login/password.png"><input type="password" o-value="this.data.password" placeholder="密码"></div><div class="button-box"><div class="button" o-tap="login" o-hover="radial-out">登录</div><div class="button" o-hover="radial-out" style=" background-color: burlywood;" go="/view-loginContent=register">注册</div></div><div class="tool-bar"><div class="left"></div><div class="right" go-route="">忘记密码</div></div></div><div class="view-register" route="register"><img class="bg-1" src="https://cunchu.site/puge/login/art.png"><p>欢迎注册PUGE账号</p><input class="register-input" type="text" o-value="this.data.registerusername" placeholder="用户名"><input class="register-input" type="password" o-value="this.data.registerPassWord" placeholder="密码"><input class="register-input" type="password" o-value="this.data.registerPassWordR" placeholder="确认密码"><div class="mini-box clear"><input class="register-input" type="text" o-value="this.data.registerPhone" placeholder="手机号码"><div class="button" o-tap="sendSMS">发送验证码</div></div><input class="register-input" type="text" o-value="this.data.registerCode" placeholder="验证码"><div class="button" o-tap="register">注册</div></div></div></div>
     <!-- 页面[page]-->
-    <div class="home page" template="page" style="display: none;"></div>
+    <div class="home clear page" template="page" style="display: none;"><div class="menu left fl"><div class="item" go="/view-content=system" o-class-active="this.view.content._activeName == 'system'"><div class="icon"></div><div class="text">系统管理</div></div><div class="item" go="/view-content=word" o-class-active="this.view.content._activeName == 'word'"><div class="icon"></div><div class="text">词语管理</div></div><div class="item" go="/view-content=history" o-class-active="this.view.content._activeName == 'history'"><div class="icon"></div><div class="text">历史管理</div></div></div><div class="right fl view" view="content"><div class="system router-item" route="system"><div class="moudle-title"><h4>系统管理</h4></div><div class="panel"><div class="title">在线系统</div></div></div><div class="word router-item" route="word"><div class="moudle-title"><h4>系统管理</h4></div><div class="panel"></div></div><div class="system router-item" route="history"><div class="moudle-title"><h4>系统管理</h4></div><div class="panel"></div></div></div></div>
     
 <!-- 框架script文件 -->
 <script src="./static/js/owo.core.js" type="text/javascript" charset="UTF-8"></script>
@@ -134,7 +133,7 @@ owo.script = {
           owo.state.userInfo = res.data;
           localStorage.setItem('owoUserInfo_' + appType, JSON.stringify(res.data));
           setTimeout(function () {
-            owo.go('route');
+            owo.go('page');
           }, 0);
         } else {
           toast(res.message);
@@ -230,11 +229,39 @@ owo.script = {
       }]
     }
   },
-  "page": {}
+  "page": {
+    "created": function created() {
+      var _this2 = this;
+
+      // 路由器被改变事件
+      owo.onViewChange = function () {
+        console.log('路由被改变!');
+
+        _this2.handleEvent(_this2, _this2.query('.menu'));
+      };
+    },
+    "view": {
+      "content": [{
+        "prop": {
+          "route": "system"
+        },
+        "_name": "system"
+      }, {
+        "prop": {
+          "route": "word"
+        },
+        "_name": "word"
+      }, {
+        "prop": {
+          "route": "history"
+        },
+        "_name": "history"
+      }]
+    }
+  }
 };
 </script>
 
-    <script src="https://cunchu.site/owo/script/idangerous.swiper2.7.6.min.js" type="text/javascript"  charset="UTF-8"></script>
     <script src="./static/js/main.js" type="text/javascript"  charset="UTF-8"></script>
 
   </body>

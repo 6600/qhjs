@@ -85,3 +85,50 @@ h1, h2, h3, h4, h5, h6, hr, p, blockquote, dl, dt, dd, ul, ol, li, pre, form, bu
 .phone .no-phone, .pc .no-pc {
   display: none;
 }
+
+@font-face {
+  font-family: 'iconfont';  /* project id 2440349 */
+  src: url('//at.alicdn.com/t/font_2440349_svf53su1p29.eot');
+  src: url('//at.alicdn.com/t/font_2440349_svf53su1p29.eot?#iefix') format('embedded-opentype'),
+  url('//at.alicdn.com/t/font_2440349_svf53su1p29.woff2') format('woff2'),
+  url('//at.alicdn.com/t/font_2440349_svf53su1p29.woff') format('woff'),
+  url('//at.alicdn.com/t/font_2440349_svf53su1p29.ttf') format('truetype'),
+  url('//at.alicdn.com/t/font_2440349_svf53su1p29.svg#iconfont') format('svg');
+}
+
+.icon {
+  font-family: "iconfont";
+  font-style: normal;
+  font-weight: normal;
+  display: inline-block;
+  user-select: none;
+}
+
+.moudle-title {
+  background-color: white;
+  height: 45px;
+  line-height: 45px;
+  display: flex;
+  align-items: center;
+}
+
+.moudle-title h4 {
+  border-left: 2px solid #7cb6e8;
+  height: 24px;
+  line-height: 24px;
+  margin-left: 20px;
+  padding-left: 10px;
+  font-size: 18px;
+}
+
+.panel {
+  background-color: white;
+  height: calc(100% - 65px);
+  width: calc(100% - 20px);
+  margin: 10px;
+  border-radius: 5px;
+}
+
+.router-item {
+  height: 100%;
+}

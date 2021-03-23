@@ -117,7 +117,7 @@
           owo.state.userInfo = res.data
           localStorage.setItem('owoUserInfo_' + appType, JSON.stringify(res.data))
           setTimeout(() => {
-            owo.go('route')
+            owo.go('page')
           }, 0);
         } else {
           toast(res.message)

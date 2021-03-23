@@ -229,4 +229,4 @@ def register():
   return json.dumps({"err": 1, "message": "缺少必填信息!"})
 
 
-# app.run(host='0.0.0.0', port=8080, debug=True)
+app.run(host='0.0.0.0', port=8080, debug=True)
