@@ -243,7 +243,7 @@ def getWord():
     connection.commit()
     result = cursor.fetchall()
     connection.close()
-    return json.dumps({"err": 0, "message": result})
+    return json.dumps({"err": 0, "data": result})
 
 
 @app.route("/addWord", methods=['GET'])
@@ -253,6 +253,23 @@ def addWord():
   with connection.cursor() as cursor:
     # 执行sql语句，进行查询
     sql = "INSERT INTO `word` (type, wordName, wordKey, plan, time) VALUES ('', '新增方案', '', '', '%s')" % (str(int(time.time())))
+    print(sql)
+    cursor.execute(sql)
+    # 获取查询结果
+  #   result = cursor.fetchone()
+    connection.commit()
+    connection.close()
+    return getWord()
+
+
+@app.route("/saveWord", methods=['POST'])
+def saveWord():
+  body = json.loads(request.get_data())
+  # 打开数据库连接
+  connection = pymysql.connect(host=config["dataBase"]["server"], port=config["dataBase"]["port"], user=config["dataBase"]["user"], password=config["dataBase"]["password"], db=config["dataBase"]["name"], charset='utf8mb4', cursorclass=pymysql.cursors.DictCursor)
+  with connection.cursor() as cursor:
+    # 执行sql语句，进行查询
+    sql = "UPDATE word SET wordName = '%s', wordKey='%s', plan='%s' where id = '%s'" % (body['wordName'], body['wordKey'], body['plan'], body['id'])
     print(sql)
     cursor.execute(sql)
     # 获取查询结果

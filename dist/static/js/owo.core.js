@@ -1,4 +1,4 @@
-// Wed Mar 24 2021 22:20:36 GMT+0800 (GMT+08:00)
+// Thu Mar 25 2021 01:10:14 GMT+0800 (GMT+08:00)
 var owo = {tool: {},state: {},event: {}};
 /* 方法合集 */
 var _owo = {
@@ -414,6 +414,22 @@ _owo.animation = function (oldDom, newDom, animationIn, animationOut, forward) {
 
 // 判断是否为手机
 _owo.isMobi = navigator.userAgent.toLowerCase().match(/(ipod|ipad|iphone|android|coolpad|mmp|smartphone|midp|wap|xoom|symbian|j2me|blackberry|wince)/i) != null
+// 向各个组件发送通知，暂时不支持参数
+owo.notice = function (str) {
+  function check (el) {
+    for (const key in el) {
+      if (Object.hasOwnProperty.call(el, key)) {
+        const element = el[key];
+        if (element.notice && element.notice[str]) {
+          element.notice[str].apply(element)
+        }
+        if (element.template) check(element.template)
+        console.log(element)
+      }
+    }
+  }
+  check(owo.script)
+}
 function Page(pageScript, parentScript) {
   for (var key in pageScript) {
     this[key] = pageScript[key]
@@ -502,6 +518,59 @@ function handleEvent (moudleScript, enterDom) {
   var tempDom = enterDom
   
   
+  
+  if (moudleScript['forList']) {
+    // 处理o-for
+    for (var key in moudleScript['forList']) {
+      var forItem = moudleScript['forList'][key];
+      var forDomList = tempDom.querySelectorAll('[otemp-for="' + forItem['for'] + '"]')
+      if (forDomList.length > 0) {
+        forDomList[0].outerHTML = forItem.template
+        for (var domIndex = 1; domIndex < forDomList.length; domIndex++) {
+          forDomList[domIndex].remove()
+        }
+      }
+    }
+  }
+  // 先处理o-for
+  _owo.recursion(tempDom, function (tempDom) {
+    
+    var forValue = tempDom.getAttribute('o-for')
+    if (forValue) {
+      // console.log(new Function('a', 'b', 'return a + b'))
+      var forEle = shaheRun.apply(moudleScript, [forValue])
+      // 如果o-for不存在则隐藏dom
+      if (!forEle || forEle.length == 0) return
+      if (!moudleScript['forList']) moudleScript['forList'] = []
+      
+      moudleScript['forList'].push({
+        "for": forValue,
+        "children": forEle.length,
+        "template": tempDom.outerHTML
+      })
+
+      tempDom.removeAttribute("o-for")
+      var tempNode = tempDom.cloneNode(true)
+      var outHtml = ''
+      
+      for (var key in forEle) {
+        tempNode.setAttribute('otemp-for', forValue)
+        var temp = tempNode.outerHTML
+        var value = forEle[key];
+        if (value == undefined) continue
+        var tempCopy = temp
+        // 获取模板插值
+        var varList = _owo.cutStringArray(tempCopy, '{', '}')
+        varList.forEach(element => {
+          const forValue = new Function('value', 'key', 'if (' + element + ') {return ' + element + '} else {return ""}')
+          // 默认变量
+          tempCopy = tempCopy.replace('{' + element + '}', forValue.apply(moudleScript, [value, key]))
+        })
+        outHtml += tempCopy
+      }
+      tempDom.outerHTML = outHtml + ''
+    }
+  })
   
   _owo.recursion(tempDom, function (childrenDom) {
     if (childrenDom.hasAttribute('o-for')) return true

@@ -9,11 +9,59 @@
         span 默认分类
     .right.fl
       .add.icon(o-hover="grow") &#xe616;
+      .list-box
+        .list-item(o-for="this.data.list" ind="{value.id}")
+          input.list-title(type="text" value="{value.wordName}")
+          p 关键词
+          textarea.wordKey(value="{value.wordKey}")
+          p 对应方案
+          textarea.plan(value="{value.plan}")
+          .bottom-bar
+            .button.edit-button(o-tap="editit({value.id})") 修改方案
+            .button.save-button(o-tap="save({value.id})") 保存方案
+            .button.delete-button(o-tap="delete({value.id})") 删除方案
 </template>
 
 <script>
   module.exports = {
-
+    data: {
+      list: []
+    },
+    show: function () {
+      fetch("http://127.0.0.1:8080/getWord")
+        .then(response => response.json())
+        .then(result => {
+          console.log(result)
+          if (result.err == 0) {
+            this.data.list = result.data
+            this.handleEvent(this, this.query('.list-box'))
+          }
+        }).catch(error => console.log('error', error));
+    },
+    editit: function (ind) {
+      this.query(`[ind="${ind}"]`).classList.add('edit')
+    },
+    save: function (ind) {
+      const box = this.query(`[ind="${ind}"]`)
+      box.classList.remove('edit')
+      console.log(this.query(`[ind="${ind}"]`))
+      fetch("http://127.0.0.1:8080/saveWord", {
+        method: 'POST',
+        body: JSON.stringify({
+          id: ind,
+          wordName: box.querySelector('.list-title').value,
+          wordKey: box.querySelector('.wordKey').value,
+          plan: box.querySelector('.plan').value
+        }),
+        redirect: 'follow'
+      }).then(response => response.json()).then(result => {
+          console.log(result)
+          if (result.err == 0) {
+            this.data.list = result.data
+            this.handleEvent(this, this.query('.list-box'))
+          }
+        }).catch(error => console.log('error', error));
+    }
   }
 </script>
 
@@ -44,6 +92,7 @@
   width: calc(100% - 220px);
   float: left;
   height: 100%;
+  overflow: auto;
   .add {
     position: absolute;
     right: 20px;
@@ -52,5 +101,72 @@
     color: darkcyan;
     cursor: pointer;
   }
+}
+.list-item {
+  background-color: #fff4f4;
+  box-shadow: 1px 1px 4px #ccc;
+  margin: 10px;
+  border-radius: 5px;
+  padding: 10px;
+  margin-bottom: 20px;
+  .list-title {
+    width: 100%;
+    height: 35px;
+    background-color: transparent;
+    border: navajowhite;
+    border-bottom: 1px solid #ccc;
+    margin-bottom: 5px;
+    outline: none;
+    font-size: 20px;
+  }
+  p {
+    font-size: 16px;
+    line-height: 30px;
+    color: #666;
+  }
+  textarea {
+    width: 100%;
+    border: navajowhite;
+    height: 200px;
+    border-radius: 5px;
+    pointer-events: none;
+    background-color: #fbeded;
+  }
+  input {
+    pointer-events: none;
+  }
+}
+.edit.list-item {
+  .edit-button {
+    display: none;
+  }
+  .save-button {
+    display: block;
+  }
+  textarea, input {
+    background-color: white;
+    pointer-events: all;
+  }
+}
+.bottom-bar {
+  margin-top: 10px;
+  border-top: 1px solid #ccc;
+  padding-top: 10px;
+  display: flex;
+  justify-content: flex-end;
+  .button {
+    width: 100px;
+    height: 34px;
+    text-align: center;
+    background-color: #009fe9;
+    color: white;
+    border-radius: 5px;
+    line-height: 34px;
+    cursor: pointer;
+    margin-left: 5px;
+  }
+}
+.save-button {
+  display: none;
 }
 </style>
