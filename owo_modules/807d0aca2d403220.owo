@@ -122,7 +122,9 @@
         } else {
           toast(res.message)
         }
-      })
+      }).catch(function (err) {
+        toast('登陆失败请稍后再试!')
+      });
     },
     register: function () {
       if (!this.data.registerusername) {

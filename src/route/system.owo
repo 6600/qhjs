@@ -5,20 +5,23 @@
   .panel
     .title
       .icon &#xe602;
-      span 在线系统
+      span 系统列表
     .system-box.clear
       .system-card
         .top
           .icon &#xe941;
           .info
             .name 健康管理系统
-            .address IP: 192.168.1.1
+            .address IP: 192.168.7.1
             .time 2021年3月23日添加
         .bottom
           .item
             .icon &#xe614;
+            span 管理
+          .item
+            .icon &#xe614;
             span 删除
-      .system-card.add
+      .system-card.add(o-hover="grow")
         .icon &#xe616;
 </template>
 
@@ -32,5 +35,17 @@
 <style lang="less">
 .system-card {
   float: left;
+  height: 92px;
+}
+.system-card.add {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: darkgray;
+  font-size: 58px;
+  cursor: pointer;
+}
+.bottom .item {
+  margin-left: 5px;
 }
 </style>

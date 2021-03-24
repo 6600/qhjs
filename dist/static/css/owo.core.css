@@ -279,11 +279,74 @@ li {
   float: left;
   width: 60%;
   display: block;
+}[o-hover="grow"] {
+  display: inline-block;
+  vertical-align: middle;
+  transform: perspective(1px) translateZ(0);
+  box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+  transition-duration: 0.3s;
+  transition-property: transform;
 }
-.system .system-card {
-  float: left;
+[o-hover="grow"]:hover, [o-hover="grow"]:focus, [o-hover="grow"]:active {
+  transform: scale(1.1);
 }
 
+.system .system-card {
+  float: left;
+  height: 92px;
+}
+
+.system .system-card.add {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: darkgray;
+  font-size: 58px;
+  cursor: pointer;
+}
+
+.system .bottom .item {
+  margin-left: 5px;
+}
+.word .menu-bar {
+  width: 200px;
+  height: calc(100% - 20px);
+  background-color: #fcf6ff;
+  padding: 10px;
+}
+
+.word .menu-item {
+  line-height: 24px;
+  font-size: 18px;
+  margin: 14px 0;
+  color: #333;
+  display: flex;
+}
+
+.word .menu-item .icon {
+  width: 26px;
+  font-size: 22px;
+  color: burlywood;
+}
+
+.word .menu-item.active {
+  color: mediumslateblue;
+}
+
+.word .right {
+  width: calc(100% - 220px);
+  float: left;
+  height: 100%;
+}
+
+.word .right .add {
+  position: absolute;
+  right: 20px;
+  bottom: 20px;
+  font-size: 60px;
+  color: darkcyan;
+  cursor: pointer;
+}
 
 .home {
   width: 100%;

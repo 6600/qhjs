@@ -229,4 +229,37 @@ def register():
   return json.dumps({"err": 1, "message": "缺少必填信息!"})
 
 
+
+# 岐黄济世
+
+@app.route("/getWord", methods=['GET'])
+def getWord():
+  # 打开数据库连接
+  connection = pymysql.connect(host=config["dataBase"]["server"], port=config["dataBase"]["port"], user=config["dataBase"]["user"], password=config["dataBase"]["password"], db=config["dataBase"]["name"], charset='utf8mb4', cursorclass=pymysql.cursors.DictCursor)
+  with connection.cursor() as cursor:
+    # 执行sql语句，进行查询
+    cursor.execute("select * from `word`")
+    # 获取查询结果
+    connection.commit()
+    result = cursor.fetchall()
+    connection.close()
+    return json.dumps({"err": 0, "message": result})
+
+
+@app.route("/addWord", methods=['GET'])
+def addWord():
+  # 打开数据库连接
+  connection = pymysql.connect(host=config["dataBase"]["server"], port=config["dataBase"]["port"], user=config["dataBase"]["user"], password=config["dataBase"]["password"], db=config["dataBase"]["name"], charset='utf8mb4', cursorclass=pymysql.cursors.DictCursor)
+  with connection.cursor() as cursor:
+    # 执行sql语句，进行查询
+    sql = "INSERT INTO `word` (type, wordName, wordKey, plan, time) VALUES ('', '新增方案', '', '', '%s')" % (str(int(time.time())))
+    print(sql)
+    cursor.execute(sql)
+    # 获取查询结果
+  #   result = cursor.fetchone()
+    connection.commit()
+    connection.close()
+    return getWord()
+
+
 app.run(host='0.0.0.0', port=8080, debug=True)

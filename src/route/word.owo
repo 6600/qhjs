@@ -1,8 +1,14 @@
 <template lang="pug">
 .word
   .moudle-title
-    h4 系统管理
+    h4 信息存储
   .panel
+    .menu-bar.fl
+      .menu-item.active
+        .icon &#xe650;
+        span 默认分类
+    .right.fl
+      .add.icon(o-hover="grow") &#xe616;
 </template>
 
 <script>
@@ -13,5 +19,38 @@
 
 
 <style lang="less">
-
+.menu-bar {
+  width: 200px;
+  height: calc(100% - 20px);
+  background-color: #fcf6ff;
+  padding: 10px;
+}
+.menu-item {
+  line-height: 24px;
+  font-size: 18px;
+  margin: 14px 0;
+  color: #333;
+  display: flex;
+  .icon {
+    width: 26px;
+    font-size: 22px;
+    color: burlywood;
+  }
+}
+.menu-item.active {
+  color: mediumslateblue;
+}
+.right {
+  width: calc(100% - 220px);
+  float: left;
+  height: 100%;
+  .add {
+    position: absolute;
+    right: 20px;
+    bottom: 20px;
+    font-size: 60px;
+    color: darkcyan;
+    cursor: pointer;
+  }
+}
 </style>

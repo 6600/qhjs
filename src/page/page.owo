@@ -6,7 +6,7 @@
       .text 系统管理
     .item(go="/view-content=word" o-class-active="this.view.content._activeName == 'word'")
       .icon &#xe694;
-      .text 词语管理
+      .text 信息存储
     .item(go="/view-content=history" o-class-active="this.view.content._activeName == 'history'")
       .icon &#xe648;
       .text 历史管理
