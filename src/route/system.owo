@@ -3,7 +3,23 @@
   .moudle-title
     h4 系统管理
   .panel
-    .title 在线系统
+    .title
+      .icon &#xe602;
+      span 在线系统
+    .system-box.clear
+      .system-card
+        .top
+          .icon &#xe941;
+          .info
+            .name 健康管理系统
+            .address IP: 192.168.1.1
+            .time 2021年3月23日添加
+        .bottom
+          .item
+            .icon &#xe614;
+            span 删除
+      .system-card.add
+        .icon &#xe616;
 </template>
 
 <script>
@@ -14,5 +30,7 @@
 
 
 <style lang="less">
-
+.system-card {
+  float: left;
+}
 </style>

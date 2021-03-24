@@ -111,7 +111,7 @@
       }).then((response) => {return response.json();}).then((res) => {
         console.log(res)
         if (res.err === 0) {
-          toast('登陆成功')
+          // toast('登陆成功')
           // do something
           
           owo.state.userInfo = res.data

@@ -8,8 +8,14 @@
       .icon &#xe694;
       .text 词语管理
     .item(go="/view-content=history" o-class-active="this.view.content._activeName == 'history'")
-      .icon &#xe64e;
+      .icon &#xe648;
       .text 历史管理
+    .item(go="/view-content=history" o-class-active="this.view.content._activeName == 'history'")
+      .icon &#xe657;
+      .text 备份管理
+    .item(go="/view-content=history" o-class-active="this.view.content._activeName == 'history'")
+      .icon &#xe617;
+      .text 系统设置
   view.right.fl.view(name="content")
     .router-item(route="system" src="./src/route/system.owo")
     .router-item(route="word" src="./src/route/word.owo")
@@ -39,19 +45,19 @@
   height: 100%;
   
   background-color: #192b5d;
-  font-size: 18px;
+  font-size: 16px;
   color: #eae9ef;
-  line-height: 52px;
+  line-height: 48px;
   letter-spacing: 2px;
   .item {
     display: flex;
-    padding: 0 10px;
+    padding: 0 5px;
     cursor: pointer;
     border-left: 3px solid #192b5d;
     .icon {
       width: 40px;
       text-align: center;
-      font-size: 30px;
+      font-size: 28px;
     }
   }
   .item.active {
@@ -63,5 +69,49 @@
   background-color: #ebf3f6;
   width: calc(100% - 200px);
   height: 100%;
+}
+.system-card {
+  width: 230px;
+  background-color: #fbfbfb;
+  border-radius: 5px;
+  padding: 5px 10px;
+  margin: 10px;
+  box-shadow: 1px 1px 5px #ccc;
+  .bottom {
+    display: flex;
+    justify-content: flex-end;
+    color: #009fe9;
+    border-top: 1px solid #f3e0e0;
+    margin-top: 5px;
+    line-height: 24px;
+    padding-top: 2px;
+    .item {
+      cursor: pointer;
+    }
+  }
+  .top {
+    display: flex;
+    .icon {
+      width: 60px;
+      font-size: 40px;
+      text-align: center;
+      height: 60px;
+      line-height: 60px;
+      color: blueviolet;
+    }
+  }
+}
+.info {
+  border-left: 1px solid #f3e0e0;
+  line-height: 16px;
+  padding-left: 10px;
+  font-size: 12px;
+  color: #666;
+  .name {
+    font-weight: bold;
+    color: #333;
+    font-size: 14px;
+    line-height: 22px;
+  }
 }
 </style>
