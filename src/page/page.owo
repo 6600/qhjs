@@ -1,6 +1,7 @@
 <template lang="pug">
 .home.clear
   .menu.left.fl
+    .logo LOGO
     .item(go="/view-content=system" o-class-active="this.view.content._activeName == 'system'")
       .icon &#xe64e;
       .text 系统管理
@@ -9,17 +10,19 @@
       .text 信息存储
     .item(go="/view-content=history" o-class-active="this.view.content._activeName == 'history'")
       .icon &#xe648;
-      .text 历史管理
-    .item(go="/view-content=history" o-class-active="this.view.content._activeName == 'history'")
+      .text 资料管理
+    .item(go="/view-content=backups" o-class-active="this.view.content._activeName == 'backups'")
       .icon &#xe657;
       .text 备份管理
-    .item(go="/view-content=history" o-class-active="this.view.content._activeName == 'history'")
+    .item(go="/view-content=setup" o-class-active="this.view.content._activeName == 'setup'")
       .icon &#xe617;
       .text 系统设置
   view.right.fl.view(name="content")
     .router-item(route="system" src="./src/route/system.owo")
     .router-item(route="word" src="./src/route/word.owo")
     .router-item(route="history" src="./src/route/history.owo")
+    .router-item(route="backups" src="./src/route/backups.owo")
+    .router-item(route="setup" src="./src/route/setup.owo")
 </template>
 
 <script>
@@ -113,5 +116,10 @@
     font-size: 14px;
     line-height: 22px;
   }
+}
+.logo {
+  text-align: center;
+  line-height: 60px;
+  font-size: 30px;
 }
 </style>

@@ -1,8 +1,17 @@
 <template lang="pug">
 .system
   .moudle-title
-    h4 系统管理
+    h4 资料管理
   .panel
+    <table border="0" class="pure-table">
+      <tr>
+        <th>ID</th>
+        <th>系统名称</th>
+        <th>数据分类</th>
+        <th>提交时间</th>
+        <th>操作</th>
+      </tr>
+    </table>
 </template>
 
 <script>
@@ -13,5 +22,50 @@
 
 
 <style lang="less">
-
+table {
+  width: 100%;
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+ 
+td,th {
+  padding: 0;
+}
+tr {
+  background-color: aquamarine;
+}
+ 
+.pure-table {
+  border-collapse: collapse;
+  border-spacing: 0;
+  empty-cells: show;
+  border: 1px solid #cbcbcb;
+}
+ 
+.pure-table caption {
+  color: #000;
+  font: italic 85%/1 arial,sans-serif;
+  padding: 1em 0;
+  text-align: center;
+}
+ 
+.pure-table td,.pure-table th {
+  border-left: 1px solid #cbcbcb;
+  border-width: 0 0 0 1px;
+  font-size: inherit;
+  margin: 0;
+  overflow: visible;
+  padding: .5em 1em;
+}
+ 
+.pure-table thead {
+  background-color: #e0e0e0;
+  color: #000;
+  text-align: left;
+  vertical-align: bottom;
+}
+ 
+.pure-table td {
+  background-color: transparent;
+}
 </style>

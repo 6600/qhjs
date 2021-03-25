@@ -1,0 +1,21 @@
+<template lang="pug">
+.system
+  .moudle-title
+    h4 备份管理
+  .panel
+    .no-data
+      .icon-box
+        .icon &#xe642;
+        span 暂无数据备份
+</template>
+
+<script>
+  module.exports = {
+
+  }
+</script>
+
+
+<style lang="less">
+
+</style>

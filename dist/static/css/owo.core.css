@@ -377,11 +377,14 @@ li {
 
 .word .list-item textarea {
   width: 100%;
+  padding: 10px;
   border: navajowhite;
   height: 200px;
   border-radius: 5px;
   pointer-events: none;
   background-color: #fbeded;
+  width: calc(100% - 20px);
+  font-size: 20px;
 }
 
 .word .list-item input {
@@ -425,7 +428,84 @@ li {
 .word .save-button {
   display: none;
 }
+.system table {
+  width: 100%;
+  border-collapse: collapse;
+  border-spacing: 0;
+}
 
+.system td,
+.system th {
+  padding: 0;
+}
+
+.system tr {
+  background-color: aquamarine;
+}
+
+.system .pure-table {
+  border-collapse: collapse;
+  border-spacing: 0;
+  empty-cells: show;
+  border: 1px solid #cbcbcb;
+}
+
+.system .pure-table caption {
+  color: #000;
+  font: italic 85%/1 arial, sans-serif;
+  padding: 1em 0;
+  text-align: center;
+}
+
+.system .pure-table td,
+.system .pure-table th {
+  border-left: 1px solid #cbcbcb;
+  border-width: 0 0 0 1px;
+  font-size: inherit;
+  margin: 0;
+  overflow: visible;
+  padding: 0.5em 1em;
+}
+
+.system .pure-table thead {
+  background-color: #e0e0e0;
+  color: #000;
+  text-align: left;
+  vertical-align: bottom;
+}
+
+.system .pure-table td {
+  background-color: transparent;
+}
+
+.system input {
+  height: 30px;
+  margin: 0 10px;
+  border: navajowhite;
+  border-bottom: 1px solid #ccc;
+  width: 360px;
+  margin-bottom: 10px;
+}
+
+.system .button {
+  width: 100px;
+  height: 34px;
+  text-align: center;
+  background-color: #009fe9;
+  color: white;
+  border-radius: 5px;
+  line-height: 34px;
+  cursor: pointer;
+  margin-left: 5px;
+}
+
+.system .button-bar {
+  height: 80px;
+  display: flex;
+  justify-content: flex-end;
+  width: 370px;
+  align-items: center;
+}
 .home {
   width: 100%;
   height: 100%;
@@ -514,5 +594,11 @@ li {
   color: #333;
   font-size: 14px;
   line-height: 22px;
+}
+
+.home .logo {
+  text-align: center;
+  line-height: 60px;
+  font-size: 30px;
 }
 

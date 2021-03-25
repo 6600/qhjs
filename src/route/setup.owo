@@ -1,0 +1,53 @@
+<template lang="pug">
+.system
+  .moudle-title
+    h4 系统管理
+  .panel
+    .title
+      .icon &#xe617;
+      span 修改密码
+    h4 原密码
+    input(type="text")
+    h4 新密码
+    input(type="password")
+    h4 重试新密码
+    input(type="password")
+    .button-bar
+      .button 修改
+</template>
+
+<script>
+  module.exports = {
+
+  }
+</script>
+
+
+<style lang="less">
+input {
+  height: 30px;
+  margin: 0 10px;
+  border: navajowhite;
+  border-bottom: 1px solid #ccc;
+  width: 360px;
+  margin-bottom: 10px;
+}
+.button {
+  width: 100px;
+  height: 34px;
+  text-align: center;
+  background-color: #009fe9;
+  color: white;
+  border-radius: 5px;
+  line-height: 34px;
+  cursor: pointer;
+  margin-left: 5px;
+}
+.button-bar {
+  height: 80px;
+  display: flex;
+  justify-content: flex-end;
+  width: 370px;
+  align-items: center;
+}
+</style>
