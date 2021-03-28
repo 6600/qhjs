@@ -13,9 +13,9 @@
         .list-item(o-for="this.data.list" ind="{value.id}")
           input.list-title(type="text" value="{value.wordName}")
           p 关键词
-          textarea.wordKey(value="{value.wordKey}")
+          textarea.wordKey {value.wordKey}
           p 对应方案
-          textarea.plan(value="{value.plan}")
+          textarea.plan {value.plan}
           .bottom-bar
             .button.edit-button(o-tap="editit({value.id})") 修改方案
             .button.save-button(o-tap="save({value.id})") 保存方案
@@ -59,6 +59,23 @@
           if (result.err == 0) {
             this.data.list = result.data
             this.handleEvent(this, this.query('.list-box'))
+            owo.tool.notice('保存成功')
+          }
+        }).catch(error => console.log('error', error));
+    },
+    delete: function (ind) {
+      fetch("http://127.0.0.1:8080/deleteWord", {
+        method: 'POST',
+        body: JSON.stringify({
+          id: ind
+        }),
+        redirect: 'follow'
+      }).then(response => response.json()).then(result => {
+          console.log(result)
+          if (result.err == 0) {
+            this.data.list = result.data
+            this.handleEvent(this, this.query('.list-box'))
+            owo.tool.notice('删除成功')
           }
         }).catch(error => console.log('error', error));
     }
@@ -126,11 +143,14 @@
   }
   textarea {
     width: 100%;
+    padding: 10px;
     border: navajowhite;
     height: 200px;
     border-radius: 5px;
     pointer-events: none;
     background-color: #fbeded;
+    width: calc(100% - 20px);
+    font-size: 20px;
   }
   input {
     pointer-events: none;

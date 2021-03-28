@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 // Thu Mar 25 2021 01:28:38 GMT+0800 (GMT+08:00)
+=======
+// Thu Mar 25 2021 10:47:44 GMT+0800 (GMT+08:00)
+>>>>>>> 16deb942334885e5f09a3fd50ab1568b07a8ae8f
 var owo = {tool: {},state: {},event: {}};
 /* 方法合集 */
 var _owo = {

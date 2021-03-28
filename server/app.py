@@ -278,5 +278,19 @@ def saveWord():
     connection.close()
     return getWord()
 
+@app.route("/deleteWord", methods=['POST'])
+def deleteWord():
+  body = json.loads(request.get_data())
+  # 打开数据库连接
+  connection = pymysql.connect(host=config["dataBase"]["server"], port=config["dataBase"]["port"], user=config["dataBase"]["user"], password=config["dataBase"]["password"], db=config["dataBase"]["name"], charset='utf8mb4', cursorclass=pymysql.cursors.DictCursor)
+  with connection.cursor() as cursor:
+    # 执行sql语句，进行查询
+    cursor.execute("DELETE FROM word WHERE id = '%s'" % (body['id']))
+    # 获取查询结果
+    # result = cursor.fetchone()
+    connection.commit()
+    connection.close()
+    return getWord()
+
 
 app.run(host='0.0.0.0', port=8080, debug=True)

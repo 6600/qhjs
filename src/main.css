@@ -88,12 +88,12 @@ h1, h2, h3, h4, h5, h6, hr, p, blockquote, dl, dt, dd, ul, ol, li, pre, form, bu
 
 @font-face {
   font-family: 'iconfont';  /* project id 2440349 */
-  src: url('//at.alicdn.com/t/font_2440349_f5q4f8p1zxd.eot');
-  src: url('//at.alicdn.com/t/font_2440349_f5q4f8p1zxd.eot?#iefix') format('embedded-opentype'),
-  url('//at.alicdn.com/t/font_2440349_f5q4f8p1zxd.woff2') format('woff2'),
-  url('//at.alicdn.com/t/font_2440349_f5q4f8p1zxd.woff') format('woff'),
-  url('//at.alicdn.com/t/font_2440349_f5q4f8p1zxd.ttf') format('truetype'),
-  url('//at.alicdn.com/t/font_2440349_f5q4f8p1zxd.svg#iconfont') format('svg');
+  src: url('//at.alicdn.com/t/font_2440349_4d62l2abs5v.eot');
+  src: url('//at.alicdn.com/t/font_2440349_4d62l2abs5v.eot?#iefix') format('embedded-opentype'),
+  url('//at.alicdn.com/t/font_2440349_4d62l2abs5v.woff2') format('woff2'),
+  url('//at.alicdn.com/t/font_2440349_4d62l2abs5v.woff') format('woff'),
+  url('//at.alicdn.com/t/font_2440349_4d62l2abs5v.ttf') format('truetype'),
+  url('//at.alicdn.com/t/font_2440349_4d62l2abs5v.svg#iconfont') format('svg');
 }
 
 .icon {
@@ -148,4 +148,47 @@ h1, h2, h3, h4, h5, h6, hr, p, blockquote, dl, dt, dd, ul, ol, li, pre, form, bu
   width: 35px;
   text-align: center;
   color: cornflowerblue;
+}
+
+.no-data {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+.no-data .icon-box {
+  width: 400px;
+  height: 270px;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+}
+
+.no-data .icon-box .icon {
+  font-size: 140px;
+  display: block;
+  margin: 0 auto;
+  text-align: center;
+  color: cadetblue;
+  height: 180px;
+}
+
+.no-data .icon-box span {
+  display: block;
+  font-size: 25px;
+  text-align: center;
+  margin-top: 20px;
+  color: #ccc;
+  padding-right: 20px;
+}
+
+.panel h4 {
+  height: 40px;
+  margin: 0 10px;
+  line-height: 40px;
+  font-size: 18px;
+  color: #333;
 }

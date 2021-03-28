@@ -29,7 +29,15 @@
     <!-- 页面[login]-->
     <div class="login page" template="login" style="display: none;"><div class="router" view="loginContent"><div class="view-login" route="login"><div class="image-box"><img src="http://cunchu.site/upload/3e79ef2ca1c387e7.png"></div><div class="hellow-text">嗨，欢迎回来!</div><div class="user-name-bar input-bar"><img class="bar-icon" src="https://cunchu.site/puge/login/user.png"><input type="text" o-value="this.data.username" placeholder="用户名"></div><div class="pass-word-bar input-bar"><img class="bar-icon" src="https://cunchu.site/puge/login/password.png"><input type="password" o-value="this.data.password" placeholder="密码"></div><div class="button-box"><div class="button" o-tap="login" o-hover="radial-out">登录</div><div class="button" o-hover="radial-out" style=" background-color: burlywood;" go="/view-loginContent=register">注册</div></div><div class="tool-bar"><div class="left"></div><div class="right" go-route="">忘记密码</div></div></div><div class="view-register" route="register"><img class="bg-1" src="https://cunchu.site/puge/login/art.png"><p>欢迎注册PUGE账号</p><input class="register-input" type="text" o-value="this.data.registerusername" placeholder="用户名"><input class="register-input" type="password" o-value="this.data.registerPassWord" placeholder="密码"><input class="register-input" type="password" o-value="this.data.registerPassWordR" placeholder="确认密码"><div class="mini-box clear"><input class="register-input" type="text" o-value="this.data.registerPhone" placeholder="手机号码"><div class="button" o-tap="sendSMS">发送验证码</div></div><input class="register-input" type="text" o-value="this.data.registerCode" placeholder="验证码"><div class="button" o-tap="register">注册</div></div></div></div>
     <!-- 页面[page]-->
-    <div class="home clear page" template="page" style="display: none;"><div class="menu left fl"><div class="item" go="/view-content=system" o-class-active="this.view.content._activeName == 'system'"><div class="icon"></div><div class="text">系统管理</div></div><div class="item" go="/view-content=word" o-class-active="this.view.content._activeName == 'word'"><div class="icon"></div><div class="text">信息存储</div></div><div class="item" go="/view-content=history" o-class-active="this.view.content._activeName == 'history'"><div class="icon"></div><div class="text">历史管理</div></div><div class="item" go="/view-content=history" o-class-active="this.view.content._activeName == 'history'"><div class="icon"></div><div class="text">备份管理</div></div><div class="item" go="/view-content=history" o-class-active="this.view.content._activeName == 'history'"><div class="icon"></div><div class="text">系统设置</div></div></div><div class="right fl view" view="content"><div class="system router-item" route="system"><div class="moudle-title"><h4>系统管理</h4></div><div class="panel"><div class="title"><div class="icon"></div><span>系统列表</span></div><div class="system-box clear"><div class="system-card"><div class="top"><div class="icon"></div><div class="info"><div class="name">健康管理系统</div><div class="address">IP: 192.168.7.1</div><div class="time">2021年3月23日添加</div></div></div><div class="bottom"><div class="item"><div class="icon"></div><span>管理</span></div><div class="item"><div class="icon"></div><span>删除</span></div></div></div><div class="system-card add" o-hover="grow"><div class="icon"></div></div></div></div></div><div class="word router-item" route="word"><div class="moudle-title"><h4>信息存储</h4></div><div class="panel"><div class="menu-bar fl"><div class="menu-item active"><div class="icon"></div><span>默认分类</span></div></div><div class="right fl"><div class="add icon" o-hover="grow"></div><div class="list-box"><div class="list-item" o-for="this.data.list" ind="{value.id}"><input class="list-title" type="text" value="{value.wordName}"><p>关键词</p><textarea class="wordKey" value="{value.wordKey}"></textarea><p>对应方案</p><textarea class="plan" value="{value.plan}"></textarea><div class="bottom-bar"><div class="button edit-button" o-tap="editit({value.id})">修改方案</div><div class="button save-button" o-tap="save({value.id})">保存方案</div><div class="button delete-button" o-tap="delete({value.id})">删除方案</div></div></div></div></div></div></div><div class="system router-item" route="history"><div class="moudle-title"><h4>系统管理</h4></div><div class="panel"></div></div></div></div>
+    <div class="home clear page" template="page" style="display: none;"><div class="menu left fl"><div class="logo">LOGO</div><div class="item" go="/view-content=system" o-class-active="this.view.content._activeName == 'system'"><div class="icon"></div><div class="text">系统管理</div></div><div class="item" go="/view-content=word" o-class-active="this.view.content._activeName == 'word'"><div class="icon"></div><div class="text">信息存储</div></div><div class="item" go="/view-content=history" o-class-active="this.view.content._activeName == 'history'"><div class="icon"></div><div class="text">资料管理</div></div><div class="item" go="/view-content=backups" o-class-active="this.view.content._activeName == 'backups'"><div class="icon"></div><div class="text">备份管理</div></div><div class="item" go="/view-content=setup" o-class-active="this.view.content._activeName == 'setup'"><div class="icon"></div><div class="text">系统设置</div></div></div><div class="right fl view" view="content"><div class="system router-item" route="system"><div class="moudle-title"><h4>系统管理</h4></div><div class="panel"><div class="title"><div class="icon"></div><span>系统列表</span></div><div class="system-box clear"><div class="system-card"><div class="top"><div class="icon"></div><div class="info"><div class="name">健康管理系统</div><div class="address">IP: 192.168.7.1</div><div class="time">2021年3月23日添加</div></div></div><div class="bottom"><div class="item"><div class="icon"></div><span>管理</span></div><div class="item"><div class="icon"></div><span>删除</span></div></div></div><div class="system-card add" o-hover="grow"><div class="icon"></div></div></div></div></div><div class="word router-item" route="word"><div class="moudle-title"><h4>信息存储</h4></div><div class="panel"><div class="menu-bar fl"><div class="menu-item active"><div class="icon"></div><span>默认分类</span></div></div><div class="right fl"><div class="add icon" o-hover="grow"></div><div class="list-box"><div class="list-item" o-for="this.data.list" ind="{value.id}"><input class="list-title" type="text" value="{value.wordName}"><p>关键词</p><textarea class="wordKey">{value.wordKey}</textarea><p>对应方案</p><textarea class="plan">{value.plan}</textarea><div class="bottom-bar"><div class="button edit-button" o-tap="editit({value.id})">修改方案</div><div class="button save-button" o-tap="save({value.id})">保存方案</div><div class="button delete-button" o-tap="delete({value.id})">删除方案</div></div></div></div></div></div></div><div class="system router-item" route="history"><div class="moudle-title"><h4>资料管理</h4></div><div class="panel"><table border="0" class="pure-table">
+<tbody><tr>
+<th>ID</th>
+<th>系统名称</th>
+<th>数据分类</th>
+<th>提交时间</th>
+<th>操作</th>
+</tr>
+</tbody></table></div></div><div class="system router-item" route="backups"><div class="moudle-title"><h4>备份管理</h4></div><div class="panel"><div class="no-data"><div class="icon-box"><div class="icon"></div><span>暂无数据备份</span></div></div></div></div><div class="system router-item" route="setup"><div class="moudle-title"><h4>系统管理</h4></div><div class="panel"><div class="title"><div class="icon"></div><span>修改密码</span></div><h4>原密码</h4><input type="text"><h4>新密码</h4><input type="password"><h4>重试新密码</h4><input type="password"><div class="button-bar"><div class="button">修改</div></div></div></div></div></div>
     
 <!-- 框架script文件 -->
 <script src="./static/js/owo.core.js" type="text/javascript" charset="UTF-8"></script>
@@ -296,6 +304,33 @@ owo.script = {
               _this4.data.list = result.data;
 
               _this4.handleEvent(_this4, _this4.query('.list-box'));
+
+              owo.tool.notice('保存成功');
+            }
+          })["catch"](function (error) {
+            return console.log('error', error);
+          });
+        },
+        "delete": function _delete(ind) {
+          var _this5 = this;
+
+          fetch("http://127.0.0.1:8080/deleteWord", {
+            method: 'POST',
+            body: JSON.stringify({
+              id: ind
+            }),
+            redirect: 'follow'
+          }).then(function (response) {
+            return response.json();
+          }).then(function (result) {
+            console.log(result);
+
+            if (result.err == 0) {
+              _this5.data.list = result.data;
+
+              _this5.handleEvent(_this5, _this5.query('.list-box'));
+
+              owo.tool.notice('删除成功');
             }
           })["catch"](function (error) {
             return console.log('error', error);
@@ -310,6 +345,16 @@ owo.script = {
           "route": "history"
         },
         "_name": "history"
+      }, {
+        "prop": {
+          "route": "backups"
+        },
+        "_name": "backups"
+      }, {
+        "prop": {
+          "route": "setup"
+        },
+        "_name": "setup"
       }]
     }
   }
