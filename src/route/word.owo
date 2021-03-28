@@ -138,8 +138,9 @@
   }
   p {
     font-size: 16px;
-    line-height: 30px;
+    line-height: 35px;
     color: #666;
+    font-weight: bold;
   }
   textarea {
     width: 100%;

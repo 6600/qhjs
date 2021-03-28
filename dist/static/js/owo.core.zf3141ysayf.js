@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-// Thu Mar 25 2021 01:28:38 GMT+0800 (GMT+08:00)
-=======
-// Thu Mar 25 2021 10:47:44 GMT+0800 (GMT+08:00)
->>>>>>> 16deb942334885e5f09a3fd50ab1568b07a8ae8f
+// Sun Mar 28 2021 20:08:18 GMT+0800 (GMT+08:00)
 var owo = {tool: {},state: {},event: {}};
 /* 方法合集 */
 var _owo = {
@@ -1023,21 +1019,4 @@ function switchPage (oldUrlParam, newUrlParam) {
 if (window.onhashchange) {window.onhashchange = _owo.hashchange;} else {window.onpopstate = _owo.hashchange;}
 // 执行页面加载完毕方法
 _owo.ready(_owo.showPage)
-
-
-// 这是用于代码调试的自动刷新代码，他不应该出现在正式上线版本!
-if ("WebSocket" in window) {
-  // 打开一个 web socket
-  if (!window._owo.ws) window._owo.ws = new WebSocket("ws://" + window.location.host)
-  window._owo.ws.onmessage = function (evt) { 
-    if (evt.data == 'reload') {
-      location.reload()
-    }
-  }
-  window._owo.ws.onclose = function() { 
-    console.info('与服务器断开连接')
-  }
-} else {
-  console.error('浏览器不支持WebSocket')
-}
 
