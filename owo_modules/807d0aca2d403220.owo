@@ -46,9 +46,8 @@
     }, 200);
     // getDataFormSession(owo.state.userInfo.username, owo.state.userInfo.session)
   }
-  const serverURL = 'http://127.0.0.1:8080'
   function getDataFormSession (username, session) {
-    fetch(`${serverURL}/userServer?route=loginSession`, {
+    fetch(`${serverIP}/userServer?route=loginSession`, {
       method: 'POST',
       headers: {
         "Content-Type": "application/json"
@@ -98,7 +97,7 @@
       }
     },
     login: function () {
-      fetch(`${serverURL}/login`, {
+      fetch(`${serverIP}/login`, {
         method: 'POST',
         headers: {
           "Content-Type": "application/json"
@@ -147,7 +146,7 @@
         toast('两次输入的密码不一致哦!')
         return
       }
-      fetch(`${serverURL}/register`, {
+      fetch(`${serverIP}/register`, {
         method: 'POST',
         headers: {
           "Content-Type": "application/json"
@@ -172,7 +171,7 @@
         alert('手机号码不能为空!')
         return
       }
-      fetch(`${serverURL}/sendSMS`, {
+      fetch(`${serverIP}/sendSMS`, {
         method: 'POST',
         headers: {
           "Content-Type": "application/json"

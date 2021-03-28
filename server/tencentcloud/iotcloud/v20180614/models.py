@@ -3288,7 +3288,7 @@ class TopicRulePayload(AbstractModel):
     },
     {
         "forward": {
-            "api": "http://127.0.0.1:8080",
+            "api": serverIP + "",
             "token":"xxx"
         }
     },

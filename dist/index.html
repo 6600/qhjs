@@ -19,7 +19,7 @@
   <meta name="catalogs" content="{TAG_83943_TAG}" />
 
   <!-- 页面主样式文件 -->
-  <link charset="utf-8" rel="stylesheet" href="./static/css/owo.core.zf3141ysayf.css">
+  <link charset="utf-8" rel="stylesheet" href="./static/css/owo.core.3u30q2exkfq.css">
 
   <!-- 附属css文件 -->
   <link rel="stylesheet" href="./static/css/main.css" charset="utf-8">
@@ -238,7 +238,7 @@
   </div>
 
   <!-- 框架script文件 -->
-  <script src="./static/js/owo.core.zf3141ysayf.js" type="text/javascript" charset="UTF-8"></script>
+  <script src="./static/js/owo.core.3u30q2exkfq.js" type="text/javascript" charset="UTF-8"></script>
   <script type="text/javascript" charset="UTF-8">
     // 模块 login 的script代码
     var appType = 'qhjs';
@@ -258,10 +258,8 @@
       }, 200); // getDataFormSession(owo.state.userInfo.username, owo.state.userInfo.session)
     }
 
-    var serverURL = 'http://127.0.0.1:8080';
-
     function getDataFormSession(username, session) {
-      fetch(serverURL + "/userServer?route=loginSession", {
+      fetch(serverIP + "/userServer?route=loginSession", {
         method: 'POST',
         headers: {
           "Content-Type": "application/json"
@@ -320,7 +318,7 @@
           };
         },
         "login": function login() {
-          fetch(serverURL + "/login", {
+          fetch(serverIP + "/login", {
             method: 'POST',
             headers: {
               "Content-Type": "application/json"
@@ -376,7 +374,7 @@
             return;
           }
 
-          fetch(serverURL + "/register", {
+          fetch(serverIP + "/register", {
             method: 'POST',
             headers: {
               "Content-Type": "application/json"
@@ -404,7 +402,7 @@
             return;
           }
 
-          fetch(serverURL + "/sendSMS", {
+          fetch(serverIP + "/sendSMS", {
             method: 'POST',
             headers: {
               "Content-Type": "application/json"
@@ -470,7 +468,7 @@
             "show": function show() {
               var _this3 = this;
 
-              fetch("http://127.0.0.1:8080/getWord").then(function(response) {
+              fetch(serverIP + "/getWord").then(function(response) {
                 return response.json();
               }).then(function(result) {
                 console.log(result);
@@ -493,7 +491,7 @@
               var box = this.query("[ind=\"" + ind + "\"]");
               box.classList.remove('edit');
               console.log(this.query("[ind=\"" + ind + "\"]"));
-              fetch("http://127.0.0.1:8080/saveWord", {
+              fetch(serverIP + "/saveWord", {
                 method: 'POST',
                 body: JSON.stringify({
                   id: ind,
@@ -521,7 +519,7 @@
             "delete": function _delete(ind) {
               var _this5 = this;
 
-              fetch("http://127.0.0.1:8080/deleteWord", {
+              fetch(serverIP + "/deleteWord", {
                 method: 'POST',
                 body: JSON.stringify({
                   id: ind

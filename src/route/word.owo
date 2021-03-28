@@ -28,7 +28,7 @@
       list: []
     },
     show: function () {
-      fetch("http://127.0.0.1:8080/getWord")
+      fetch(serverIP + "/getWord")
         .then(response => response.json())
         .then(result => {
           console.log(result)
@@ -45,7 +45,7 @@
       const box = this.query(`[ind="${ind}"]`)
       box.classList.remove('edit')
       console.log(this.query(`[ind="${ind}"]`))
-      fetch("http://127.0.0.1:8080/saveWord", {
+      fetch(serverIP + "/saveWord", {
         method: 'POST',
         body: JSON.stringify({
           id: ind,
@@ -64,7 +64,7 @@
         }).catch(error => console.log('error', error));
     },
     delete: function (ind) {
-      fetch("http://127.0.0.1:8080/deleteWord", {
+      fetch(serverIP + "/deleteWord", {
         method: 'POST',
         body: JSON.stringify({
           id: ind
