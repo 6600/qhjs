@@ -1,0 +1,56 @@
+<template lang="pug">
+.power
+  .moudle-title
+    h4 权限管理
+  .panel
+    .title
+      .icon &#xe602;
+      span 系统列表
+    .system-box
+      <table border="0" class="pure-table">
+        <tr>
+          <th>系统名称</th>
+          <th>系统标签</th>
+          <th>系统地址</th>
+          <th>系统备注</th>
+          <th>系统权限</th>
+        </tr>
+        <tr o-for="this.data.list"><td>{value.name}</td><td>{value.type}</td><td>{value.ip}</td><td>{value.remark}</td><td>{value.power}</td></tr>
+      </table>
+</template>
+
+<script>
+  module.exports = {
+    data: {
+      list: []
+    },
+    show: function () {
+      owo.state.style = 'power'
+      this.getSystem()
+    },
+    getSystem: function () {
+      fetch(serverIP + "/getSystem/" + owo.state.style, {
+        method: 'GET',
+        redirect: 'follow'
+      }).then(response => response.json()).then(result => {
+        
+        if (result.err == 0) {
+          console.log('--------------------------')
+          console.log(result)
+          this.data.list = result.data
+          this.handleEvent()
+        }
+      }).catch(error => console.log('error', error));
+    }
+  }
+</script>
+
+
+<style lang="less">
+.system-box {
+  padding: 10px;
+}
+table {
+  width: 100%;
+}
+</style>

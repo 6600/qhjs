@@ -291,12 +291,12 @@ li {
   transform: scale(1.1);
 }
 
-.system .system-card {
+.panel .system-card {
   float: left;
   height: 92px;
 }
 
-.system .system-card.add {
+.panel .system-card.add {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -305,57 +305,11 @@ li {
   cursor: pointer;
 }
 
+.panel .system-card.add .icon {
+  pointer-events: none;
+}
 .system .bottom .item {
   margin-left: 5px;
-}
-
-.system .sys-info {
-  display: none;
-}
-
-.system .list,
-.system .sys-info {
-  width: 100%;
-  height: 100%;
-}
-
-.system .sys-info .input-item {
-  display: flex;
-  padding: 0 10px;
-  line-height: 40px;
-  align-items: flex-end;
-  margin-top: 10px;
-}
-
-.system .sys-info .input-item .name {
-  width: 200px;
-  font-size: 18px;
-}
-
-.system .sys-info input,
-.system .sys-info .mini-input {
-  outline: none;
-  font-size: 18px;
-  width: calc(100% - 220px);
-}
-
-.system .sys-info input {
-  padding: 0 10px;
-}
-
-.system .sys-info .mini-input {
-  display: flex;
-}
-
-.system .sys-info .mini-input span {
-  display: inline-block;
-  width: 90px;
-  text-align: center;
-  color: #666;
-}
-
-.system .sys-info .mini-input input {
-  width: calc(100% - 90px);
 }
 
 .system .bottom-button-bar {
@@ -364,6 +318,13 @@ li {
   justify-content: flex-end;
   align-items: center;
   padding: 0 10px;
+}
+
+.system input,
+.system .mini-input {
+  outline: none;
+  font-size: 18px;
+  width: calc(100% - 220px);
 }
 .word .menu-bar {
   width: 200px;
@@ -447,6 +408,7 @@ li {
 
 .word .list-item input {
   pointer-events: none;
+  padding: 0;
 }
 
 .word .edit.list-item .edit-button {
@@ -500,51 +462,13 @@ li {
 .system tr {
   background-color: aquamarine;
 }
-
-.system .pure-table {
-  border-collapse: collapse;
-  border-spacing: 0;
-  empty-cells: show;
-  border: 1px solid #cbcbcb;
+.power .system-box {
+  padding: 10px;
 }
 
-.system .pure-table caption {
-  color: #000;
-  font: italic 85%/1 arial, sans-serif;
-  padding: 1em 0;
-  text-align: center;
+.power table {
+  width: 100%;
 }
-
-.system .pure-table td,
-.system .pure-table th {
-  border-left: 1px solid #cbcbcb;
-  border-width: 0 0 0 1px;
-  font-size: inherit;
-  margin: 0;
-  overflow: visible;
-  padding: 0.5em 1em;
-}
-
-.system .pure-table thead {
-  background-color: #e0e0e0;
-  color: #000;
-  text-align: left;
-  vertical-align: bottom;
-}
-
-.system .pure-table td {
-  background-color: transparent;
-}
-
-.system input {
-  height: 30px;
-  margin: 0 10px;
-  border: navajowhite;
-  border-bottom: 1px solid #ccc;
-  width: 360px;
-  margin-bottom: 10px;
-}
-
 .system .button {
   width: 100px;
   height: 34px;
@@ -658,5 +582,60 @@ li {
   text-align: center;
   line-height: 60px;
   font-size: 30px;
+}
+.blinker {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.3);
+  display: none;
+}
+
+.blinker .add-box input {
+  width: calc(100% - 20px);
+  margin-bottom: 20px;
+  outline: none;
+  padding: 0;
+}
+
+.blinker .add-box {
+  width: 560px;
+  height: 360px;
+  background-color: white;
+  box-shadow: 1px 1px 8px #847373;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+  border-radius: 5px;
+  padding: 20px;
+}
+
+.blinker .close {
+  font-size: 45px;
+  color: steelblue;
+  right: -24px;
+  top: -24px;
+  position: absolute;
+  cursor: pointer;
+}
+
+.blinker .title {
+  line-height: 24px;
+  font-size: 18px;
+  color: #333;
+  font-weight: bold;
+  padding: 0 10px;
+}
+
+.blinker #beizhu {
+  width: calc(100% - 20px);
+  margin: 10px;
+  display: block;
+  height: 140px;
 }
 

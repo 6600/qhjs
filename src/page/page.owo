@@ -4,13 +4,16 @@
     .logo LOGO
     .item(go="/view-content=system" o-class-active="this.view.content._activeName == 'system'")
       .icon &#xe64e;
-      .text 管理系统
+      .text 管理
     .item(go="/view-content=word" o-class-active="this.view.content._activeName == 'word'")
       .icon &#xe694;
-      .text 匹配管理
+      .text 匹配
     .item(go="/view-content=history" o-class-active="this.view.content._activeName == 'history'")
       .icon &#xe648;
-      .text 连接系统
+      .text 系统连接
+    .item(go="/view-content=power" o-class-active="this.view.content._activeName == 'power'")
+      .icon &#xe77e;
+      .text 系统权限
     //- .item(go="/view-content=backups" o-class-active="this.view.content._activeName == 'backups'")
     //-   .icon &#xe657;
     //-   .text 备份管理
@@ -21,7 +24,7 @@
     .router-item(route="system" src="./src/route/system.owo")
     .router-item(route="word" src="./src/route/word.owo")
     .router-item(route="history" src="./src/route/history.owo")
-    .router-item(route="backups" src="./src/route/backups.owo")
+    .router-item(route="power" src="./src/route/power.owo")
     .router-item(route="setup" src="./src/route/setup.owo")
 </template>
 

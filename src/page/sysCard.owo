@@ -1,0 +1,95 @@
+<template lang="pug">
+.panel
+  .title
+    .icon &#xe602;
+    span 系统列表
+  .system-box.clear
+    .system-card(o-for="this.data.cardList")
+      .top
+        .icon &#xe941;
+        .info
+          .name {value.name}
+          .address IP: {value.ip}
+          .time {value.remark}
+      .bottom
+        .item(o-tap="swiInfo()")
+          .icon &#xe614;
+          span 管理
+        .item(o-tap="deleteSys({value.id}, '{value.name}')")
+          .icon &#xe614;
+          span 删除
+    .system-card.add(o-hover="grow" o-tap="owo.script.add.switchShow()")
+      .icon &#xe616;
+</template>
+
+<script>
+  module.exports = {
+    data: {
+      cardList: []
+    },
+    show: function () {
+      this.getSystem()
+    },
+    swiInfo: function () {
+      console.log(owo.script.page.view.content._list[owo.script.page.view.content._activeIndex])
+      owo.script.page.view.content._list[owo.script.page.view.content._activeIndex].$el.querySelector('.hide-box').style.display = 'block'
+      owo.script.page.view.content._list[owo.script.page.view.content._activeIndex].$el.querySelector('.list').style.display = 'none'
+    },
+    getSystem: function () {
+      fetch(serverIP + "/getSystem/" + owo.state.style, {
+        method: 'GET',
+        redirect: 'follow'
+      }).then(response => response.json()).then(result => {
+        
+        if (result.err == 0) {
+          console.log('--------------------------')
+          console.log(this)
+          this.data.cardList = result.data
+          this.handleEvent(this, owo.script.page.view.content._list[owo.script.page.view.content._activeIndex].$el.querySelector('.panel'))
+        }
+      }).catch(error => console.log('error', error));
+    },
+    deleteSys: function (id, name) {
+      if (confirm(`确定删除系统${name}吗?`)) {
+        fetch(serverIP + "/deleteSystem", {
+          method: 'POST',
+          body: JSON.stringify({
+            id: id,
+            type: owo.state.style
+          }),
+          redirect: 'follow'
+        }).then(response => response.json()).then(result => {
+          
+          if (result.err == 0) {
+            this.data.cardList = result.data
+            this.handleEvent(this, owo.script.page.view.content._list[owo.script.page.view.content._activeIndex].$el.querySelector('.panel'))
+          }
+        }).catch(error => console.log('error', error));
+      }
+    },
+    notice: {
+      updata: function () {
+        console.log('刷新!')
+        this.getSystem()
+      }
+    }
+  }
+</script>
+
+<style lang="less">
+.system-card {
+  float: left;
+  height: 92px;
+}
+.system-card.add {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: darkgray;
+  font-size: 58px;
+  cursor: pointer;
+  .icon {
+    pointer-events: none;
+  }
+}
+</style>

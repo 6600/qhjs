@@ -88,12 +88,12 @@ h1, h2, h3, h4, h5, h6, hr, p, blockquote, dl, dt, dd, ul, ol, li, pre, form, bu
 
 @font-face {
   font-family: 'iconfont';  /* project id 2440349 */
-  src: url('//at.alicdn.com/t/font_2440349_4d62l2abs5v.eot');
-  src: url('//at.alicdn.com/t/font_2440349_4d62l2abs5v.eot?#iefix') format('embedded-opentype'),
-  url('//at.alicdn.com/t/font_2440349_4d62l2abs5v.woff2') format('woff2'),
-  url('//at.alicdn.com/t/font_2440349_4d62l2abs5v.woff') format('woff'),
-  url('//at.alicdn.com/t/font_2440349_4d62l2abs5v.ttf') format('truetype'),
-  url('//at.alicdn.com/t/font_2440349_4d62l2abs5v.svg#iconfont') format('svg');
+  src: url('//at.alicdn.com/t/font_2440349_4q7tsv9obqj.eot');
+  src: url('//at.alicdn.com/t/font_2440349_4q7tsv9obqj.eot?#iefix') format('embedded-opentype'),
+  url('//at.alicdn.com/t/font_2440349_4q7tsv9obqj.woff2') format('woff2'),
+  url('//at.alicdn.com/t/font_2440349_4q7tsv9obqj.woff') format('woff'),
+  url('//at.alicdn.com/t/font_2440349_4q7tsv9obqj.ttf') format('truetype'),
+  url('//at.alicdn.com/t/font_2440349_4q7tsv9obqj.svg#iconfont') format('svg');
 }
 
 .icon {
@@ -191,4 +191,127 @@ h1, h2, h3, h4, h5, h6, hr, p, blockquote, dl, dt, dd, ul, ol, li, pre, form, bu
   line-height: 40px;
   font-size: 18px;
   color: #333;
+}
+
+.input-item {
+  display: flex;
+  padding: 0 10px;
+  line-height: 40px;
+  align-items: flex-end;
+  margin-top: 10px;
+}
+.input-item .name {
+  width: 200px;
+  font-size: 18px;
+}
+input {
+  padding: 0 10px;
+}
+input {
+  height: 30px;
+  margin: 0 10px;
+  border: none;
+  border-bottom: 1px solid #ccc;
+  width: 360px;
+  margin-bottom: 10px;
+}
+.mini-input {
+  display: flex;
+}
+
+.mini-input span {
+  display: inline-block;
+  width: 90px;
+  text-align: center;
+  color: #666;
+}
+
+.mini-input input {
+  width: calc(100% - 90px)
+}
+
+.home .button-box {
+  height: 40px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.button {
+  background-color: #009fe9;
+  color: white;
+  width: 100px;
+  text-align: center;
+  border-radius: 5px;
+  line-height: 35px;
+  cursor: pointer;
+}
+
+.hide-box {
+  display: none;
+}
+.list, .hide-box {
+  width: 100%;
+  height: 100%;
+}
+
+.back-title {
+  background-color: white;
+  height: 45px;
+  line-height: 45px;
+  display: flex;
+  align-items: center;
+}
+
+.back-title h4 {
+  height: 24px;
+  line-height: 24px;
+  font-size: 18px;
+}
+
+.back-title .icon {
+  width: 60px;
+  text-align: center;
+  font-size: 26px;
+  color: #009fe9;
+  cursor: pointer;
+}
+
+ 
+.pure-table {
+  border-collapse: collapse;
+  border-spacing: 0;
+  empty-cells: show;
+  border: 1px solid #cbcbcb;
+}
+ 
+.pure-table caption {
+  color: #000;
+  font: italic 85%/1 arial,sans-serif;
+  padding: 1em 0;
+  text-align: center;
+}
+ 
+.pure-table td,.pure-table th {
+  border-left: 1px solid #cbcbcb;
+  border-width: 0 0 0 1px;
+  font-size: inherit;
+  margin: 0;
+  overflow: visible;
+  padding: .5em 1em;
+}
+ 
+.pure-table thead {
+  background-color: #e0e0e0;
+  color: #000;
+  text-align: left;
+  vertical-align: bottom;
+}
+ 
+.pure-table td {
+  background-color: transparent;
+}
+
+.pure-table tr {
+  border-bottom: 1px solid #ccc;
 }

@@ -1,25 +1,31 @@
 <template lang="pug">
 .word
-  .moudle-title
-    h4 信息存储
-  .panel
-    .menu-bar.fl
-      .menu-item.active
-        .icon &#xe650;
-        span 默认分类
-    .right.fl
-      .add.icon(o-hover="grow") &#xe616;
-      .list-box
-        .list-item(o-for="this.data.list" ind="{value.id}")
-          input.list-title(type="text" value="{value.wordName}")
-          p 关键词
-          textarea.wordKey {value.wordKey}
-          p 对应方案
-          textarea.plan {value.plan}
-          .bottom-bar
-            .button.edit-button(o-tap="editit({value.id})") 修改方案
-            .button.save-button(o-tap="save({value.id})") 保存方案
-            .button.delete-button(o-tap="delete({value.id})") 删除方案
+  .list
+    .moudle-title
+      h4 匹配系统列表
+    plug(_name="sysCard" _src="./src/page/sysCard.owo")
+  .word-list.hide-box
+    .back-title
+      .icon(o-tap="hideInfo()") &#xe618;
+      h4 测试匹配系统
+    .panel
+      .menu-bar.fl
+        .menu-item.active
+          .icon &#xe650;
+          span 默认分类
+      .right.fl
+        .add.icon(o-hover="grow") &#xe616;
+        .list-box
+          .list-item(o-for="this.data.list" ind="{value.id}")
+            input.list-title(type="text" value="{value.wordName}")
+            p 关键词
+            textarea.wordKey {value.wordKey}
+            p 对应方案
+            textarea.plan {value.plan}
+            .bottom-bar
+              .button.edit-button(o-tap="editit({value.id})") 修改方案
+              .button.save-button(o-tap="save({value.id})") 保存方案
+              .button.delete-button(o-tap="delete({value.id})") 删除方案
 </template>
 
 <script>
@@ -28,6 +34,7 @@
       list: []
     },
     show: function () {
+      owo.state.style = 'word'
       fetch(serverIP + "/getWord")
         .then(response => response.json())
         .then(result => {
@@ -155,6 +162,7 @@
   }
   input {
     pointer-events: none;
+    padding: 0;
   }
 }
 .edit.list-item {

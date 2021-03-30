@@ -64,6 +64,11 @@
 			"name": "main",
 			"src": "./src/main.js",
 			"resource": true
+		},
+		{
+			"name": "notice",
+			"afterbody": true,
+			"src": "./owo_modules/notice.js"
 		}
 	],
 	"styleList": [
@@ -83,6 +88,11 @@
 			"name": "page",
 			"src": "./src/page/page.owo",
 			"type": "page"
+		},
+		{
+			"name": "add",
+			"src": "./src/page/add.owo",
+			"type": "block"
 		}
 	],
 	"mode": {

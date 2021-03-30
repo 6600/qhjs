@@ -24,14 +24,6 @@
 
 
 <style lang="less">
-input {
-  height: 30px;
-  margin: 0 10px;
-  border: navajowhite;
-  border-bottom: 1px solid #ccc;
-  width: 360px;
-  margin-bottom: 10px;
-}
 .button {
   width: 100px;
   height: 34px;

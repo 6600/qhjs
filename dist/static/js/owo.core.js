@@ -1,4 +1,4 @@
-// Sun Mar 28 2021 20:28:45 GMT+0800 (GMT+08:00)
+// Tue Mar 30 2021 14:29:50 GMT+0800 (GMT+08:00)
 var owo = {tool: {},state: {},event: {}};
 /* 方法合集 */
 var _owo = {
@@ -412,8 +412,43 @@ _owo.animation = function (oldDom, newDom, animationIn, animationOut, forward) {
 
 
 
+// 计算$dom
+var idList = document.querySelectorAll('[id]')
+owo.id = {}
+for (var ind = 0; ind < idList.length; ind++) {
+  var item = idList[ind]
+  owo.id[item.getAttribute('id')] = item
+}
+
 // 判断是否为手机
 _owo.isMobi = navigator.userAgent.toLowerCase().match(/(ipod|ipad|iphone|android|coolpad|mmp|smartphone|midp|wap|xoom|symbian|j2me|blackberry|wince)/i) != null
+// 向各个组件发送通知，暂时不支持参数
+owo.notice = function (str) {
+  function check (el) {
+    for (const key in el) {
+      if (Object.hasOwnProperty.call(el, key)) {
+        const element = el[key];
+        if (element.notice && element.notice[str]) {
+          element.notice[str].apply(element)
+        }
+        if (element.template) check(element.template)
+        // 通知view组件
+        if (element.view) {
+          for (const viewKey in element.view) {
+            if (Object.hasOwnProperty.call(element.view, viewKey)) {
+              const viewElement = element.view[viewKey];
+              for (let index = 0; index < viewElement.length; index++) {
+                check(viewElement[index])
+              }
+            }
+          }
+        }
+        // console.log(element)
+      }
+    }
+  }
+  check(owo.script)
+}
 function Page(pageScript, parentScript) {
   for (var key in pageScript) {
     this[key] = pageScript[key]
@@ -524,9 +559,12 @@ function handleEvent (moudleScript, enterDom) {
       // console.log(new Function('a', 'b', 'return a + b'))
       var forEle = shaheRun.apply(moudleScript, [forValue])
       // 如果o-for不存在则隐藏dom
-      if (!forEle || forEle.length == 0) return
+      if (Object.values(forEle).length == 0) {
+        tempDom.style.display = 'none'
+        return
+      }
+      tempDom.style.display = ''
       if (!moudleScript['forList']) moudleScript['forList'] = []
-      
       moudleScript['forList'].push({
         "for": forValue,
         "children": forEle.length,
@@ -1019,4 +1057,21 @@ function switchPage (oldUrlParam, newUrlParam) {
 if (window.onhashchange) {window.onhashchange = _owo.hashchange;} else {window.onpopstate = _owo.hashchange;}
 // 执行页面加载完毕方法
 _owo.ready(_owo.showPage)
+
+
+// 这是用于代码调试的自动刷新代码，他不应该出现在正式上线版本!
+if ("WebSocket" in window) {
+  // 打开一个 web socket
+  if (!window._owo.ws) window._owo.ws = new WebSocket("ws://" + window.location.host)
+  window._owo.ws.onmessage = function (evt) { 
+    if (evt.data == 'reload') {
+      location.reload()
+    }
+  }
+  window._owo.ws.onclose = function() { 
+    console.info('与服务器断开连接')
+  }
+} else {
+  console.error('浏览器不支持WebSocket')
+}
 
