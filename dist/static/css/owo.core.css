@@ -469,6 +469,27 @@ li {
 .power table {
   width: 100%;
 }
+
+.power tr,
+.power td {
+  line-height: 28px;
+}
+
+.power .add {
+  color: tomato;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.power .tool {
+  font-size: 14px;
+  text-align: center;
+}
+
+.power .tool span {
+  cursor: pointer;
+  color: blueviolet;
+}
 .system .button {
   width: 100px;
   height: 34px;
@@ -637,5 +658,65 @@ li {
   margin: 10px;
   display: block;
   height: 140px;
+}
+.blinker {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.3);
+  display: none;
+}
+
+.blinker .add-box input {
+  width: calc(100% - 20px);
+  margin-bottom: 20px;
+  outline: none;
+  padding: 0;
+}
+
+.blinker .close {
+  font-size: 45px;
+  color: steelblue;
+  right: -24px;
+  top: -24px;
+  position: absolute;
+  cursor: pointer;
+}
+
+.blinker .title {
+  line-height: 24px;
+  font-size: 18px;
+  color: #333;
+  font-weight: bold;
+  padding: 0 10px;
+  margin-bottom: 10px;
+}
+
+.blinker .select-list {
+  height: 280px;
+  padding: 5px;
+}
+
+.blinker .user-list {
+  float: left;
+  padding: 5px 8px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  line-height: 18px;
+  font-size: 14px;
+  margin-right: 10px;
+  cursor: pointer;
+}
+
+.blinker .user-list[check] {
+  background-color: #009fe9;
+  color: white;
+}
+
+.blinker .button-box {
+  display: flex;
+  justify-content: flex-end;
 }
 

@@ -93,6 +93,11 @@
 			"name": "add",
 			"src": "./src/page/add.owo",
 			"type": "block"
+		},
+		{
+			"name": "selectUser",
+			"src": "./src/page/selectUser.owo",
+			"type": "block"
 		}
 	],
 	"mode": {

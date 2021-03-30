@@ -39,16 +39,19 @@
 </tr>
 </tbody></table></div></div></div><div class="power router-item" route="power"><div class="moudle-title"><h4>权限管理</h4></div><div class="panel"><div class="title"><div class="icon"></div><span>系统列表</span></div><div class="system-box"><table border="0" class="pure-table">
 <tbody><tr>
-<th>系统名称</th>
-<th>系统标签</th>
-<th>系统地址</th>
-<th>系统备注</th>
+<th width="120px">系统名称</th>
+<th width="120px">系统标签</th>
+<th width="120px">系统地址</th>
+<th width="200px">系统备注</th>
 <th>系统权限</th>
+<th width="80px">操作</th>
 </tr>
-<tr o-for="this.data.list"><td>{value.name}</td><td>{value.type}</td><td>{value.ip}</td><td>{value.remark}</td><td>{value.power}</td></tr>
+<tr o-for="this.data.list"><td>{value.name}</td><td>{value.type}</td><td>{value.ip}</td><td>{value.remark}</td><td>{value.power}</td><td class="tool"><span o-tap="showAddBox({key})">添加权限</span></td></tr>
 </tbody></table></div></div></div><div class="system router-item" route="setup"><div class="moudle-title"><h4>系统管理</h4></div><div class="panel"><div class="title"><div class="icon"></div><span>修改密码</span></div><h4>原密码</h4><input type="text"><h4>新密码</h4><input type="password"><h4>重试新密码</h4><input type="password"><div class="button-bar"><div class="button">修改</div></div></div></div></div></div>
     <!-- 插件[add]-->
     <div class="blinker owo-block" template="add" style="display: none;"><div class="add-box"><div class="close icon" o-tap="switchShow"></div><div class="title">系统名称</div><input id="styName" type="text"><div class="title">系统地址</div><input id="styIP" type="text"><div class="title">系统备注</div><textarea id="beizhu"></textarea><div class="button-box"><div class="button" o-tap="addSystem">验证并添加</div></div></div></div>
+    <!-- 插件[selectUser]-->
+    <div class="blinker owo-block" template="selectUser" style="display: none;"><div class="add-box"><div class="close icon" o-tap="switchShow"></div><div class="title">选择需要添加权限的用户</div><div class="select-list"><span class="user-list" o-for="this.data.userList" key="{value.id}" name="{value.username}" o-tap="checkUser('{value.id}')">{value.username}</span></div><div class="button-box clear"><div class="button" o-tap="addPower">保存权限</div></div></div></div>
     
 <!-- 框架script文件 -->
 <script src="./static/js/owo.core.js" type="text/javascript" charset="UTF-8"></script>
@@ -311,8 +314,13 @@ owo.script = {
             "getSystem": function getSystem() {
               var _this4 = this;
 
-              fetch(serverIP + "/getSystem/" + owo.state.style, {
-                method: 'GET',
+              fetch(serverIP + "/getSystem", {
+                method: 'POST',
+                body: JSON.stringify({
+                  type: owo.state.style,
+                  username: owo.state.userInfo.username,
+                  session: owo.state.userInfo.session
+                }),
                 redirect: 'follow'
               }).then(function (response) {
                 return response.json();
@@ -461,8 +469,13 @@ owo.script = {
             "getSystem": function getSystem() {
               var _this9 = this;
 
-              fetch(serverIP + "/getSystem/" + owo.state.style, {
-                method: 'GET',
+              fetch(serverIP + "/getSystem", {
+                method: 'POST',
+                body: JSON.stringify({
+                  type: owo.state.style,
+                  username: owo.state.userInfo.username,
+                  session: owo.state.userInfo.session
+                }),
                 redirect: 'follow'
               }).then(function (response) {
                 return response.json();
@@ -534,8 +547,13 @@ owo.script = {
             "getSystem": function getSystem() {
               var _this11 = this;
 
-              fetch(serverIP + "/getSystem/" + owo.state.style, {
-                method: 'GET',
+              fetch(serverIP + "/getSystem", {
+                method: 'POST',
+                body: JSON.stringify({
+                  type: owo.state.style,
+                  username: owo.state.userInfo.username,
+                  session: owo.state.userInfo.session
+                }),
                 redirect: 'follow'
               }).then(function (response) {
                 return response.json();
@@ -594,15 +612,18 @@ owo.script = {
         "getSystem": function getSystem() {
           var _this13 = this;
 
-          fetch(serverIP + "/getSystem/" + owo.state.style, {
-            method: 'GET',
+          fetch(serverIP + "/getSystem", {
+            method: 'POST',
+            body: JSON.stringify({
+              type: owo.state.style,
+              username: owo.state.userInfo.username,
+              session: owo.state.userInfo.session
+            }),
             redirect: 'follow'
           }).then(function (response) {
             return response.json();
           }).then(function (result) {
             if (result.err == 0) {
-              console.log('--------------------------');
-              console.log(result);
               _this13.data.list = result.data;
 
               _this13.handleEvent();
@@ -610,6 +631,15 @@ owo.script = {
           })["catch"](function (error) {
             return console.log('error', error);
           });
+        },
+        "showAddBox": function showAddBox(key) {
+          var value = this.data.list[key];
+          owo.script.selectUser.switchShow(value.power, value.id);
+        },
+        "notice": {
+          "updataPower": function updataPower() {
+            this.getSystem();
+          }
         },
         "prop": {
           "route": "power"
@@ -663,6 +693,96 @@ owo.script = {
       })["catch"](function (error) {
         return console.log('error', error);
       });
+    }
+  },
+  "selectUser": {
+    "data": {
+      "show": false,
+      "userList": [],
+      "activeSystem": 0
+    },
+    "created": function created() {
+      var _this15 = this;
+
+      fetch(serverIP + "/getUserList", {
+        method: 'POST',
+        body: JSON.stringify({
+          username: owo.state.userInfo.username,
+          session: owo.state.userInfo.session
+        })
+      }).then(function (response) {
+        return response.json();
+      }).then(function (result) {
+        console.log(result);
+
+        if (result.err == 0) {
+          _this15.data.userList = result.data;
+
+          _this15.handleEvent();
+        }
+      })["catch"](function (error) {
+        return console.log('error', error);
+      });
+    },
+    "switchShow": function switchShow(power, systemID) {
+      this.data.show = !this.data.show;
+
+      if (this.data.show) {
+        var powerList = power.split(',');
+        console.log(powerList);
+        this.$el.style.display = 'block';
+        this.data.activeSystem = systemID;
+        this.queryAll('.user-list').forEach(function (element) {
+          console.log(element.attributes['name'].value);
+
+          if (powerList.includes(element.attributes['name'].value)) {
+            element.setAttribute("check", "");
+          } else {
+            element.removeAttribute('check');
+          }
+        });
+      } else {
+        this.$el.style.display = 'none';
+      }
+    },
+    "addPower": function addPower() {
+      var _this16 = this;
+
+      var sendData = '';
+      this.queryAll('[check]').forEach(function (element) {
+        sendData += element.innerText + ',';
+      });
+      fetch(serverIP + "/addPower", {
+        method: 'POST',
+        body: JSON.stringify({
+          id: this.data.activeSystem,
+          username: owo.state.userInfo.username,
+          session: owo.state.userInfo.session,
+          data: sendData
+        }),
+        redirect: 'follow'
+      }).then(function (response) {
+        return response.json();
+      }).then(function (result) {
+        console.log(result);
+
+        if (result.err == 0) {
+          owo.tool.notice('修改成功');
+
+          _this16.switchShow();
+
+          owo.notice('updataPower');
+        }
+      })["catch"](function (error) {
+        return console.log('error', error);
+      });
+    },
+    "checkUser": function checkUser(id) {
+      if (this.$target.attributes['check']) {
+        this.$target.removeAttribute('check');
+      } else {
+        this.$target.setAttribute("check", "");
+      }
     }
   }
 };

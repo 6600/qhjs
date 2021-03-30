@@ -36,8 +36,13 @@
       owo.script.page.view.content._list[owo.script.page.view.content._activeIndex].$el.querySelector('.list').style.display = 'none'
     },
     getSystem: function () {
-      fetch(serverIP + "/getSystem/" + owo.state.style, {
-        method: 'GET',
+      fetch(serverIP + "/getSystem", {
+        method: 'POST',
+        body: JSON.stringify({
+          type: owo.state.style,
+          username: owo.state.userInfo.username,
+          session: owo.state.userInfo.session,
+        }),
         redirect: 'follow'
       }).then(response => response.json()).then(result => {
         
