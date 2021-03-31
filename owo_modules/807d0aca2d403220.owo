@@ -190,7 +190,7 @@
     notice: {
       loadInfo: function () {
         console.log(this)
-        this.query('.user-name-bar input').value = owo.state.userInfo.username
+        // this.query('.user-name-bar input').value = owo.state.userInfo.username
         this.data.username = owo.state.userInfo.username
       }
     }

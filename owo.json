@@ -69,6 +69,11 @@
 			"name": "notice",
 			"afterbody": true,
 			"src": "./owo_modules/notice.js"
+		},
+		{
+			"name": "jsoneditor.min",
+			"afterbody": true,
+			"src": "https://cdnjs.cloudflare.com/ajax/libs/jsoneditor/9.2.0/jsoneditor.min.js"
 		}
 	],
 	"styleList": [
@@ -76,6 +81,11 @@
 			"name": "main",
 			"src": "./src/main.css",
 			"resource": true
+		},
+		{
+			"name": "jsoneditor.min",
+			"afterbody": true,
+			"src": "https://cdnjs.cloudflare.com/ajax/libs/jsoneditor/9.2.0/jsoneditor.css"
 		}
 	],
 	"pageList": [
@@ -130,7 +140,7 @@
 			"merge": false,
 			"allAnimate": false,
 			"title": "{TAG_14226_TAG}",
-			"handleLink": true,
+			"handleLink": false,
 			"scriptList": [
 				{
 					"name": "jquery1.11.0",

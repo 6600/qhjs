@@ -1,795 +1,1114 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
-  <head>
-    <!-- 页面的元信息 -->
-    <title>测试预览页面</title>
-    <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
-    <meta name="viewport" content="width=1000, user-scalable=yes"/>
-    <meta name="format-detection" content="telephone=no, email=no"/>
-    <meta name="apple-mobile-web-app-capable" content="yes"/>
-    <meta name="apple-mobile-web-app-status-bar-style" content="white"/>
-    <meta name="renderer" content="webkit"/>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
-    <meta name="filetype" content="1"/>
-    <meta name="publishedtype" content="1"/>
-    <meta name="pagetype" content="2"/>
-    <meta name="description" content="{TAG_59447_TAG}"/>
-    <meta name="keywords" content="{TAG_59446_TAG}"/>
-    <meta name="catalogs" content="{TAG_83943_TAG}"/>
-    
-      <!-- 页面主样式文件 -->
-      <link charset="utf-8"  rel="stylesheet" href="./static/css/owo.core.css">
-      
-    <!-- 附属css文件 -->
-    <link rel="stylesheet" href="./static/css/main.css" charset="utf-8">
-      
-  </head>
-  <body>
-    
-    <!-- 页面[login]-->
-    <div class="login page" template="login" style="display: none;"><div class="router" view="loginContent"><div class="view-login" route="login"><div class="image-box"><img src="http://cunchu.site/upload/3e79ef2ca1c387e7.png"></div><div class="hellow-text">嗨，欢迎回来!</div><div class="user-name-bar input-bar"><img class="bar-icon" src="https://cunchu.site/puge/login/user.png"><input type="text" o-value="this.data.username" placeholder="用户名"></div><div class="pass-word-bar input-bar"><img class="bar-icon" src="https://cunchu.site/puge/login/password.png"><input type="password" o-value="this.data.password" placeholder="密码"></div><div class="button-box"><div class="button" o-tap="login" o-hover="radial-out">登录</div><div class="button" o-hover="radial-out" style=" background-color: burlywood;" go="/view-loginContent=register">注册</div></div><div class="tool-bar"><div class="left"></div><div class="right" go-route="">忘记密码</div></div></div><div class="view-register" route="register"><img class="bg-1" src="https://cunchu.site/puge/login/art.png"><p>欢迎注册PUGE账号</p><input class="register-input" type="text" o-value="this.data.registerusername" placeholder="用户名"><input class="register-input" type="password" o-value="this.data.registerPassWord" placeholder="密码"><input class="register-input" type="password" o-value="this.data.registerPassWordR" placeholder="确认密码"><div class="mini-box clear"><input class="register-input" type="text" o-value="this.data.registerPhone" placeholder="手机号码"><div class="button" o-tap="sendSMS">发送验证码</div></div><input class="register-input" type="text" o-value="this.data.registerCode" placeholder="验证码"><div class="button" o-tap="register">注册</div></div></div></div>
-    <!-- 页面[page]-->
-    <div class="home clear page" template="page" style="display: none;"><div class="menu left fl"><div class="logo">LOGO</div><div class="item" go="/view-content=system" o-class-active="this.view.content._activeName == 'system'"><div class="icon"></div><div class="text">管理</div></div><div class="item" go="/view-content=word" o-class-active="this.view.content._activeName == 'word'"><div class="icon"></div><div class="text">匹配</div></div><div class="item" go="/view-content=history" o-class-active="this.view.content._activeName == 'history'"><div class="icon"></div><div class="text">系统连接</div></div><div class="item" go="/view-content=power" o-class-active="this.view.content._activeName == 'power'"><div class="icon"></div><div class="text">系统权限</div></div></div><div class="right fl view" view="content"><div class="system router-item" route="system"><div class="list"><div class="back-title"><div class="icon" o-tap="hideInfo()"></div><h4>管理系统列表</h4></div><div class="panel" template="sysCard"><div class="title"><div class="icon"></div><span>系统列表</span></div><div class="system-box clear"><div class="system-card" o-for="this.data.cardList"><div class="top"><div class="icon"></div><div class="info"><div class="name">{value.name}</div><div class="address">IP: {value.ip}</div><div class="time">{value.remark}</div></div></div><div class="bottom"><div class="item" o-tap="swiInfo()"><div class="icon"></div><span>管理</span></div><div class="item" o-tap="deleteSys({value.id}, '{value.name}')"><div class="icon"></div><span>删除</span></div></div></div><div class="system-card add" o-hover="grow" o-tap="owo.script.add.switchShow()"><div class="icon"></div></div></div></div></div><div class="sys-info hide-box"><div class="back-title"><div class="icon" o-tap="hideInfo()"></div><h4>测试管理系统</h4></div><div class="panel"><div class="input-item"><div class="name">数据交换地址</div><input type="text" value="192.168.1.3"></div><div class="input-item"><div class="name">网站标题</div><input type="text" value="测试系统"></div><div class="input-item"><div class="name">系统备份周期</div><div class="mini-input"><input type="text" value="1"><span>天/次</span></div></div><div class="input-item"><div class="name">数据库地址</div><input type="text" value="bj-cynosdbmysql-grp-kqvvbnw0.sql.tencentcdb.com"></div><div class="bottom-button-bar"><div class="button" o-tap="save">保存数据</div></div></div></div></div><div class="word router-item" route="word"><div class="list"><div class="moudle-title"><h4>匹配系统列表</h4></div><div class="panel" template="sysCard"><div class="title"><div class="icon"></div><span>系统列表</span></div><div class="system-box clear"><div class="system-card" o-for="this.data.cardList"><div class="top"><div class="icon"></div><div class="info"><div class="name">{value.name}</div><div class="address">IP: {value.ip}</div><div class="time">{value.remark}</div></div></div><div class="bottom"><div class="item" o-tap="swiInfo()"><div class="icon"></div><span>管理</span></div><div class="item" o-tap="deleteSys({value.id}, '{value.name}')"><div class="icon"></div><span>删除</span></div></div></div><div class="system-card add" o-hover="grow" o-tap="owo.script.add.switchShow()"><div class="icon"></div></div></div></div></div><div class="word-list hide-box"><div class="back-title"><div class="icon" o-tap="hideInfo()"></div><h4>测试匹配系统</h4></div><div class="panel"><div class="menu-bar fl"><div class="menu-item active"><div class="icon"></div><span>默认分类</span></div></div><div class="right fl"><div class="add icon" o-hover="grow"></div><div class="list-box"><div class="list-item" o-for="this.data.list" ind="{value.id}"><input class="list-title" type="text" value="{value.wordName}"><p>关键词</p><textarea class="wordKey">{value.wordKey}</textarea><p>对应方案</p><textarea class="plan">{value.plan}</textarea><div class="bottom-bar"><div class="button edit-button" o-tap="editit({value.id})">修改方案</div><div class="button save-button" o-tap="save({value.id})">保存方案</div><div class="button delete-button" o-tap="delete({value.id})">删除方案</div></div></div></div></div></div></div></div><div class="system router-item" route="history"><div class="list"><div class="moudle-title"><h4>链接系统列表</h4></div><div class="panel" template="sysCard"><div class="title"><div class="icon"></div><span>系统列表</span></div><div class="system-box clear"><div class="system-card" o-for="this.data.cardList"><div class="top"><div class="icon"></div><div class="info"><div class="name">{value.name}</div><div class="address">IP: {value.ip}</div><div class="time">{value.remark}</div></div></div><div class="bottom"><div class="item" o-tap="swiInfo()"><div class="icon"></div><span>管理</span></div><div class="item" o-tap="deleteSys({value.id}, '{value.name}')"><div class="icon"></div><span>删除</span></div></div></div><div class="system-card add" o-hover="grow" o-tap="owo.script.add.switchShow()"><div class="icon"></div></div></div></div></div><div class="hide-box"><div class="back-title"><div class="icon" o-tap="hideInfo()"></div><h4>测试链接系统</h4></div><div class="panel"><table border="0" class="pure-table">
-<tbody><tr>
-<th>ID</th>
-<th>系统名称</th>
-<th>数据分类</th>
-<th>提交时间</th>
-<th>操作</th>
-</tr>
-</tbody></table></div></div></div><div class="power router-item" route="power"><div class="moudle-title"><h4>权限管理</h4></div><div class="panel"><div class="title"><div class="icon"></div><span>系统列表</span></div><div class="system-box"><table border="0" class="pure-table">
-<tbody><tr>
-<th width="120px">系统名称</th>
-<th width="120px">系统标签</th>
-<th width="120px">系统地址</th>
-<th width="200px">系统备注</th>
-<th>系统权限</th>
-<th width="80px">操作</th>
-</tr>
-<tr o-for="this.data.list"><td>{value.name}</td><td>{value.type}</td><td>{value.ip}</td><td>{value.remark}</td><td>{value.power}</td><td class="tool"><span o-tap="showAddBox({key})">添加权限</span></td></tr>
-</tbody></table></div></div></div><div class="system router-item" route="setup"><div class="moudle-title"><h4>系统管理</h4></div><div class="panel"><div class="title"><div class="icon"></div><span>修改密码</span></div><h4>原密码</h4><input type="text"><h4>新密码</h4><input type="password"><h4>重试新密码</h4><input type="password"><div class="button-bar"><div class="button">修改</div></div></div></div></div></div>
-    <!-- 插件[add]-->
-    <div class="blinker owo-block" template="add" style="display: none;"><div class="add-box"><div class="close icon" o-tap="switchShow"></div><div class="title">系统名称</div><input id="styName" type="text"><div class="title">系统地址</div><input id="styIP" type="text"><div class="title">系统备注</div><textarea id="beizhu"></textarea><div class="button-box"><div class="button" o-tap="addSystem">验证并添加</div></div></div></div>
-    <!-- 插件[selectUser]-->
-    <div class="blinker owo-block" template="selectUser" style="display: none;"><div class="add-box"><div class="close icon" o-tap="switchShow"></div><div class="title">选择需要添加权限的用户</div><div class="select-list"><span class="user-list" o-for="this.data.userList" key="{value.id}" name="{value.username}" o-tap="checkUser('{value.id}')">{value.username}</span></div><div class="button-box clear"><div class="button" o-tap="addPower">保存权限</div></div></div></div>
-    
-<!-- 框架script文件 -->
-<script src="./static/js/owo.core.js" type="text/javascript" charset="UTF-8"></script>
-<script type="text/javascript" charset="UTF-8">
-// 模块 login 的script代码
-var appType = 'qhjs';
-var userInfo = localStorage.getItem("owoUserInfo_" + appType);
 
-if (userInfo) {
-  console.log(userInfo);
-  owo.state.userInfo = JSON.parse(userInfo);
+<head>
+  <!-- 页面的元信息 -->
+  <title>{TAG_14226_TAG}</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+  <meta name="viewport" content="width=1000, user-scalable=yes" />
+  <meta name="format-detection" content="telephone=no, email=no" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="white" />
+  <meta name="renderer" content="webkit" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <meta name="filetype" content="1" />
+  <meta name="publishedtype" content="1" />
+  <meta name="pagetype" content="2" />
+  <meta name="description" content="{TAG_59447_TAG}" />
+  <meta name="keywords" content="{TAG_59446_TAG}" />
+  <meta name="catalogs" content="{TAG_83943_TAG}" />
 
-  if (typeof owo.state.userInfo.data == "string") {
-    if (owo.state.userInfo.data == '') owo.state.userInfo.data = {};else owo.state.userInfo.data = JSON.parse(owo.state.userInfo.data);
-  }
+  <!-- 页面主样式文件 -->
+  <link charset="utf-8" rel="stylesheet" href="./static/css/owo.core.o61adk8y5.css">
 
-  setTimeout(function () {
-    if (owo.notice) owo.notice('loadInfo');
-  }, 200); // getDataFormSession(owo.state.userInfo.username, owo.state.userInfo.session)
-}
+  <!-- 附属css文件 -->
+  <link rel="stylesheet" href="./static/css/main.css" charset="utf-8">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jsoneditor/9.2.0/jsoneditor.css" charset="utf-8">
 
-function getDataFormSession(username, session) {
-  fetch(serverIP + "/userServer?route=loginSession", {
-    method: 'POST',
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify({
-      type: appType,
-      username: username,
-      session: session
-    })
-  }).then(function (response) {
-    return response.json();
-  }).then(function (res) {
-    console.log(res);
+</head>
 
-    if (res.err === 0) {
-      owo.tool.toast('登陆成功');
-      owo.state.userInfo = res.data;
-      localStorage.setItem('owoUserInfo_' + appType, JSON.stringify(res.data));
+<body>
 
-      if (owo.event.login) {
-        owo.event.login(res.data);
+  <!-- 页面[login]-->
+  <div class="login page" template="login" style="display: none;">
+    <div class="router" view="loginContent">
+      <div class="view-login" route="login">
+        <div class="image-box">
+          <img src="http://cunchu.site/upload/3e79ef2ca1c387e7.png">
+        </div>
+        <div class="hellow-text">嗨，欢迎回来!</div>
+        <div class="user-name-bar input-bar">
+          <img class="bar-icon" src="https://cunchu.site/puge/login/user.png">
+          <input type="text" o-value="this.data.username" placeholder="用户名">
+        </div>
+        <div class="pass-word-bar input-bar">
+          <img class="bar-icon" src="https://cunchu.site/puge/login/password.png">
+          <input type="password" o-value="this.data.password" placeholder="密码">
+        </div>
+        <div class="button-box">
+          <div class="button" o-tap="login" o-hover="radial-out">登录</div>
+          <div class="button" o-hover="radial-out" style=" background-color: burlywood;" go="/view-loginContent=register">注册</div>
+        </div>
+        <div class="tool-bar">
+          <div class="left"></div>
+          <div class="right" go-route="">忘记密码</div>
+        </div>
+      </div>
+      <div class="view-register" route="register">
+        <img class="bg-1" src="https://cunchu.site/puge/login/art.png">
+        <p>欢迎注册PUGE账号</p>
+        <input class="register-input" type="text" o-value="this.data.registerusername" placeholder="用户名">
+        <input class="register-input" type="password" o-value="this.data.registerPassWord" placeholder="密码">
+        <input class="register-input" type="password" o-value="this.data.registerPassWordR" placeholder="确认密码">
+        <div class="mini-box clear">
+          <input class="register-input" type="text" o-value="this.data.registerPhone" placeholder="手机号码">
+          <div class="button" o-tap="sendSMS">发送验证码</div>
+        </div>
+        <input class="register-input" type="text" o-value="this.data.registerCode" placeholder="验证码">
+        <div class="button" o-tap="register">注册</div>
+      </div>
+    </div>
+  </div>
+  <!-- 页面[page]-->
+  <div class="home clear page" template="page" style="display: none;">
+    <div class="menu left fl">
+      <div class="logo">LOGO</div>
+      <div class="item" go="/view-content=system" o-class-active="this.view.content._activeName == 'system'">
+        <div class="icon"></div>
+        <div class="text">管理</div>
+      </div>
+      <div class="item" go="/view-content=word" o-class-active="this.view.content._activeName == 'word'">
+        <div class="icon"></div>
+        <div class="text">匹配</div>
+      </div>
+      <div class="item" go="/view-content=history" o-class-active="this.view.content._activeName == 'history'">
+        <div class="icon"></div>
+        <div class="text">系统连接</div>
+      </div>
+      <div class="item" go="/view-content=power" o-class-active="this.view.content._activeName == 'power'">
+        <div class="icon"></div>
+        <div class="text">系统权限</div>
+      </div>
+    </div>
+    <div class="right fl view" view="content">
+      <div class="system router-item" route="system">
+        <div class="list">
+          <div class="back-title">
+            <div class="icon" o-tap="hideInfo()"></div>
+            <h4>管理系统列表</h4>
+          </div>
+          <div class="panel" template="sysCard">
+            <div class="title">
+              <div class="icon"></div>
+              <span>系统列表</span>
+            </div>
+            <div class="system-box clear">
+              <div class="system-card" o-for="this.data.cardList">
+                <div class="top">
+                  <div class="icon"></div>
+                  <div class="info">
+                    <div class="name">{value.name}</div>
+                    <div class="address">IP: {value.ip}</div>
+                    <div class="time">{value.remark}</div>
+                  </div>
+                </div>
+                <div class="bottom">
+                  <div class="item" o-tap="swiInfo()">
+                    <div class="icon"></div>
+                    <span>管理</span>
+                  </div>
+                  <div class="item" o-tap="deleteSys({value.id}, '{value.name}')">
+                    <div class="icon"></div>
+                    <span>删除</span>
+                  </div>
+                </div>
+              </div>
+              <div class="system-card add" o-hover="grow" o-tap="owo.script.add.switchShow()">
+                <div class="icon"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="sys-info hide-box">
+          <div class="back-title">
+            <div class="icon" o-tap="hideInfo()"></div>
+            <h4>测试管理系统</h4>
+          </div>
+          <div class="panel">
+            <div id="editer"></div>
+            <div class="bottom-button-bar">
+              <div class="button" o-tap="save">保存数据</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="word router-item" route="word">
+        <div class="list">
+          <div class="moudle-title">
+            <h4>匹配系统列表</h4>
+          </div>
+          <div class="panel" template="sysCard">
+            <div class="title">
+              <div class="icon"></div>
+              <span>系统列表</span>
+            </div>
+            <div class="system-box clear">
+              <div class="system-card" o-for="this.data.cardList">
+                <div class="top">
+                  <div class="icon"></div>
+                  <div class="info">
+                    <div class="name">{value.name}</div>
+                    <div class="address">IP: {value.ip}</div>
+                    <div class="time">{value.remark}</div>
+                  </div>
+                </div>
+                <div class="bottom">
+                  <div class="item" o-tap="swiInfo()">
+                    <div class="icon"></div>
+                    <span>管理</span>
+                  </div>
+                  <div class="item" o-tap="deleteSys({value.id}, '{value.name}')">
+                    <div class="icon"></div>
+                    <span>删除</span>
+                  </div>
+                </div>
+              </div>
+              <div class="system-card add" o-hover="grow" o-tap="owo.script.add.switchShow()">
+                <div class="icon"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="word-list hide-box">
+          <div class="back-title">
+            <div class="icon" o-tap="hideInfo()"></div>
+            <h4>测试匹配系统</h4>
+          </div>
+          <div class="panel">
+            <div class="menu-bar fl">
+              <div class="menu-item active">
+                <div class="icon"></div>
+                <span>默认分类</span>
+              </div>
+            </div>
+            <div class="right fl">
+              <div class="add icon" o-hover="grow"></div>
+              <div class="list-box">
+                <div class="list-item" o-for="this.data.list" ind="{value.id}">
+                  <input class="list-title" type="text" value="{value.wordName}">
+                  <p>关键词</p>
+                  <textarea class="wordKey">{value.wordKey}</textarea>
+                  <p>对应方案</p>
+                  <textarea class="plan">{value.plan}</textarea>
+                  <div class="bottom-bar">
+                    <div class="button edit-button" o-tap="editit({value.id})">修改方案</div>
+                    <div class="button save-button" o-tap="save({value.id})">保存方案</div>
+                    <div class="button delete-button" o-tap="delete({value.id})">删除方案</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="system router-item" route="history">
+        <div class="list">
+          <div class="moudle-title">
+            <h4>链接系统列表</h4>
+          </div>
+          <div class="panel" template="sysCard">
+            <div class="title">
+              <div class="icon"></div>
+              <span>系统列表</span>
+            </div>
+            <div class="system-box clear">
+              <div class="system-card" o-for="this.data.cardList">
+                <div class="top">
+                  <div class="icon"></div>
+                  <div class="info">
+                    <div class="name">{value.name}</div>
+                    <div class="address">IP: {value.ip}</div>
+                    <div class="time">{value.remark}</div>
+                  </div>
+                </div>
+                <div class="bottom">
+                  <div class="item" o-tap="swiInfo()">
+                    <div class="icon"></div>
+                    <span>管理</span>
+                  </div>
+                  <div class="item" o-tap="deleteSys({value.id}, '{value.name}')">
+                    <div class="icon"></div>
+                    <span>删除</span>
+                  </div>
+                </div>
+              </div>
+              <div class="system-card add" o-hover="grow" o-tap="owo.script.add.switchShow()">
+                <div class="icon"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="hide-box">
+          <div class="back-title">
+            <div class="icon" o-tap="hideInfo()"></div>
+            <h4>测试链接系统</h4>
+          </div>
+          <div class="panel">
+            <table border="0" class="pure-table">
+              <tbody>
+                <tr>
+                  <th>ID</th>
+                  <th>系统名称</th>
+                  <th>数据分类</th>
+                  <th>提交时间</th>
+                  <th>操作</th>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <div class="power router-item" route="power">
+        <div class="moudle-title">
+          <h4>权限管理</h4>
+        </div>
+        <div class="panel">
+          <div class="title">
+            <div class="icon"></div>
+            <span>系统列表</span>
+          </div>
+          <div class="system-box">
+            <table border="0" class="pure-table">
+              <tbody>
+                <tr>
+                  <th width="120px">系统名称</th>
+                  <th width="120px">系统标签</th>
+                  <th width="120px">系统地址</th>
+                  <th width="200px">系统备注</th>
+                  <th>系统权限</th>
+                  <th width="80px">操作</th>
+                </tr>
+                <tr o-for="this.data.list">
+                  <td>{value.name}</td>
+                  <td>{value.type}</td>
+                  <td>{value.ip}</td>
+                  <td>{value.remark}</td>
+                  <td>{value.power}</td>
+                  <td class="tool">
+                    <span o-tap="showAddBox({key})">添加权限</span>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <div class="system router-item" route="setup">
+        <div class="moudle-title">
+          <h4>系统管理</h4>
+        </div>
+        <div class="panel">
+          <div class="title">
+            <div class="icon"></div>
+            <span>修改密码</span>
+          </div>
+          <h4>原密码</h4>
+          <input type="text">
+          <h4>新密码</h4>
+          <input type="password">
+          <h4>重试新密码</h4>
+          <input type="password">
+          <div class="button-bar">
+            <div class="button">修改</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- 插件[add]-->
+  <div class="blinker owo-block" template="add" style="display: none;">
+    <div class="add-box">
+      <div class="close icon" o-tap="switchShow"></div>
+      <div class="title">系统名称</div>
+      <input id="styName" type="text">
+      <div class="title">系统地址</div>
+      <input id="styIP" type="text">
+      <div class="title">系统备注</div>
+      <textarea id="beizhu"></textarea>
+      <div class="button-box">
+        <div class="button" o-tap="addSystem">验证并添加</div>
+      </div>
+    </div>
+  </div>
+  <!-- 插件[selectUser]-->
+  <div class="blinker owo-block" template="selectUser" style="display: none;">
+    <div class="add-box">
+      <div class="close icon" o-tap="switchShow"></div>
+      <div class="title">选择需要添加权限的用户</div>
+      <div class="select-list">
+        <span class="user-list" o-for="this.data.userList" key="{value.id}" name="{value.username}" o-tap="checkUser('{value.id}')">{value.username}</span>
+      </div>
+      <div class="button-box clear">
+        <div class="button" o-tap="addPower">保存权限</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 框架script文件 -->
+  <script src="./static/js/owo.core.o61adk8y5.js" type="text/javascript" charset="UTF-8"></script>
+  <script type="text/javascript" charset="UTF-8">
+    // 模块 login 的script代码
+    var appType = 'qhjs';
+    var userInfo = localStorage.getItem("owoUserInfo_" + appType);
+
+    if (userInfo) {
+      console.log(userInfo);
+      owo.state.userInfo = JSON.parse(userInfo);
+
+      if (typeof owo.state.userInfo.data == "string") {
+        if (owo.state.userInfo.data == '') owo.state.userInfo.data = {};
+        else owo.state.userInfo.data = JSON.parse(owo.state.userInfo.data);
       }
-    } else {
-      owo.go('login');
-      owo.tool.toast(res.message);
+
+      setTimeout(function() {
+        if (owo.notice) owo.notice('loadInfo');
+      }, 200); // getDataFormSession(owo.state.userInfo.username, owo.state.userInfo.session)
     }
-  });
-}
 
-owo.script = {
-  "login": {
-    "data": {
-      "registerusername": "",
-      "registerPassWord": "",
-      "registerPassWordR": "",
-      "registerPhone": "",
-      "registerCode": "",
-      "username": "",
-      "password": "",
-      "toast": null,
-      "session": null
-    },
-    "created": function created() {
-      var _arguments = arguments,
-          _this = this;
-
-      if (owo.tool.toast) toast = owo.tool.toast;else toast = alert; // 按钮点击事件
-
-      this.$el.onkeydown = function (event) {
-        var e = event || window.event || _arguments.callee.caller.arguments[0];
-
-        if (e && e.keyCode == 13) {
-          _this.login();
-        }
-      };
-    },
-    "login": function login() {
-      fetch(serverIP + "/login", {
+    function getDataFormSession(username, session) {
+      fetch(serverIP + "/userServer?route=loginSession", {
         method: 'POST',
         headers: {
           "Content-Type": "application/json"
         },
         body: JSON.stringify({
           type: appType,
-          username: this.data.username,
-          password: this.data.password
+          username: username,
+          session: session
         })
-      }).then(function (response) {
+      }).then(function(response) {
         return response.json();
-      }).then(function (res) {
+      }).then(function(res) {
         console.log(res);
 
         if (res.err === 0) {
-          // toast('登陆成功')
-          // do something
+          owo.tool.toast('登陆成功');
           owo.state.userInfo = res.data;
           localStorage.setItem('owoUserInfo_' + appType, JSON.stringify(res.data));
-          setTimeout(function () {
-            owo.go('page');
-          }, 0);
+
+          if (owo.event.login) {
+            owo.event.login(res.data);
+          }
         } else {
-          toast(res.message);
-        }
-      })["catch"](function (err) {
-        toast('登陆失败请稍后再试!');
-      });
-    },
-    "register": function register() {
-      if (!this.data.registerusername) {
-        toast('用户名不能为空哦!');
-        return;
-      }
-
-      if (!this.data.registerPassWord) {
-        toast('密码不能为空哦!');
-        return;
-      }
-
-      if (!this.data.registerPassWordR) {
-        toast('重复密码不能为空哦!');
-        return;
-      }
-
-      if (!this.data.registerPhone) {
-        toast('手机号码不能为空!');
-        return;
-      }
-
-      if (this.data.registerPassWord !== this.data.registerPassWordR) {
-        toast('两次输入的密码不一致哦!');
-        return;
-      }
-
-      fetch(serverIP + "/register", {
-        method: 'POST',
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-          phone: this.data.registerPhone,
-          username: this.data.registerusername,
-          password: this.data.registerPassWord,
-          code: this.data.registerCode
-        })
-      }).then(function (response) {
-        return response.json();
-      }).then(function (res) {
-        if (res.err === 0) {
-          toast('注册成功!');
-          owo.go('/view-loginContent=login');
-        } else {
-          toast("\u6CE8\u518C\u5931\u8D25: " + res.message);
+          owo.go('login');
+          owo.tool.toast(res.message);
         }
       });
-    },
-    "sendSMS": function sendSMS() {
-      if (!this.data.registerPhone) {
-        alert('手机号码不能为空!');
-        return;
-      }
-
-      fetch(serverIP + "/sendSMS", {
-        method: 'POST',
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-          phone: this.data.registerPhone
-        })
-      }).then(function (response) {
-        return response.json();
-      }).then(function (res) {
-        if (res.err === 0) {
-          toast('短信已发送!');
-        } else {
-          toast("\u77ED\u4FE1\u53D1\u9001\u5931\u8D25: " + res.message);
-        }
-      });
-    },
-    "notice": {
-      "loadInfo": function loadInfo() {
-        console.log(this);
-        this.query('.user-name-bar input').value = owo.state.userInfo.username;
-        this.data.username = owo.state.userInfo.username;
-      }
-    },
-    "view": {
-      "loginContent": [{
-        "_name": "login",
-        "_inherit": true
-      }, {
-        "_name": "register",
-        "_inherit": true
-      }]
     }
-  },
-  "page": {
-    "created": function created() {
-      var _this2 = this;
 
-      // 路由器被改变事件
-      owo.onViewChange = function () {
-        console.log('路由被改变!');
-
-        _this2.handleEvent(_this2, _this2.query('.menu'));
-      };
-    },
-    "view": {
-      "content": [{
-        "show": function show() {
-          owo.state.style = 'guanli';
-        },
-        "save": function save() {
-          alert('数据保存成功!');
-        },
-        "deleteSys": function deleteSys(id, name) {
-          var _this3 = this;
-
-          if (confirm("\u786E\u5B9A\u5220\u9664\u7CFB\u7EDF" + name + "\u5417?")) {
-            fetch(serverIP + "/deleteSystem", {
-              method: 'POST',
-              body: JSON.stringify({
-                id: id,
-                type: "guanli"
-              }),
-              redirect: 'follow'
-            }).then(function (response) {
-              return response.json();
-            }).then(function (result) {
-              if (result.err == 0) {
-                _this3.data.cardList = result.data;
-
-                _this3.handleEvent();
-              }
-            })["catch"](function (error) {
-              return console.log('error', error);
-            });
-          }
-        },
-        "prop": {
-          "route": "system"
-        },
-        "_name": "system",
-        "template": {
-          "sysCard": {
-            "data": {
-              "cardList": []
-            },
-            "show": function show() {
-              this.getSystem();
-            },
-            "swiInfo": function swiInfo() {
-              console.log(owo.script.page.view.content._list[owo.script.page.view.content._activeIndex]);
-              owo.script.page.view.content._list[owo.script.page.view.content._activeIndex].$el.querySelector('.hide-box').style.display = 'block';
-              owo.script.page.view.content._list[owo.script.page.view.content._activeIndex].$el.querySelector('.list').style.display = 'none';
-            },
-            "getSystem": function getSystem() {
-              var _this4 = this;
-
-              fetch(serverIP + "/getSystem", {
-                method: 'POST',
-                body: JSON.stringify({
-                  type: owo.state.style,
-                  username: owo.state.userInfo.username,
-                  session: owo.state.userInfo.session
-                }),
-                redirect: 'follow'
-              }).then(function (response) {
-                return response.json();
-              }).then(function (result) {
-                if (result.err == 0) {
-                  console.log('--------------------------');
-                  console.log(_this4);
-                  _this4.data.cardList = result.data;
-
-                  _this4.handleEvent(_this4, owo.script.page.view.content._list[owo.script.page.view.content._activeIndex].$el.querySelector('.panel'));
-                }
-              })["catch"](function (error) {
-                return console.log('error', error);
-              });
-            },
-            "deleteSys": function deleteSys(id, name) {
-              var _this5 = this;
-
-              if (confirm("\u786E\u5B9A\u5220\u9664\u7CFB\u7EDF" + name + "\u5417?")) {
-                fetch(serverIP + "/deleteSystem", {
-                  method: 'POST',
-                  body: JSON.stringify({
-                    id: id,
-                    type: owo.state.style
-                  }),
-                  redirect: 'follow'
-                }).then(function (response) {
-                  return response.json();
-                }).then(function (result) {
-                  if (result.err == 0) {
-                    _this5.data.cardList = result.data;
-
-                    _this5.handleEvent(_this5, owo.script.page.view.content._list[owo.script.page.view.content._activeIndex].$el.querySelector('.panel'));
-                  }
-                })["catch"](function (error) {
-                  return console.log('error', error);
-                });
-              }
-            },
-            "notice": {
-              "updata": function updata() {
-                console.log('刷新!');
-                this.getSystem();
-              }
-            }
-          }
-        }
-      }, {
+    owo.script = {
+      "login": {
         "data": {
-          "list": []
+          "registerusername": "",
+          "registerPassWord": "",
+          "registerPassWordR": "",
+          "registerPhone": "",
+          "registerCode": "",
+          "username": "",
+          "password": "",
+          "toast": null,
+          "session": null
         },
-        "show": function show() {
-          var _this6 = this;
+        "created": function created() {
+          var _arguments = arguments,
+            _this = this;
 
-          owo.state.style = 'word';
-          fetch(serverIP + "/getWord").then(function (response) {
-            return response.json();
-          }).then(function (result) {
-            console.log(result);
+          if (owo.tool.toast) toast = owo.tool.toast;
+          else toast = alert; // 按钮点击事件
 
-            if (result.err == 0) {
-              _this6.data.list = result.data;
+          this.$el.onkeydown = function(event) {
+            var e = event || window.event || _arguments.callee.caller.arguments[0];
 
-              _this6.handleEvent(_this6, _this6.query('.list-box'));
+            if (e && e.keyCode == 13) {
+              _this.login();
             }
-          })["catch"](function (error) {
-            return console.log('error', error);
-          });
+          };
         },
-        "editit": function editit(ind) {
-          this.query("[ind=\"" + ind + "\"]").classList.add('edit');
-        },
-        "save": function save(ind) {
-          var _this7 = this;
-
-          var box = this.query("[ind=\"" + ind + "\"]");
-          box.classList.remove('edit');
-          console.log(this.query("[ind=\"" + ind + "\"]"));
-          fetch(serverIP + "/saveWord", {
+        "login": function login() {
+          fetch(serverIP + "/login", {
             method: 'POST',
+            headers: {
+              "Content-Type": "application/json"
+            },
             body: JSON.stringify({
-              id: ind,
-              wordName: box.querySelector('.list-title').value,
-              wordKey: box.querySelector('.wordKey').value,
-              plan: box.querySelector('.plan').value
-            }),
-            redirect: 'follow'
-          }).then(function (response) {
+              type: appType,
+              username: this.data.username,
+              password: this.data.password
+            })
+          }).then(function(response) {
             return response.json();
-          }).then(function (result) {
-            console.log(result);
+          }).then(function(res) {
+            console.log(res);
 
-            if (result.err == 0) {
-              _this7.data.list = result.data;
-
-              _this7.handleEvent(_this7, _this7.query('.list-box'));
-
-              owo.tool.notice('保存成功');
+            if (res.err === 0) {
+              // toast('登陆成功')
+              // do something
+              owo.state.userInfo = res.data;
+              localStorage.setItem('owoUserInfo_' + appType, JSON.stringify(res.data));
+              setTimeout(function() {
+                owo.go('page');
+              }, 0);
+            } else {
+              toast(res.message);
             }
-          })["catch"](function (error) {
-            return console.log('error', error);
+          })["catch"](function(err) {
+            toast('登陆失败请稍后再试!');
           });
         },
-        "delete": function _delete(ind) {
-          var _this8 = this;
-
-          fetch(serverIP + "/deleteWord", {
-            method: 'POST',
-            body: JSON.stringify({
-              id: ind
-            }),
-            redirect: 'follow'
-          }).then(function (response) {
-            return response.json();
-          }).then(function (result) {
-            console.log(result);
-
-            if (result.err == 0) {
-              _this8.data.list = result.data;
-
-              _this8.handleEvent(_this8, _this8.query('.list-box'));
-
-              owo.tool.notice('删除成功');
-            }
-          })["catch"](function (error) {
-            return console.log('error', error);
-          });
-        },
-        "prop": {
-          "route": "word"
-        },
-        "_name": "word",
-        "template": {
-          "sysCard": {
-            "data": {
-              "cardList": []
-            },
-            "show": function show() {
-              this.getSystem();
-            },
-            "swiInfo": function swiInfo() {
-              console.log(owo.script.page.view.content._list[owo.script.page.view.content._activeIndex]);
-              owo.script.page.view.content._list[owo.script.page.view.content._activeIndex].$el.querySelector('.hide-box').style.display = 'block';
-              owo.script.page.view.content._list[owo.script.page.view.content._activeIndex].$el.querySelector('.list').style.display = 'none';
-            },
-            "getSystem": function getSystem() {
-              var _this9 = this;
-
-              fetch(serverIP + "/getSystem", {
-                method: 'POST',
-                body: JSON.stringify({
-                  type: owo.state.style,
-                  username: owo.state.userInfo.username,
-                  session: owo.state.userInfo.session
-                }),
-                redirect: 'follow'
-              }).then(function (response) {
-                return response.json();
-              }).then(function (result) {
-                if (result.err == 0) {
-                  console.log('--------------------------');
-                  console.log(_this9);
-                  _this9.data.cardList = result.data;
-
-                  _this9.handleEvent(_this9, owo.script.page.view.content._list[owo.script.page.view.content._activeIndex].$el.querySelector('.panel'));
-                }
-              })["catch"](function (error) {
-                return console.log('error', error);
-              });
-            },
-            "deleteSys": function deleteSys(id, name) {
-              var _this10 = this;
-
-              if (confirm("\u786E\u5B9A\u5220\u9664\u7CFB\u7EDF" + name + "\u5417?")) {
-                fetch(serverIP + "/deleteSystem", {
-                  method: 'POST',
-                  body: JSON.stringify({
-                    id: id,
-                    type: owo.state.style
-                  }),
-                  redirect: 'follow'
-                }).then(function (response) {
-                  return response.json();
-                }).then(function (result) {
-                  if (result.err == 0) {
-                    _this10.data.cardList = result.data;
-
-                    _this10.handleEvent(_this10, owo.script.page.view.content._list[owo.script.page.view.content._activeIndex].$el.querySelector('.panel'));
-                  }
-                })["catch"](function (error) {
-                  return console.log('error', error);
-                });
-              }
-            },
-            "notice": {
-              "updata": function updata() {
-                console.log('刷新!');
-                this.getSystem();
-              }
-            }
+        "register": function register() {
+          if (!this.data.registerusername) {
+            toast('用户名不能为空哦!');
+            return;
           }
-        }
-      }, {
-        "show": function show() {
-          owo.state.style = 'lianjie';
-        },
-        "prop": {
-          "route": "history"
-        },
-        "_name": "history",
-        "template": {
-          "sysCard": {
-            "data": {
-              "cardList": []
-            },
-            "show": function show() {
-              this.getSystem();
-            },
-            "swiInfo": function swiInfo() {
-              console.log(owo.script.page.view.content._list[owo.script.page.view.content._activeIndex]);
-              owo.script.page.view.content._list[owo.script.page.view.content._activeIndex].$el.querySelector('.hide-box').style.display = 'block';
-              owo.script.page.view.content._list[owo.script.page.view.content._activeIndex].$el.querySelector('.list').style.display = 'none';
-            },
-            "getSystem": function getSystem() {
-              var _this11 = this;
 
-              fetch(serverIP + "/getSystem", {
-                method: 'POST',
-                body: JSON.stringify({
-                  type: owo.state.style,
-                  username: owo.state.userInfo.username,
-                  session: owo.state.userInfo.session
-                }),
-                redirect: 'follow'
-              }).then(function (response) {
-                return response.json();
-              }).then(function (result) {
-                if (result.err == 0) {
-                  console.log('--------------------------');
-                  console.log(_this11);
-                  _this11.data.cardList = result.data;
-
-                  _this11.handleEvent(_this11, owo.script.page.view.content._list[owo.script.page.view.content._activeIndex].$el.querySelector('.panel'));
-                }
-              })["catch"](function (error) {
-                return console.log('error', error);
-              });
-            },
-            "deleteSys": function deleteSys(id, name) {
-              var _this12 = this;
-
-              if (confirm("\u786E\u5B9A\u5220\u9664\u7CFB\u7EDF" + name + "\u5417?")) {
-                fetch(serverIP + "/deleteSystem", {
-                  method: 'POST',
-                  body: JSON.stringify({
-                    id: id,
-                    type: owo.state.style
-                  }),
-                  redirect: 'follow'
-                }).then(function (response) {
-                  return response.json();
-                }).then(function (result) {
-                  if (result.err == 0) {
-                    _this12.data.cardList = result.data;
-
-                    _this12.handleEvent(_this12, owo.script.page.view.content._list[owo.script.page.view.content._activeIndex].$el.querySelector('.panel'));
-                  }
-                })["catch"](function (error) {
-                  return console.log('error', error);
-                });
-              }
-            },
-            "notice": {
-              "updata": function updata() {
-                console.log('刷新!');
-                this.getSystem();
-              }
-            }
+          if (!this.data.registerPassWord) {
+            toast('密码不能为空哦!');
+            return;
           }
-        }
-      }, {
-        "data": {
-          "list": []
-        },
-        "show": function show() {
-          owo.state.style = 'power';
-          this.getSystem();
-        },
-        "getSystem": function getSystem() {
-          var _this13 = this;
 
-          fetch(serverIP + "/getSystem", {
+          if (!this.data.registerPassWordR) {
+            toast('重复密码不能为空哦!');
+            return;
+          }
+
+          if (!this.data.registerPhone) {
+            toast('手机号码不能为空!');
+            return;
+          }
+
+          if (this.data.registerPassWord !== this.data.registerPassWordR) {
+            toast('两次输入的密码不一致哦!');
+            return;
+          }
+
+          fetch(serverIP + "/register", {
             method: 'POST',
+            headers: {
+              "Content-Type": "application/json"
+            },
             body: JSON.stringify({
-              type: owo.state.style,
-              username: owo.state.userInfo.username,
-              session: owo.state.userInfo.session
-            }),
-            redirect: 'follow'
-          }).then(function (response) {
+              phone: this.data.registerPhone,
+              username: this.data.registerusername,
+              password: this.data.registerPassWord,
+              code: this.data.registerCode
+            })
+          }).then(function(response) {
             return response.json();
-          }).then(function (result) {
-            if (result.err == 0) {
-              _this13.data.list = result.data;
-
-              _this13.handleEvent();
+          }).then(function(res) {
+            if (res.err === 0) {
+              toast('注册成功!');
+              owo.go('/view-loginContent=login');
+            } else {
+              toast("\u6CE8\u518C\u5931\u8D25: " + res.message);
             }
-          })["catch"](function (error) {
-            return console.log('error', error);
           });
         },
-        "showAddBox": function showAddBox(key) {
-          var value = this.data.list[key];
-          owo.script.selectUser.switchShow(value.power, value.id);
+        "sendSMS": function sendSMS() {
+          if (!this.data.registerPhone) {
+            alert('手机号码不能为空!');
+            return;
+          }
+
+          fetch(serverIP + "/sendSMS", {
+            method: 'POST',
+            headers: {
+              "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+              phone: this.data.registerPhone
+            })
+          }).then(function(response) {
+            return response.json();
+          }).then(function(res) {
+            if (res.err === 0) {
+              toast('短信已发送!');
+            } else {
+              toast("\u77ED\u4FE1\u53D1\u9001\u5931\u8D25: " + res.message);
+            }
+          });
         },
         "notice": {
-          "updataPower": function updataPower() {
-            this.getSystem();
+          "loadInfo": function loadInfo() {
+            console.log(this); // this.query('.user-name-bar input').value = owo.state.userInfo.username
+
+            this.data.username = owo.state.userInfo.username;
           }
         },
-        "prop": {
-          "route": "power"
-        },
-        "_name": "power"
-      }, {
-        "prop": {
-          "route": "setup"
-        },
-        "_name": "setup"
-      }]
-    }
-  },
-  "add": {
-    "data": {
-      "show": false
-    },
-    "switchShow": function switchShow() {
-      this.data.show = !this.data.show;
-
-      if (this.data.show) {
-        this.$el.style.display = 'block';
-      } else {
-        this.$el.style.display = 'none';
-      }
-    },
-    "addSystem": function addSystem() {
-      var _this14 = this;
-
-      var box = this.$el;
-      fetch(serverIP + "/addSystem", {
-        method: 'POST',
-        body: JSON.stringify({
-          name: box.querySelector('#styName').value,
-          ip: box.querySelector('#styIP').value,
-          remark: box.querySelector('#beizhu').value,
-          type: owo.state.style
-        }),
-        redirect: 'follow'
-      }).then(function (response) {
-        return response.json();
-      }).then(function (result) {
-        console.log(result);
-
-        if (result.err == 0) {
-          _this14.switchShow();
-
-          owo.tool.notice('添加成功');
-          owo.notice('updata');
+        "view": {
+          "loginContent": [{
+            "_name": "login",
+            "_inherit": true
+          }, {
+            "_name": "register",
+            "_inherit": true
+          }]
         }
-      })["catch"](function (error) {
-        return console.log('error', error);
-      });
-    }
-  },
-  "selectUser": {
-    "data": {
-      "show": false,
-      "userList": [],
-      "activeSystem": 0
-    },
-    "created": function created() {
-      var _this15 = this;
+      },
+      "page": {
+        "created": function created() {
+          var _this2 = this;
 
-      fetch(serverIP + "/getUserList", {
-        method: 'POST',
-        body: JSON.stringify({
-          username: owo.state.userInfo.username,
-          session: owo.state.userInfo.session
-        })
-      }).then(function (response) {
-        return response.json();
-      }).then(function (result) {
-        console.log(result);
+          // 路由器被改变事件
+          owo.onViewChange = function() {
+            console.log('路由被改变!');
 
-        if (result.err == 0) {
-          _this15.data.userList = result.data;
+            _this2.handleEvent(_this2, _this2.query('.menu'));
+          };
+        },
+        "view": {
+          "content": [{
+            "show": function show() {
+              owo.state.style = 'guanli';
+            },
+            "created": function created() {
+              var container = document.getElementById("editer");
+              var options = {};
+              var editor = new JSONEditor(container, options);
+              fetch("http://cunchu.site/mock/owo.json").then(function(response) {
+                return response.json();
+              }).then(function(result) {
+                editor.set(result);
+              })["catch"](function(error) {
+                return console.log('error', error);
+              }); // get json
+              // const updatedJson = editor.get()
+            },
+            "save": function save() {
+              alert('数据保存成功!');
+            },
+            "deleteSys": function deleteSys(id, name) {
+              var _this3 = this;
 
-          _this15.handleEvent();
+              if (confirm("\u786E\u5B9A\u5220\u9664\u7CFB\u7EDF" + name + "\u5417?")) {
+                fetch(serverIP + "/deleteSystem", {
+                  method: 'POST',
+                  body: JSON.stringify({
+                    id: id,
+                    type: "guanli"
+                  }),
+                  redirect: 'follow'
+                }).then(function(response) {
+                  return response.json();
+                }).then(function(result) {
+                  if (result.err == 0) {
+                    _this3.data.cardList = result.data;
+
+                    _this3.handleEvent();
+                  }
+                })["catch"](function(error) {
+                  return console.log('error', error);
+                });
+              }
+            },
+            "prop": {
+              "route": "system"
+            },
+            "_name": "system",
+            "template": {
+              "sysCard": {
+                "data": {
+                  "cardList": []
+                },
+                "show": function show() {
+                  this.getSystem();
+                },
+                "swiInfo": function swiInfo() {
+                  console.log(owo.script.page.view.content._list[owo.script.page.view.content._activeIndex]);
+                  owo.script.page.view.content._list[owo.script.page.view.content._activeIndex].$el.querySelector('.hide-box').style.display = 'block';
+                  owo.script.page.view.content._list[owo.script.page.view.content._activeIndex].$el.querySelector('.list').style.display = 'none';
+                },
+                "getSystem": function getSystem() {
+                  var _this4 = this;
+
+                  fetch(serverIP + "/getSystem", {
+                    method: 'POST',
+                    body: JSON.stringify({
+                      type: owo.state.style,
+                      username: owo.state.userInfo.username,
+                      session: owo.state.userInfo.session
+                    }),
+                    redirect: 'follow'
+                  }).then(function(response) {
+                    return response.json();
+                  }).then(function(result) {
+                    if (result.err == 0) {
+                      console.log('--------------------------');
+                      console.log(_this4);
+                      _this4.data.cardList = result.data;
+
+                      _this4.handleEvent(_this4, owo.script.page.view.content._list[owo.script.page.view.content._activeIndex].$el.querySelector('.panel'));
+                    }
+                  })["catch"](function(error) {
+                    return console.log('error', error);
+                  });
+                },
+                "deleteSys": function deleteSys(id, name) {
+                  var _this5 = this;
+
+                  if (confirm("\u786E\u5B9A\u5220\u9664\u7CFB\u7EDF" + name + "\u5417?")) {
+                    fetch(serverIP + "/deleteSystem", {
+                      method: 'POST',
+                      body: JSON.stringify({
+                        id: id,
+                        type: owo.state.style
+                      }),
+                      redirect: 'follow'
+                    }).then(function(response) {
+                      return response.json();
+                    }).then(function(result) {
+                      if (result.err == 0) {
+                        _this5.data.cardList = result.data;
+
+                        _this5.handleEvent(_this5, owo.script.page.view.content._list[owo.script.page.view.content._activeIndex].$el.querySelector('.panel'));
+                      }
+                    })["catch"](function(error) {
+                      return console.log('error', error);
+                    });
+                  }
+                },
+                "notice": {
+                  "updata": function updata() {
+                    console.log('刷新!');
+                    this.getSystem();
+                  }
+                }
+              }
+            }
+          }, {
+            "data": {
+              "list": []
+            },
+            "show": function show() {
+              var _this6 = this;
+
+              owo.state.style = 'word';
+              fetch(serverIP + "/getWord").then(function(response) {
+                return response.json();
+              }).then(function(result) {
+                console.log(result);
+
+                if (result.err == 0) {
+                  _this6.data.list = result.data;
+
+                  _this6.handleEvent(_this6, _this6.query('.list-box'));
+                }
+              })["catch"](function(error) {
+                return console.log('error', error);
+              });
+            },
+            "editit": function editit(ind) {
+              this.query("[ind=\"" + ind + "\"]").classList.add('edit');
+            },
+            "save": function save(ind) {
+              var _this7 = this;
+
+              var box = this.query("[ind=\"" + ind + "\"]");
+              box.classList.remove('edit');
+              console.log(this.query("[ind=\"" + ind + "\"]"));
+              fetch(serverIP + "/saveWord", {
+                method: 'POST',
+                body: JSON.stringify({
+                  id: ind,
+                  wordName: box.querySelector('.list-title').value,
+                  wordKey: box.querySelector('.wordKey').value,
+                  plan: box.querySelector('.plan').value
+                }),
+                redirect: 'follow'
+              }).then(function(response) {
+                return response.json();
+              }).then(function(result) {
+                console.log(result);
+
+                if (result.err == 0) {
+                  _this7.data.list = result.data;
+
+                  _this7.handleEvent(_this7, _this7.query('.list-box'));
+
+                  owo.tool.notice('保存成功');
+                }
+              })["catch"](function(error) {
+                return console.log('error', error);
+              });
+            },
+            "delete": function _delete(ind) {
+              var _this8 = this;
+
+              fetch(serverIP + "/deleteWord", {
+                method: 'POST',
+                body: JSON.stringify({
+                  id: ind
+                }),
+                redirect: 'follow'
+              }).then(function(response) {
+                return response.json();
+              }).then(function(result) {
+                console.log(result);
+
+                if (result.err == 0) {
+                  _this8.data.list = result.data;
+
+                  _this8.handleEvent(_this8, _this8.query('.list-box'));
+
+                  owo.tool.notice('删除成功');
+                }
+              })["catch"](function(error) {
+                return console.log('error', error);
+              });
+            },
+            "prop": {
+              "route": "word"
+            },
+            "_name": "word",
+            "template": {
+              "sysCard": {
+                "data": {
+                  "cardList": []
+                },
+                "show": function show() {
+                  this.getSystem();
+                },
+                "swiInfo": function swiInfo() {
+                  console.log(owo.script.page.view.content._list[owo.script.page.view.content._activeIndex]);
+                  owo.script.page.view.content._list[owo.script.page.view.content._activeIndex].$el.querySelector('.hide-box').style.display = 'block';
+                  owo.script.page.view.content._list[owo.script.page.view.content._activeIndex].$el.querySelector('.list').style.display = 'none';
+                },
+                "getSystem": function getSystem() {
+                  var _this9 = this;
+
+                  fetch(serverIP + "/getSystem", {
+                    method: 'POST',
+                    body: JSON.stringify({
+                      type: owo.state.style,
+                      username: owo.state.userInfo.username,
+                      session: owo.state.userInfo.session
+                    }),
+                    redirect: 'follow'
+                  }).then(function(response) {
+                    return response.json();
+                  }).then(function(result) {
+                    if (result.err == 0) {
+                      console.log('--------------------------');
+                      console.log(_this9);
+                      _this9.data.cardList = result.data;
+
+                      _this9.handleEvent(_this9, owo.script.page.view.content._list[owo.script.page.view.content._activeIndex].$el.querySelector('.panel'));
+                    }
+                  })["catch"](function(error) {
+                    return console.log('error', error);
+                  });
+                },
+                "deleteSys": function deleteSys(id, name) {
+                  var _this10 = this;
+
+                  if (confirm("\u786E\u5B9A\u5220\u9664\u7CFB\u7EDF" + name + "\u5417?")) {
+                    fetch(serverIP + "/deleteSystem", {
+                      method: 'POST',
+                      body: JSON.stringify({
+                        id: id,
+                        type: owo.state.style
+                      }),
+                      redirect: 'follow'
+                    }).then(function(response) {
+                      return response.json();
+                    }).then(function(result) {
+                      if (result.err == 0) {
+                        _this10.data.cardList = result.data;
+
+                        _this10.handleEvent(_this10, owo.script.page.view.content._list[owo.script.page.view.content._activeIndex].$el.querySelector('.panel'));
+                      }
+                    })["catch"](function(error) {
+                      return console.log('error', error);
+                    });
+                  }
+                },
+                "notice": {
+                  "updata": function updata() {
+                    console.log('刷新!');
+                    this.getSystem();
+                  }
+                }
+              }
+            }
+          }, {
+            "show": function show() {
+              owo.state.style = 'lianjie';
+            },
+            "prop": {
+              "route": "history"
+            },
+            "_name": "history",
+            "template": {
+              "sysCard": {
+                "data": {
+                  "cardList": []
+                },
+                "show": function show() {
+                  this.getSystem();
+                },
+                "swiInfo": function swiInfo() {
+                  console.log(owo.script.page.view.content._list[owo.script.page.view.content._activeIndex]);
+                  owo.script.page.view.content._list[owo.script.page.view.content._activeIndex].$el.querySelector('.hide-box').style.display = 'block';
+                  owo.script.page.view.content._list[owo.script.page.view.content._activeIndex].$el.querySelector('.list').style.display = 'none';
+                },
+                "getSystem": function getSystem() {
+                  var _this11 = this;
+
+                  fetch(serverIP + "/getSystem", {
+                    method: 'POST',
+                    body: JSON.stringify({
+                      type: owo.state.style,
+                      username: owo.state.userInfo.username,
+                      session: owo.state.userInfo.session
+                    }),
+                    redirect: 'follow'
+                  }).then(function(response) {
+                    return response.json();
+                  }).then(function(result) {
+                    if (result.err == 0) {
+                      console.log('--------------------------');
+                      console.log(_this11);
+                      _this11.data.cardList = result.data;
+
+                      _this11.handleEvent(_this11, owo.script.page.view.content._list[owo.script.page.view.content._activeIndex].$el.querySelector('.panel'));
+                    }
+                  })["catch"](function(error) {
+                    return console.log('error', error);
+                  });
+                },
+                "deleteSys": function deleteSys(id, name) {
+                  var _this12 = this;
+
+                  if (confirm("\u786E\u5B9A\u5220\u9664\u7CFB\u7EDF" + name + "\u5417?")) {
+                    fetch(serverIP + "/deleteSystem", {
+                      method: 'POST',
+                      body: JSON.stringify({
+                        id: id,
+                        type: owo.state.style
+                      }),
+                      redirect: 'follow'
+                    }).then(function(response) {
+                      return response.json();
+                    }).then(function(result) {
+                      if (result.err == 0) {
+                        _this12.data.cardList = result.data;
+
+                        _this12.handleEvent(_this12, owo.script.page.view.content._list[owo.script.page.view.content._activeIndex].$el.querySelector('.panel'));
+                      }
+                    })["catch"](function(error) {
+                      return console.log('error', error);
+                    });
+                  }
+                },
+                "notice": {
+                  "updata": function updata() {
+                    console.log('刷新!');
+                    this.getSystem();
+                  }
+                }
+              }
+            }
+          }, {
+            "data": {
+              "list": []
+            },
+            "show": function show() {
+              owo.state.style = 'power';
+              this.getSystem();
+            },
+            "getSystem": function getSystem() {
+              var _this13 = this;
+
+              fetch(serverIP + "/getSystem", {
+                method: 'POST',
+                body: JSON.stringify({
+                  type: owo.state.style,
+                  username: owo.state.userInfo.username,
+                  session: owo.state.userInfo.session
+                }),
+                redirect: 'follow'
+              }).then(function(response) {
+                return response.json();
+              }).then(function(result) {
+                if (result.err == 0) {
+                  _this13.data.list = result.data;
+
+                  _this13.handleEvent();
+                }
+              })["catch"](function(error) {
+                return console.log('error', error);
+              });
+            },
+            "showAddBox": function showAddBox(key) {
+              var value = this.data.list[key];
+              owo.script.selectUser.switchShow(value.power, value.id);
+            },
+            "notice": {
+              "updataPower": function updataPower() {
+                this.getSystem();
+              }
+            },
+            "prop": {
+              "route": "power"
+            },
+            "_name": "power"
+          }, {
+            "prop": {
+              "route": "setup"
+            },
+            "_name": "setup"
+          }]
         }
-      })["catch"](function (error) {
-        return console.log('error', error);
-      });
-    },
-    "switchShow": function switchShow(power, systemID) {
-      this.data.show = !this.data.show;
+      },
+      "add": {
+        "data": {
+          "show": false
+        },
+        "switchShow": function switchShow() {
+          this.data.show = !this.data.show;
 
-      if (this.data.show) {
-        var powerList = power.split(',');
-        console.log(powerList);
-        this.$el.style.display = 'block';
-        this.data.activeSystem = systemID;
-        this.queryAll('.user-list').forEach(function (element) {
-          console.log(element.attributes['name'].value);
-
-          if (powerList.includes(element.attributes['name'].value)) {
-            element.setAttribute("check", "");
+          if (this.data.show) {
+            this.$el.style.display = 'block';
           } else {
-            element.removeAttribute('check');
+            this.$el.style.display = 'none';
           }
-        });
-      } else {
-        this.$el.style.display = 'none';
-      }
-    },
-    "addPower": function addPower() {
-      var _this16 = this;
+        },
+        "addSystem": function addSystem() {
+          var _this14 = this;
 
-      var sendData = '';
-      this.queryAll('[check]').forEach(function (element) {
-        sendData += element.innerText + ',';
-      });
-      fetch(serverIP + "/addPower", {
-        method: 'POST',
-        body: JSON.stringify({
-          id: this.data.activeSystem,
-          username: owo.state.userInfo.username,
-          session: owo.state.userInfo.session,
-          data: sendData
-        }),
-        redirect: 'follow'
-      }).then(function (response) {
-        return response.json();
-      }).then(function (result) {
-        console.log(result);
+          var box = this.$el;
+          fetch(serverIP + "/addSystem", {
+            method: 'POST',
+            body: JSON.stringify({
+              name: box.querySelector('#styName').value,
+              ip: box.querySelector('#styIP').value,
+              remark: box.querySelector('#beizhu').value,
+              type: owo.state.style
+            }),
+            redirect: 'follow'
+          }).then(function(response) {
+            return response.json();
+          }).then(function(result) {
+            console.log(result);
 
-        if (result.err == 0) {
-          owo.tool.notice('修改成功');
+            if (result.err == 0) {
+              _this14.switchShow();
 
-          _this16.switchShow();
-
-          owo.notice('updataPower');
+              owo.tool.notice('添加成功');
+              owo.notice('updata');
+            }
+          })["catch"](function(error) {
+            return console.log('error', error);
+          });
         }
-      })["catch"](function (error) {
-        return console.log('error', error);
-      });
-    },
-    "checkUser": function checkUser(id) {
-      if (this.$target.attributes['check']) {
-        this.$target.removeAttribute('check');
-      } else {
-        this.$target.setAttribute("check", "");
+      },
+      "selectUser": {
+        "data": {
+          "show": false,
+          "userList": [],
+          "activeSystem": 0
+        },
+        "created": function created() {
+          var _this15 = this;
+
+          fetch(serverIP + "/getUserList", {
+            method: 'POST',
+            body: JSON.stringify({
+              username: owo.state.userInfo.username,
+              session: owo.state.userInfo.session
+            })
+          }).then(function(response) {
+            return response.json();
+          }).then(function(result) {
+            console.log(result);
+
+            if (result.err == 0) {
+              _this15.data.userList = result.data;
+
+              _this15.handleEvent();
+            }
+          })["catch"](function(error) {
+            return console.log('error', error);
+          });
+        },
+        "switchShow": function switchShow(power, systemID) {
+          this.data.show = !this.data.show;
+
+          if (this.data.show) {
+            var powerList = power.split(',');
+            console.log(powerList);
+            this.$el.style.display = 'block';
+            this.data.activeSystem = systemID;
+            this.queryAll('.user-list').forEach(function(element) {
+              console.log(element.attributes['name'].value);
+
+              if (powerList.includes(element.attributes['name'].value)) {
+                element.setAttribute("check", "");
+              } else {
+                element.removeAttribute('check');
+              }
+            });
+          } else {
+            this.$el.style.display = 'none';
+          }
+        },
+        "addPower": function addPower() {
+          var _this16 = this;
+
+          var sendData = '';
+          this.queryAll('[check]').forEach(function(element) {
+            sendData += element.innerText + ',';
+          });
+          fetch(serverIP + "/addPower", {
+            method: 'POST',
+            body: JSON.stringify({
+              id: this.data.activeSystem,
+              username: owo.state.userInfo.username,
+              session: owo.state.userInfo.session,
+              data: sendData
+            }),
+            redirect: 'follow'
+          }).then(function(response) {
+            return response.json();
+          }).then(function(result) {
+            console.log(result);
+
+            if (result.err == 0) {
+              owo.tool.notice('修改成功');
+
+              _this16.switchShow();
+
+              owo.notice('updataPower');
+            }
+          })["catch"](function(error) {
+            return console.log('error', error);
+          });
+        },
+        "checkUser": function checkUser(id) {
+          if (this.$target.attributes['check']) {
+            this.$target.removeAttribute('check');
+          } else {
+            this.$target.setAttribute("check", "");
+          }
+        }
       }
-    }
-  }
-};
-</script>
+    };
+  </script>
 
-    <script src="./static/js/main.js" type="text/javascript"  charset="UTF-8"></script>
+  <script src="./static/js/main.js" type="text/javascript" charset="UTF-8"></script>
+  <script src="https://cunchu.site/owo/script/jquery-1.11.1.min.js" type="text/javascript" charset="UTF-8"></script>
 
-    <script src="./static/js/notice.js" type="text/javascript"  charset="UTF-8"></script>
-  </body>
+  <script src="./static/js/notice.js" type="text/javascript" charset="UTF-8"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jsoneditor/9.2.0/jsoneditor.min.js" type="text/javascript" charset="UTF-8"></script>
+</body>
+
 </html>
