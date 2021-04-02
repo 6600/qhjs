@@ -2,6 +2,12 @@ from flask import Flask, jsonify, request
 from flask_cors import CORS
 app = Flask(__name__)
 CORS(app, supports_credentials=True)
+
+from twisted.web.server import Site
+from twisted.web.wsgi import WSGIResource
+from twisted.internet import reactor
+
+import re
 import json
 import time
 import base64
@@ -96,21 +102,24 @@ config = {
   }
 }
 
+# 过滤SQL
+def badSQL(str):
+  return not re.compile('^[0-9A-Za-z\u4e00-\u9fa5\.\-_]+$').findall(str)
 
 @app.route("/")
 def index():
-    return "Welcome to Flask appliaction created by Serverless Framework."
+  return "Welcome to Flask appliaction created by Serverless Framework."
 
 
 @app.route("/users")
 def users():
-    users = [{'name': 'test1'}, {'name': 'test2'}]
-    return jsonify(data=users)
+  users = [{'name': 'test1'}, {'name': 'test2'}]
+  return jsonify(data=users)
 
 
 @app.route("/users/<id>")
 def user(id):
-    return jsonify(data={'name': 'test1'})
+  return jsonify(data={'name': 'test1'})
 
 @app.route("/login", methods=['POST'])
 def login():
@@ -122,6 +131,8 @@ def login():
   type = body['type']
   username = body['username']
   password = body['password']
+  if (badSQL(type) or badSQL(username)):
+    return {"err": 999, "message": "非法访问!"}
   if username and password:
     # 打开数据库连接
     connection = pymysql.connect(host=config["dataBase"]["server"], port=config["dataBase"]["port"], user=config["dataBase"]["user"], password=config["dataBase"]["password"], db=config["dataBase"]["name"], charset='utf8mb4', cursorclass=pymysql.cursors.DictCursor)
@@ -180,6 +191,8 @@ def sendSMS():
   global config
   body = json.loads(request.get_data())
   phone = body['phone']
+  if (badSQL(phone)):
+    return {"err": 999, "message": "非法访问!"}
   if phone:
     # 打开数据库连接
     connection = pymysql.connect(host=config["dataBase"]["server"], port=config["dataBase"]["port"], user=config["dataBase"]["user"], password=config["dataBase"]["password"], db=config["dataBase"]["name"], charset='utf8mb4', cursorclass=pymysql.cursors.DictCursor)
@@ -189,7 +202,7 @@ def sendSMS():
         userExist = cursor.fetchone()
         code = random.randint(1000, 9999)
         
-        sql = "INSERT INTO `user` (username, phone, verification, verificationTime) VALUES ('待注册', '%s', '%s', '%s')" % (phone, str(code), str(time.time()))
+        sql = "INSERT INTO `user` (username, phone, verification, verificationTime, state) VALUES ('待注册', '%s', '%s', '%s', '0')" % (phone, str(code), str(time.time()))
         if (not userExist):
             cursor.execute(sql)
             #   解码
@@ -206,6 +219,8 @@ def register():
   code = body['code']
   username = body['username']
   password = body['password']
+  if (badSQL(phone) or badSQL(code) or badSQL(username)):
+    return {"err": 999, "message": "非法访问!"}
   if username and password and phone:
     # 打开数据库连接
     connection = pymysql.connect(host=config["dataBase"]["server"], port=config["dataBase"]["port"], user=config["dataBase"]["user"], password=config["dataBase"]["password"], db=config["dataBase"]["name"], charset='utf8mb4', cursorclass=pymysql.cursors.DictCursor)
@@ -218,7 +233,7 @@ def register():
       if (userExist['verification'] != code):
         return {"err": 1, "message": "验证码错误!"}
       # 执行sql语句，进行查询
-      sql = "UPDATE user SET username = '%s', password='%s' where phone = '%s'" % (username, password, phone)
+      sql = "UPDATE user SET username = '%s', password='%s', state='1' where phone = '%s'" % (username, password, phone)
       print(sql)
       cursor.execute(sql)
       # 获取查询结果
@@ -226,6 +241,26 @@ def register():
       connection.commit()
       connection.close()
       return json.dumps({"err": 0, "message": "注册成功!"})
+  return json.dumps({"err": 1, "message": "缺少必填信息!"})
+
+
+@app.route("/getUserList", methods=['POST'])
+def getUserList():
+  global config
+  body = json.loads(request.get_data())
+  username = body['username']
+  session = body['session']
+  if (badSQL(username) or badSQL(code) or badSQL(session)):
+    return {"err": 999, "message": "非法访问!"}
+  if username and session:
+    # 打开数据库连接
+    connection = pymysql.connect(host=config["dataBase"]["server"], port=config["dataBase"]["port"], user=config["dataBase"]["user"], password=config["dataBase"]["password"], db=config["dataBase"]["name"], charset='utf8mb4', cursorclass=pymysql.cursors.DictCursor)
+    with connection.cursor() as cursor:
+      cursor.execute("select id, username from `user` where state = '1'")
+      connection.commit()
+      connection.close()
+      # 获取查询结果
+      return json.dumps({"err": 0, "data": cursor.fetchall()})
   return json.dumps({"err": 1, "message": "缺少必填信息!"})
 
 
@@ -281,6 +316,8 @@ def saveWord():
 @app.route("/deleteWord", methods=['POST'])
 def deleteWord():
   body = json.loads(request.get_data())
+  if (badSQL(body['id'])):
+    return {"err": 999, "message": "非法访问!"}
   # 打开数据库连接
   connection = pymysql.connect(host=config["dataBase"]["server"], port=config["dataBase"]["port"], user=config["dataBase"]["user"], password=config["dataBase"]["password"], db=config["dataBase"]["name"], charset='utf8mb4', cursorclass=pymysql.cursors.DictCursor)
   with connection.cursor() as cursor:
@@ -293,4 +330,113 @@ def deleteWord():
     return getWord()
 
 
-app.run(host='0.0.0.0', port=8080, debug=True)
+@app.route("/addSystem", methods=['POST'])
+def addSystem():
+  body = json.loads(request.get_data())
+  if (badSQL(body['name']) or badSQL(body['ip']) or badSQL(body['type']) or badSQL(body['remark'])):
+    return {"err": 999, "message": "非法访问!"}
+  # 打开数据库连接
+  connection = pymysql.connect(host=config["dataBase"]["server"], port=config["dataBase"]["port"], user=config["dataBase"]["user"], password=config["dataBase"]["password"], db=config["dataBase"]["name"], charset='utf8mb4', cursorclass=pymysql.cursors.DictCursor)
+  with connection.cursor() as cursor:
+    # 执行sql语句，进行查询
+    sql = "INSERT INTO `system` (name, ip, type, remark, isDelete, power) VALUES ('%s', '%s', '%s', '%s', '0', 'admin,')" % (body['name'], body['ip'], body['type'], body['remark'])
+    cursor.execute(sql)
+    # 获取查询结果
+    # result = cursor.fetchone()
+    connection.commit()
+    connection.close()
+    return getSystemP(body['type'])
+
+@app.route("/getSystem", methods=['POST'])
+def getSystem():
+  body = json.loads(request.get_data())
+  if (badSQL(body['type']) or badSQL(body['username'])):
+    return {"err": 999, "message": "非法访问!"}
+  # 打开数据库连接
+  connection = pymysql.connect(host=config["dataBase"]["server"], port=config["dataBase"]["port"], user=config["dataBase"]["user"], password=config["dataBase"]["password"], db=config["dataBase"]["name"], charset='utf8mb4', cursorclass=pymysql.cursors.DictCursor)
+  with connection.cursor() as cursor:
+    # 执行sql语句，进行查询
+    if (body['type'] != 'power'):
+      if (body['username'] == 'admin'):
+        cursor.execute("select * from `system` WHERE type = '%s' AND isDelete = '0'" % (body['type']))
+      else:
+        cursor.execute("select * from `system` WHERE type = '%s' AND isDelete = '0' AND power like '%s'" % (body['type'], '%' + body['username'] + ',%'))
+    else:
+      cursor.execute("select * from `system` WHERE isDelete = '0'")
+    # 获取查询结果
+    result = cursor.fetchall()
+    connection.commit()
+    connection.close()
+    return json.dumps({"err": 0, "data": result})
+
+# 获取系统信息
+@app.route("/getSystemData", methods=['POST'])
+def getSystemData():
+  body = json.loads(request.get_data())
+  if (badSQL(body['type']) or badSQL(body['name'])):
+    return {"err": 999, "message": "非法访问!"}
+  # 打开数据库连接
+  connection = pymysql.connect(host=config["dataBase"]["server"], port=config["dataBase"]["port"], user=config["dataBase"]["user"], password=config["dataBase"]["password"], db=config["dataBase"]["name"], charset='utf8mb4', cursorclass=pymysql.cursors.DictCursor)
+  with connection.cursor() as cursor:
+    # 执行sql语句，进行查询
+    cursor.execute("select * from `system` WHERE type = '%s' AND isDelete = '0' AND name = '%s'" % (body['type'], body['name']))
+    # 获取查询结果
+    result = cursor.fetchall()
+    connection.commit()
+    connection.close()
+    return json.dumps({"err": 0, "data": result})
+
+def getSystemP(typeStr):
+  if (badSQL(typeStr)):
+    return {"err": 999, "message": "非法访问!"}
+  # 打开数据库连接
+  connection = pymysql.connect(host=config["dataBase"]["server"], port=config["dataBase"]["port"], user=config["dataBase"]["user"], password=config["dataBase"]["password"], db=config["dataBase"]["name"], charset='utf8mb4', cursorclass=pymysql.cursors.DictCursor)
+  with connection.cursor() as cursor:
+    # 执行sql语句，进行查询
+    if (typeStr != 'power'):
+      cursor.execute("select * from `system` WHERE type = '%s' AND isDelete = '0'" % (typeStr))
+    else:
+      cursor.execute("select * from `system` WHERE isDelete = '0'")
+    # 获取查询结果
+    result = cursor.fetchall()
+    connection.commit()
+    connection.close()
+    return json.dumps({"err": 0, "data": result})
+
+
+@app.route("/deleteSystem", methods=['POST'])
+def deleteSystem():
+  body = json.loads(request.get_data())
+  if (badSQL(body['id'])):
+    return {"err": 999, "message": "非法访问!"}
+  # 打开数据库连接
+  connection = pymysql.connect(host=config["dataBase"]["server"], port=config["dataBase"]["port"], user=config["dataBase"]["user"], password=config["dataBase"]["password"], db=config["dataBase"]["name"], charset='utf8mb4', cursorclass=pymysql.cursors.DictCursor)
+  with connection.cursor() as cursor:
+    # 执行sql语句，进行查询
+    cursor.execute("UPDATE system SET isDelete = '1' where id = '%s'" % (body['id']))
+    # 获取查询结果
+    connection.commit()
+    connection.close()
+    return getSystemP(body['type'])
+
+@app.route("/addPower", methods=['POST'])
+def addPower():
+  body = json.loads(request.get_data())
+  if (badSQL(body['id']) or badSQL(body['data'])):
+    return {"err": 999, "message": "非法访问!"}
+  # 打开数据库连接
+  connection = pymysql.connect(host=config["dataBase"]["server"], port=config["dataBase"]["port"], user=config["dataBase"]["user"], password=config["dataBase"]["password"], db=config["dataBase"]["name"], charset='utf8mb4', cursorclass=pymysql.cursors.DictCursor)
+  with connection.cursor() as cursor:
+    # 执行sql语句，进行查询
+    cursor.execute("UPDATE system SET power = '%s' where id = '%s'" % (body['data'], body['id']))
+    # 获取查询结果
+    connection.commit()
+    connection.close()
+    return getSystemP('power')
+
+if __name__ == '__main__':
+  resource = WSGIResource(reactor, reactor.getThreadPool(), app)
+  site = Site(resource)
+  reactor.listenTCP(8180, site)
+  reactor.run()
+
