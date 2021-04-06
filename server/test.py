@@ -95,6 +95,9 @@ config = {
   }
 }
 
+# 过滤SQL
+def badSQL(str):
+  return not re.compile('^[0-9A-Za-z\u4e00-\u9fa5\.\-_]+$').findall(str)
 
 def login(data):
   global config
@@ -160,9 +163,9 @@ def login(data):
     return json.dumps({"err": 1, "message": "账号或密码不能为空!"})
 
 # 发送验证短信
-def sendSMS():
+def sendSMS(data):
   global config
-  body = json.loads(request.get_data())
+  body = json.loads(data)
   phone = body['phone']
   if (badSQL(phone)):
     return {"err": 999, "message": "非法访问!"}
@@ -209,7 +212,6 @@ class enter(resource.Resource):
     if (path in routeList):
       print('----------------- ' + path + ' -----------------')
       return routeList[path]
-    return route()
 
 
 
