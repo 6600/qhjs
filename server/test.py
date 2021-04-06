@@ -220,13 +220,14 @@ def register(data):
 
 class loginR(resource.Resource):
   def render_OPTIONS(self, request):
-    print('sd')
     return b"ok"
   def render_POST(self, request):
     postData = request.content.read()
     return login(postData).encode('utf-8')
 
 class sendSMSR(resource.Resource):
+  def render_OPTIONS(self, request):
+    return b"ok"
   def render_POST(self, request):
     postData = request.content.read()
     return sendSMS(postData).encode('utf-8')
@@ -252,6 +253,8 @@ def getUserList(data):
   return json.dumps({"err": 1, "message": "缺少必填信息!"})
 
 class getUserListR(resource.Resource):
+  def render_OPTIONS(self, request):
+    return b"ok"
   def render_POST(self, request):
     postData = request.content.read()
     return getUserList(postData).encode('utf-8')
@@ -271,9 +274,11 @@ def getWord():
     return json.dumps({"err": 0, "data": result})
 
 class getWordR(resource.Resource):
+  def render_OPTIONS(self, request):
+    return b"ok"
   def render_POST(self, request):
     postData = request.content.read()
-    return getWord(postData).encode('utf-8')
+    return getWord().encode('utf-8')
 
 # 添加方案
 def addWord():
@@ -290,9 +295,11 @@ def addWord():
     connection.close()
     return getWord()
 class addWordR(resource.Resource):
+  def render_OPTIONS(self, request):
+    return b"ok"
   def render_POST(self, request):
     postData = request.content.read()
-    return addWord(postData).encode('utf-8')
+    return addWord().encode('utf-8')
 
 # 保存方案
 def saveWord(data):
@@ -310,6 +317,8 @@ def saveWord(data):
     connection.close()
     return getWord()
 class saveWordR(resource.Resource):
+  def render_OPTIONS(self, request):
+    return b"ok"
   def render_POST(self, request):
     postData = request.content.read()
     return saveWord(postData).encode('utf-8')
@@ -330,6 +339,8 @@ def deleteWord(data):
     connection.close()
     return getWord()
 class deleteWordR(resource.Resource):
+  def render_OPTIONS(self, request):
+    return b"ok"
   def render_POST(self, request):
     postData = request.content.read()
     return deleteWord(postData).encode('utf-8')
@@ -351,6 +362,8 @@ def addSystem(data):
     connection.close()
     return getSystemP(body['type'])
 class addSystemR(resource.Resource):
+  def render_OPTIONS(self, request):
+    return b"ok"
   def render_POST(self, request):
     postData = request.content.read()
     return addSystem(postData).encode('utf-8')
@@ -377,6 +390,8 @@ def getSystem(data):
     connection.close()
     return json.dumps({"err": 0, "data": result})
 class getSystemR(resource.Resource):
+  def render_OPTIONS(self, request):
+    return b"ok"
   def render_POST(self, request):
     postData = request.content.read()
     return getSystem(postData).encode('utf-8')
@@ -390,16 +405,62 @@ def getSystemData(data):
   connection = pymysql.connect(host=config["dataBase"]["server"], port=config["dataBase"]["port"], user=config["dataBase"]["user"], password=config["dataBase"]["password"], db=config["dataBase"]["name"], charset='utf8mb4', cursorclass=pymysql.cursors.DictCursor)
   with connection.cursor() as cursor:
     # 执行sql语句，进行查询
-    cursor.execute("select * from `system` WHERE type = '%s' AND isDelete = '0' AND name = '%s'" % (body['type'], body['name']))
+    cursor.execute("select id,name,type,remark,ip,isDelete,power from `system` WHERE type = '%s' AND isDelete = '0' AND name = '%s'" % (body['type'], body['name']))
     # 获取查询结果
     result = cursor.fetchall()
     connection.commit()
     connection.close()
     return json.dumps({"err": 0, "data": result})
 class getSystemDataR(resource.Resource):
+  def render_OPTIONS(self, request):
+    return b"ok"
   def render_POST(self, request):
     postData = request.content.read()
     return getSystemData(postData).encode('utf-8')
+
+# 获取系统配置
+def getSystemConfig(data):
+  body = json.loads(data)
+  if (badSQL(body['type']) or badSQL(body['id'])):
+    return {"err": 999, "message": "非法访问!"}
+  # 打开数据库连接
+  connection = pymysql.connect(host=config["dataBase"]["server"], port=config["dataBase"]["port"], user=config["dataBase"]["user"], password=config["dataBase"]["password"], db=config["dataBase"]["name"], charset='utf8mb4', cursorclass=pymysql.cursors.DictCursor)
+  with connection.cursor() as cursor:
+    # 执行sql语句，进行查询
+    cursor.execute("select config from `system` WHERE type = '%s' AND isDelete = '0' AND id = '%s'" % (body['type'], body['id']))
+    # 获取查询结果
+    result = cursor.fetchall()
+    connection.commit()
+    connection.close()
+    return json.dumps({"err": 0, "data": result})
+class getSystemConfigR(resource.Resource):
+  def render_OPTIONS(self, request):
+    return b"ok"
+  def render_POST(self, request):
+    postData = request.content.read()
+    return getSystemConfig(postData).encode('utf-8')
+
+# 设置系统配置
+def setSystemConfig(data):
+  body = json.loads(data)
+  if (badSQL(body['id'])):
+    return {"err": 999, "message": "非法访问!"}
+  # 打开数据库连接
+  connection = pymysql.connect(host=config["dataBase"]["server"], port=config["dataBase"]["port"], user=config["dataBase"]["user"], password=config["dataBase"]["password"], db=config["dataBase"]["name"], charset='utf8mb4', cursorclass=pymysql.cursors.DictCursor)
+  with connection.cursor() as cursor:
+    # 执行sql语句，进行查询
+    cursor.execute("UPDATE system SET config = '%s' where id = '%s'" % (body['data'], body['id']))
+    # 获取查询结果
+    connection.commit()
+    connection.close()
+    return getSystemP(body['type'])
+  
+class setSystemConfigR(resource.Resource):
+  def render_OPTIONS(self, request):
+    return b"ok"
+  def render_POST(self, request):
+    postData = request.content.read()
+    return setSystemConfig(postData).encode('utf-8')
 
 def getSystemP(typeStr):
   if (badSQL(typeStr)):
@@ -434,6 +495,8 @@ def deleteSystem(data):
     connection.close()
     return getSystemP(body['type'])
 class deleteSystemR(resource.Resource):
+  def render_OPTIONS(self, request):
+    return b"ok"
   def render_POST(self, request):
     postData = request.content.read()
     return deleteSystem(postData).encode('utf-8')
@@ -453,6 +516,8 @@ def addPower():
     connection.close()
     return getSystemP('power')
 class addPowerR(resource.Resource):
+  def render_OPTIONS(self, request):
+    return b"ok"
   def render_POST(self, request):
     postData = request.content.read()
     return addPower(postData).encode('utf-8')
@@ -470,6 +535,9 @@ routeList = {
   'addSystem': addSystemR(),
   'getSystem': getSystemR(),
   'getSystemData': getSystemDataR(),
+  # 'setSystemData': setSystemDataR(),
+  'getSystemConfig': getSystemConfigR(),
+  'setSystemConfig': setSystemConfigR(),
   'deleteSystem': deleteSystemR(),
   'addPower': addPowerR(),
 }
