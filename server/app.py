@@ -427,11 +427,8 @@ routeList = {
   'addSystem': addSystemR(),
   'getSystem': getSystemR(),
   'getSystemData': getSystemDataR(),
-<<<<<<< HEAD
   'getSystemConfig': getSystemConfigR(),
-=======
   'saveSystemData': saveSystemDataR(),
->>>>>>> 8bb78459df94aec04c304b0c7e17168ac068fad2
   'deleteSystem': deleteSystemR(),
   'addPower': addPowerR(),
   'sendMessage': sendMessageR()
