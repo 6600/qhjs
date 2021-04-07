@@ -301,6 +301,26 @@ class getSystemDataR(resource.Resource):
     postData = request.content.read()
     return getSystemData(postData).encode('utf-8')
 
+# 获取系统信息
+def getSystemConfig(data):
+  body = json.loads(data)
+  if (badSQL(body['type']) or badSQL(body['id'])):
+    return {"err": 999, "message": "非法访问!"}
+  # 打开数据库连接
+  connection = pymysql.connect(host=config["dataBase"]["server"], port=config["dataBase"]["port"], user=config["dataBase"]["user"], password=config["dataBase"]["password"], db=config["dataBase"]["name"], charset='utf8mb4', cursorclass=pymysql.cursors.DictCursor)
+  with connection.cursor() as cursor:
+    # 执行sql语句，进行查询
+    cursor.execute("select config from `system` WHERE type = '%s' AND isDelete = '0' AND id = '%s'" % (body['type'], body['id']))
+    # 获取查询结果
+    result = cursor.fetchone()
+    connection.commit()
+    connection.close()
+    return json.dumps({"err": 0, "data": result})
+class getSystemConfigR(resource.Resource):
+  def render_POST(self, request):
+    postData = request.content.read()
+    return getSystemConfig(postData).encode('utf-8')
+
 def getSystemP(typeStr):
   if (badSQL(typeStr)):
     return {"err": 999, "message": "非法访问!"}
@@ -407,6 +427,7 @@ routeList = {
   'addSystem': addSystemR(),
   'getSystem': getSystemR(),
   'getSystemData': getSystemDataR(),
+  'getSystemConfig': getSystemConfigR(),
   'saveSystemData': saveSystemDataR(),
   'deleteSystem': deleteSystemR(),
   'addPower': addPowerR(),
