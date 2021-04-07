@@ -1,4 +1,4 @@
-// Wed Apr 07 2021 00:08:58 GMT+0800 (GMT+08:00)
+// Wed Apr 07 2021 09:30:37 GMT+0800 (GMT+08:00)
 var owo = {tool: {},state: {},event: {}};
 /* 方法合集 */
 var _owo = {
@@ -432,6 +432,17 @@ owo.notice = function (str) {
           element.notice[str].apply(element)
         }
         if (element.template) check(element.template)
+        // 通知view组件
+        if (element.view) {
+          for (const viewKey in element.view) {
+            if (Object.hasOwnProperty.call(element.view, viewKey)) {
+              const viewElement = element.view[viewKey];
+              for (let index = 0; index < viewElement.length; index++) {
+                check(viewElement[index])
+              }
+            }
+          }
+        }
         // console.log(element)
       }
     }

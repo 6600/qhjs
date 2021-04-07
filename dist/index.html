@@ -30,7 +30,7 @@
     <!-- 页面[login]-->
     <div class="login page" template="login" style="display: none;"><div class="router" view="loginContent"><div class="view-login" route="login"><div class="image-box"><img src="http://cunchu.site/upload/3e79ef2ca1c387e7.png"></div><div class="hellow-text">嗨，欢迎回来!</div><div class="user-name-bar input-bar"><img class="bar-icon" src="https://cunchu.site/puge/login/user.png"><input type="text" o-value="this.data.username" placeholder="用户名"></div><div class="pass-word-bar input-bar"><img class="bar-icon" src="https://cunchu.site/puge/login/password.png"><input type="password" o-value="this.data.password" placeholder="密码"></div><div class="button-box"><div class="button" o-tap="login" o-hover="radial-out">登录</div><div class="button" o-hover="radial-out" style=" background-color: burlywood;" go="/view-loginContent=register">注册</div></div><div class="tool-bar"><div class="left"></div><div class="right" go-route="">忘记密码</div></div></div><div class="view-register" route="register"><img class="bg-1" src="https://cunchu.site/puge/login/art.png"><p>欢迎注册PUGE账号</p><input class="register-input" type="text" o-value="this.data.registerusername" placeholder="用户名"><input class="register-input" type="password" o-value="this.data.registerPassWord" placeholder="密码"><input class="register-input" type="password" o-value="this.data.registerPassWordR" placeholder="确认密码"><div class="mini-box clear"><input class="register-input" type="text" o-value="this.data.registerPhone" placeholder="手机号码"><div class="button" o-tap="sendSMS">发送验证码</div></div><input class="register-input" type="text" o-value="this.data.registerCode" placeholder="验证码"><div class="button" o-tap="register">注册</div></div></div></div>
     <!-- 页面[page]-->
-    <div class="home clear page" template="page" style="display: none;"><div class="menu left fl"><div class="logo">LOGO</div><div class="item" go="/view-content=system" o-class-active="this.view.content._activeName == 'system'"><div class="icon"></div><div class="text">管理</div></div><div class="item" go="/view-content=word" o-class-active="this.view.content._activeName == 'word'"><div class="icon"></div><div class="text">匹配</div></div><div class="item" go="/view-content=history" o-class-active="this.view.content._activeName == 'history'"><div class="icon"></div><div class="text">系统连接</div></div><div class="item" go="/view-content=power" o-class-active="this.view.content._activeName == 'power'"><div class="icon"></div><div class="text">系统权限</div></div></div><div class="right fl view" view="content"><div class="system router-item" route="system"><div class="list"><div class="back-title"><div class="icon" o-tap="hideInfo()"></div><h4>管理系统列表</h4></div><div class="panel" template="sysCard"><div class="title"><div class="icon"></div><span>系统列表</span></div><div class="system-box clear"><div class="system-card" o-for="this.data.cardList"><div class="top"><div class="icon"></div><div class="info"><div class="name">{value.name}</div><div class="address">IP: {value.ip}</div><div class="time">{value.remark}</div></div></div><div class="bottom"><div class="item" o-tap="swiInfo({value.id})"><div class="icon"></div><span>管理</span></div><div class="item" o-tap="deleteSys({value.id}, '{value.name}')"><div class="icon"></div><span>删除</span></div></div></div><div class="system-card add" o-hover="grow" o-tap="owo.script.add.switchShow()"><div class="icon"></div></div></div></div></div><div class="sys-info hide-box"><div class="back-title"><div class="icon" o-tap="hideInfo()"></div><h4>测试管理系统</h4></div><div class="panel"><div id="editer"></div><div class="bottom-button-bar"><div class="button" o-tap="save">保存数据</div></div></div></div></div><div class="word router-item" route="word"><div class="list"><div class="moudle-title"><h4>匹配系统列表</h4></div><div class="panel" template="sysCard"><div class="title"><div class="icon"></div><span>系统列表</span></div><div class="system-box clear"><div class="system-card" o-for="this.data.cardList"><div class="top"><div class="icon"></div><div class="info"><div class="name">{value.name}</div><div class="address">IP: {value.ip}</div><div class="time">{value.remark}</div></div></div><div class="bottom"><div class="item" o-tap="swiInfo({value.id})"><div class="icon"></div><span>管理</span></div><div class="item" o-tap="deleteSys({value.id}, '{value.name}')"><div class="icon"></div><span>删除</span></div></div></div><div class="system-card add" o-hover="grow" o-tap="owo.script.add.switchShow()"><div class="icon"></div></div></div></div></div><div class="word-list hide-box"><div class="back-title"><div class="icon" o-tap="hideInfo()"></div><h4>测试匹配系统</h4></div><div class="panel"><div class="menu-bar fl"><div class="menu-item active"><div class="icon"></div><span>默认分类</span></div></div><div class="right fl"><div class="add icon" o-hover="grow"></div><div class="list-box"><div class="list-item" o-for="this.data.list" ind="{value.id}"><input class="list-title" type="text" value="{value.wordName}"><p>关键词</p><textarea class="wordKey">{value.wordKey}</textarea><p>对应方案</p><textarea class="plan">{value.plan}</textarea><div class="bottom-bar"><div class="button edit-button" o-tap="editit({value.id})">修改方案</div><div class="button save-button" o-tap="save({value.id})">保存方案</div><div class="button delete-button" o-tap="delete({value.id})">删除方案</div></div></div></div></div></div></div></div><div class="system router-item" route="history"><div class="list"><div class="moudle-title"><h4>链接系统列表</h4></div><div class="panel" template="sysCard"><div class="title"><div class="icon"></div><span>系统列表</span></div><div class="system-box clear"><div class="system-card" o-for="this.data.cardList"><div class="top"><div class="icon"></div><div class="info"><div class="name">{value.name}</div><div class="address">IP: {value.ip}</div><div class="time">{value.remark}</div></div></div><div class="bottom"><div class="item" o-tap="swiInfo({value.id})"><div class="icon"></div><span>管理</span></div><div class="item" o-tap="deleteSys({value.id}, '{value.name}')"><div class="icon"></div><span>删除</span></div></div></div><div class="system-card add" o-hover="grow" o-tap="owo.script.add.switchShow()"><div class="icon"></div></div></div></div></div><div class="hide-box"><div class="back-title"><div class="icon" o-tap="hideInfo()"></div><h4>测试链接系统</h4></div><div class="panel"><table border="0" class="pure-table">
+    <div class="home clear page" template="page" style="display: none;"><div class="menu left fl"><div class="logo">LOGO</div><div class="item" go="/view-content=system" o-class-active="this.view.content._activeName == 'system'"><div class="icon"></div><div class="text">管理</div></div><div class="item" go="/view-content=word" o-class-active="this.view.content._activeName == 'word'"><div class="icon"></div><div class="text">匹配</div></div><div class="item" go="/view-content=history" o-class-active="this.view.content._activeName == 'history'"><div class="icon"></div><div class="text">系统连接</div></div><div class="item" go="/view-content=power" o-class-active="this.view.content._activeName == 'power'"><div class="icon"></div><div class="text">系统权限</div></div></div><div class="right fl view" view="content"><div class="system router-item" route="system"><div class="list"><div class="back-title"><div class="icon" o-tap="hideInfo()"></div><h4>管理系统列表</h4></div><div class="panel" template="sysCard"><div class="title"><div class="icon"></div><span>系统列表</span></div><div class="system-box clear"><div class="system-card" o-for="this.data.cardList"><div class="top"><div class="icon"></div><div class="info"><div class="name">{value.name}</div><div class="address">IP: {value.ip}</div><div class="time">{value.remark}</div></div></div><div class="bottom"><div class="item" o-tap="swiInfo({value.id})"><div class="icon"></div><span>管理</span></div><div class="item" o-tap="deleteSys({value.id}, '{value.name}')"><div class="icon"></div><span>删除</span></div></div></div><div class="system-card add" o-hover="grow" o-tap="owo.script.add.switchShow()"><div class="icon"></div></div></div></div></div><div class="sys-info hide-box"><div class="back-title"><div class="icon" o-tap="hideInfo()"></div><h4>测试管理系统</h4></div><div class="panel"><div id="editer"></div><div class="bottom-button-bar"><div class="button" o-tap="saveSystemData">保存数据</div></div></div></div></div><div class="word router-item" route="word"><div class="list"><div class="moudle-title"><h4>匹配系统列表</h4></div><div class="panel" template="sysCard"><div class="title"><div class="icon"></div><span>系统列表</span></div><div class="system-box clear"><div class="system-card" o-for="this.data.cardList"><div class="top"><div class="icon"></div><div class="info"><div class="name">{value.name}</div><div class="address">IP: {value.ip}</div><div class="time">{value.remark}</div></div></div><div class="bottom"><div class="item" o-tap="swiInfo({value.id})"><div class="icon"></div><span>管理</span></div><div class="item" o-tap="deleteSys({value.id}, '{value.name}')"><div class="icon"></div><span>删除</span></div></div></div><div class="system-card add" o-hover="grow" o-tap="owo.script.add.switchShow()"><div class="icon"></div></div></div></div></div><div class="word-list hide-box"><div class="back-title"><div class="icon" o-tap="hideInfo()"></div><h4>测试匹配系统</h4></div><div class="panel"><div class="menu-bar fl"><div class="menu-item active"><div class="icon"></div><span>默认分类</span></div></div><div class="right fl"><div class="add icon" o-hover="grow"></div><div class="list-box"><div class="list-item" o-for="this.data.list" ind="{value.id}"><input class="list-title" type="text" value="{value.wordName}"><p>关键词</p><textarea class="wordKey">{value.wordKey}</textarea><p>对应方案</p><textarea class="plan">{value.plan}</textarea><div class="bottom-bar"><div class="button edit-button" o-tap="editit({value.id})">修改方案</div><div class="button save-button" o-tap="save({value.id})">保存方案</div><div class="button delete-button" o-tap="delete({value.id})">删除方案</div></div></div></div></div></div></div></div><div class="system router-item" route="history"><div class="list"><div class="moudle-title"><h4>链接系统列表</h4></div><div class="panel" template="sysCard"><div class="title"><div class="icon"></div><span>系统列表</span></div><div class="system-box clear"><div class="system-card" o-for="this.data.cardList"><div class="top"><div class="icon"></div><div class="info"><div class="name">{value.name}</div><div class="address">IP: {value.ip}</div><div class="time">{value.remark}</div></div></div><div class="bottom"><div class="item" o-tap="swiInfo({value.id})"><div class="icon"></div><span>管理</span></div><div class="item" o-tap="deleteSys({value.id}, '{value.name}')"><div class="icon"></div><span>删除</span></div></div></div><div class="system-card add" o-hover="grow" o-tap="owo.script.add.switchShow()"><div class="icon"></div></div></div></div></div><div class="hide-box"><div class="back-title"><div class="icon" o-tap="hideInfo()"></div><h4>测试链接系统</h4></div><div class="panel"><table border="0" class="pure-table">
 <tbody><tr>
 <th>ID</th>
 <th>系统名称</th>
@@ -265,20 +265,45 @@ owo.script = {
     },
     "view": {
       "content": [{
+        "data": {
+          "editor": null
+        },
         "show": function show() {
           owo.state.style = 'guanli';
         },
         "created": function created() {
           var container = document.getElementById("editer");
           var options = {};
-          var editor = new JSONEditor(container, options); // get json
+          this.data.editor = new JSONEditor(container, options); // get json
           // const updatedJson = editor.get()
         },
-        "save": function save() {
-          alert('数据保存成功!');
+        "saveSystemData": function saveSystemData() {
+          fetch(serverIP + "/saveSystemData", {
+            method: 'POST',
+            body: JSON.stringify({
+              id: owo.state.systemID,
+              username: owo.state.userInfo.username,
+              session: owo.state.userInfo.session,
+              data: this.data.editor.get()
+            }),
+            redirect: 'follow'
+          }).then(function (response) {
+            return response.json();
+          }).then(function (result) {
+            console.log(result);
+
+            if (result.err == 0) {
+              owo.tool.notice('修改成功');
+            }
+          })["catch"](function (error) {
+            return console.log('error', error);
+          });
         },
         "notice": {
           "changeConfig": function changeConfig() {
+            var _this3 = this;
+
+            // console.log('sd')
             fetch(serverIP + "/getSystemConfig", {
               method: 'POST',
               body: JSON.stringify({
@@ -291,8 +316,9 @@ owo.script = {
             }).then(function (response) {
               return response.json();
             }).then(function (result) {
+              // console.log(result.data.config)
               if (result.err == 0) {
-                editor.set(result.config);
+                _this3.data.editor.set(JSON.parse(result.data.config));
               }
             })["catch"](function (error) {
               return console.log('error', error);
@@ -319,7 +345,7 @@ owo.script = {
               owo.notice('changeConfig');
             },
             "getSystem": function getSystem() {
-              var _this3 = this;
+              var _this4 = this;
 
               fetch(serverIP + "/getSystem", {
                 method: 'POST',
@@ -334,17 +360,17 @@ owo.script = {
               }).then(function (result) {
                 if (result.err == 0) {
                   console.log('--------------------------');
-                  console.log(_this3);
-                  _this3.data.cardList = result.data;
+                  console.log(_this4);
+                  _this4.data.cardList = result.data;
 
-                  _this3.handleEvent(_this3, owo.script.page.view.content._list[owo.script.page.view.content._activeIndex].$el.querySelector('.panel'));
+                  _this4.handleEvent(_this4, owo.script.page.view.content._list[owo.script.page.view.content._activeIndex].$el.querySelector('.panel'));
                 }
               })["catch"](function (error) {
                 return console.log('error', error);
               });
             },
             "deleteSys": function deleteSys(id, name) {
-              var _this4 = this;
+              var _this5 = this;
 
               if (confirm("\u786E\u5B9A\u5220\u9664\u7CFB\u7EDF" + name + "\u5417?")) {
                 fetch(serverIP + "/deleteSystem", {
@@ -358,9 +384,9 @@ owo.script = {
                   return response.json();
                 }).then(function (result) {
                   if (result.err == 0) {
-                    _this4.data.cardList = result.data;
+                    _this5.data.cardList = result.data;
 
-                    _this4.handleEvent(_this4, owo.script.page.view.content._list[owo.script.page.view.content._activeIndex].$el.querySelector('.panel'));
+                    _this5.handleEvent(_this5, owo.script.page.view.content._list[owo.script.page.view.content._activeIndex].$el.querySelector('.panel'));
                   }
                 })["catch"](function (error) {
                   return console.log('error', error);
@@ -380,7 +406,7 @@ owo.script = {
           "list": []
         },
         "show": function show() {
-          var _this5 = this;
+          var _this6 = this;
 
           owo.state.style = 'word';
           fetch(serverIP + "/getWord", {
@@ -394,9 +420,9 @@ owo.script = {
             console.log(result);
 
             if (result.err == 0) {
-              _this5.data.list = result.data;
+              _this6.data.list = result.data;
 
-              _this5.handleEvent(_this5, _this5.query('.list-box'));
+              _this6.handleEvent(_this6, _this6.query('.list-box'));
             }
           })["catch"](function (error) {
             return console.log('error', error);
@@ -406,7 +432,7 @@ owo.script = {
           this.query("[ind=\"" + ind + "\"]").classList.add('edit');
         },
         "save": function save(ind) {
-          var _this6 = this;
+          var _this7 = this;
 
           var box = this.query("[ind=\"" + ind + "\"]");
           box.classList.remove('edit');
@@ -426,9 +452,9 @@ owo.script = {
             console.log(result);
 
             if (result.err == 0) {
-              _this6.data.list = result.data;
+              _this7.data.list = result.data;
 
-              _this6.handleEvent(_this6, _this6.query('.list-box'));
+              _this7.handleEvent(_this7, _this7.query('.list-box'));
 
               owo.tool.notice('保存成功');
             }
@@ -437,7 +463,7 @@ owo.script = {
           });
         },
         "delete": function _delete(ind) {
-          var _this7 = this;
+          var _this8 = this;
 
           fetch(serverIP + "/deleteWord", {
             method: 'POST',
@@ -451,9 +477,9 @@ owo.script = {
             console.log(result);
 
             if (result.err == 0) {
-              _this7.data.list = result.data;
+              _this8.data.list = result.data;
 
-              _this7.handleEvent(_this7, _this7.query('.list-box'));
+              _this8.handleEvent(_this8, _this8.query('.list-box'));
 
               owo.tool.notice('删除成功');
             }
@@ -481,7 +507,7 @@ owo.script = {
               owo.notice('changeConfig');
             },
             "getSystem": function getSystem() {
-              var _this8 = this;
+              var _this9 = this;
 
               fetch(serverIP + "/getSystem", {
                 method: 'POST',
@@ -496,17 +522,17 @@ owo.script = {
               }).then(function (result) {
                 if (result.err == 0) {
                   console.log('--------------------------');
-                  console.log(_this8);
-                  _this8.data.cardList = result.data;
+                  console.log(_this9);
+                  _this9.data.cardList = result.data;
 
-                  _this8.handleEvent(_this8, owo.script.page.view.content._list[owo.script.page.view.content._activeIndex].$el.querySelector('.panel'));
+                  _this9.handleEvent(_this9, owo.script.page.view.content._list[owo.script.page.view.content._activeIndex].$el.querySelector('.panel'));
                 }
               })["catch"](function (error) {
                 return console.log('error', error);
               });
             },
             "deleteSys": function deleteSys(id, name) {
-              var _this9 = this;
+              var _this10 = this;
 
               if (confirm("\u786E\u5B9A\u5220\u9664\u7CFB\u7EDF" + name + "\u5417?")) {
                 fetch(serverIP + "/deleteSystem", {
@@ -520,9 +546,9 @@ owo.script = {
                   return response.json();
                 }).then(function (result) {
                   if (result.err == 0) {
-                    _this9.data.cardList = result.data;
+                    _this10.data.cardList = result.data;
 
-                    _this9.handleEvent(_this9, owo.script.page.view.content._list[owo.script.page.view.content._activeIndex].$el.querySelector('.panel'));
+                    _this10.handleEvent(_this10, owo.script.page.view.content._list[owo.script.page.view.content._activeIndex].$el.querySelector('.panel'));
                   }
                 })["catch"](function (error) {
                   return console.log('error', error);
@@ -561,7 +587,7 @@ owo.script = {
               owo.notice('changeConfig');
             },
             "getSystem": function getSystem() {
-              var _this10 = this;
+              var _this11 = this;
 
               fetch(serverIP + "/getSystem", {
                 method: 'POST',
@@ -576,17 +602,17 @@ owo.script = {
               }).then(function (result) {
                 if (result.err == 0) {
                   console.log('--------------------------');
-                  console.log(_this10);
-                  _this10.data.cardList = result.data;
+                  console.log(_this11);
+                  _this11.data.cardList = result.data;
 
-                  _this10.handleEvent(_this10, owo.script.page.view.content._list[owo.script.page.view.content._activeIndex].$el.querySelector('.panel'));
+                  _this11.handleEvent(_this11, owo.script.page.view.content._list[owo.script.page.view.content._activeIndex].$el.querySelector('.panel'));
                 }
               })["catch"](function (error) {
                 return console.log('error', error);
               });
             },
             "deleteSys": function deleteSys(id, name) {
-              var _this11 = this;
+              var _this12 = this;
 
               if (confirm("\u786E\u5B9A\u5220\u9664\u7CFB\u7EDF" + name + "\u5417?")) {
                 fetch(serverIP + "/deleteSystem", {
@@ -600,9 +626,9 @@ owo.script = {
                   return response.json();
                 }).then(function (result) {
                   if (result.err == 0) {
-                    _this11.data.cardList = result.data;
+                    _this12.data.cardList = result.data;
 
-                    _this11.handleEvent(_this11, owo.script.page.view.content._list[owo.script.page.view.content._activeIndex].$el.querySelector('.panel'));
+                    _this12.handleEvent(_this12, owo.script.page.view.content._list[owo.script.page.view.content._activeIndex].$el.querySelector('.panel'));
                   }
                 })["catch"](function (error) {
                   return console.log('error', error);
@@ -626,7 +652,7 @@ owo.script = {
           this.getSystem();
         },
         "getSystem": function getSystem() {
-          var _this12 = this;
+          var _this13 = this;
 
           fetch(serverIP + "/getSystem", {
             method: 'POST',
@@ -640,9 +666,9 @@ owo.script = {
             return response.json();
           }).then(function (result) {
             if (result.err == 0) {
-              _this12.data.list = result.data;
+              _this13.data.list = result.data;
 
-              _this12.handleEvent();
+              _this13.handleEvent();
             }
           })["catch"](function (error) {
             return console.log('error', error);
@@ -683,7 +709,7 @@ owo.script = {
       }
     },
     "addSystem": function addSystem() {
-      var _this13 = this;
+      var _this14 = this;
 
       var box = this.$el;
       fetch(serverIP + "/addSystem", {
@@ -701,7 +727,7 @@ owo.script = {
         console.log(result);
 
         if (result.err == 0) {
-          _this13.switchShow();
+          _this14.switchShow();
 
           owo.tool.notice('添加成功');
           owo.notice('updata');
@@ -718,7 +744,7 @@ owo.script = {
       "activeSystem": 0
     },
     "created": function created() {
-      var _this14 = this;
+      var _this15 = this;
 
       fetch(serverIP + "/getUserList", {
         method: 'POST',
@@ -732,9 +758,9 @@ owo.script = {
         console.log(result);
 
         if (result.err == 0) {
-          _this14.data.userList = result.data;
+          _this15.data.userList = result.data;
 
-          _this14.handleEvent();
+          _this15.handleEvent();
         }
       })["catch"](function (error) {
         return console.log('error', error);
@@ -762,7 +788,7 @@ owo.script = {
       }
     },
     "addPower": function addPower() {
-      var _this15 = this;
+      var _this16 = this;
 
       var sendData = '';
       this.queryAll('[check]').forEach(function (element) {
@@ -785,7 +811,7 @@ owo.script = {
         if (result.err == 0) {
           owo.tool.notice('修改成功');
 
-          _this15.switchShow();
+          _this16.switchShow();
 
           owo.notice('updataPower');
         }
