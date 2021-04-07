@@ -379,7 +379,7 @@ class saveSystemDataR(resource.Resource):
 
 
 # 向其他系统发送数据
-def sendMessage():
+def sendMessage(data):
   body = json.loads(data)
   sendData = urllib.urlencode(body['data'])
   # Is this really the preferred way to pass a string body?
