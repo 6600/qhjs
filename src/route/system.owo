@@ -39,30 +39,27 @@
       const container = document.getElementById("editer")
       const options = {}
       const editor = new JSONEditor(container, options)
-      fetch("http://cunchu.site/mock/owo.json").then(response => response.json()).then(result => {
-        editor.set(result)
-      }).catch(error => console.log('error', error));
-
       // get json
       // const updatedJson = editor.get()
     },
     save: function () {
       alert('数据保存成功!')
     },
-    deleteSys: function (id, name) {
-      if (confirm(`确定删除系统${name}吗?`)) {
-        fetch(serverIP + "/deleteSystem", {
+    notice: {
+      changeConfig: function () {
+        fetch(serverIP + "/getSystemConfig", {
           method: 'POST',
           body: JSON.stringify({
-            id: id,
-            type: "guanli"
+            type: owo.state.style,
+            id: owo.state.systemID,
+            username: owo.state.userInfo.username,
+            session: owo.state.userInfo.session,
           }),
           redirect: 'follow'
         }).then(response => response.json()).then(result => {
           
           if (result.err == 0) {
-            this.data.cardList = result.data
-            this.handleEvent()
+            editor.set(result.config)
           }
         }).catch(error => console.log('error', error));
       }
