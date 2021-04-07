@@ -358,6 +358,26 @@ class addPowerR(resource.Resource):
     return addPower(postData).encode('utf-8')
 
 
+# 保存系统配置
+def saveSystemData():
+  body = json.loads(data)
+  if (badSQL(body['id']) or badSQL(body['data'])):
+    return {"err": 999, "message": "非法访问!"}
+  # 打开数据库连接
+  connection = pymysql.connect(host=config["dataBase"]["server"], port=config["dataBase"]["port"], user=config["dataBase"]["user"], password=config["dataBase"]["password"], db=config["dataBase"]["name"], charset='utf8mb4', cursorclass=pymysql.cursors.DictCursor)
+  with connection.cursor() as cursor:
+    # 执行sql语句，进行查询
+    cursor.execute("UPDATE system SET config = '%s' where id = '%s'" % (body['data'], body['id']))
+    # 获取查询结果
+    connection.commit()
+    connection.close()
+    return {"err": 0}
+class saveSystemDataR(resource.Resource):
+  def render_POST(self, request):
+    postData = request.content.read()
+    return saveSystemData(postData).encode('utf-8')
+
+
 # 向其他系统发送数据
 def sendMessage():
   body = json.loads(data)
@@ -387,6 +407,7 @@ routeList = {
   'addSystem': addSystemR(),
   'getSystem': getSystemR(),
   'getSystemData': getSystemDataR(),
+  'saveSystemData': saveSystemDataR(),
   'deleteSystem': deleteSystemR(),
   'addPower': addPowerR(),
   'sendMessage': sendMessageR()

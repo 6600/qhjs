@@ -27,26 +27,44 @@
       #editer
 
       .bottom-button-bar
-        .button(o-tap="save") 保存数据
+        .button(o-tap="saveSystemData") 保存数据
 </template>
 
 <script>
   module.exports = {
+    data: {
+      editor: null
+    },
     show: function () {
       owo.state.style = 'guanli'
     },
     created: function () {
       const container = document.getElementById("editer")
       const options = {}
-      const editor = new JSONEditor(container, options)
+      this.data.editor = new JSONEditor(container, options)
       // get json
       // const updatedJson = editor.get()
     },
-    save: function () {
-      alert('数据保存成功!')
+    saveSystemData: function () {
+      fetch(serverIP + "/saveSystemData", {
+        method: 'POST',
+        body: JSON.stringify({
+          id: owo.state.systemID,
+          username: owo.state.userInfo.username,
+          session: owo.state.userInfo.session,
+          data: this.data.editor.get()
+        }),
+        redirect: 'follow'
+      }).then(response => response.json()).then(result => {
+        console.log(result)
+        if (result.err == 0) {
+          owo.tool.notice('修改成功')
+        }
+      }).catch(error => console.log('error', error));
     },
     notice: {
       changeConfig: function () {
+        // console.log('sd')
         fetch(serverIP + "/getSystemConfig", {
           method: 'POST',
           body: JSON.stringify({
@@ -57,9 +75,9 @@
           }),
           redirect: 'follow'
         }).then(response => response.json()).then(result => {
-          
+          // console.log(result.data.config)
           if (result.err == 0) {
-            editor.set(result.config)
+            this.data.editor.set(JSON.parse(result.data.config))
           }
         }).catch(error => console.log('error', error));
       }
