@@ -9,7 +9,7 @@
     .title 系统备注
     textarea#beizhu
     .button-box
-      .button(o-tap="addSystem") 验证并添加
+      .button(o-tap="tsetServer") 验证并添加
 </template>
 
 <script>
@@ -44,6 +44,18 @@
           owo.notice('updata')
         }
       }).catch(error => console.log('error', error));
+    },
+    tsetServer: function () {
+      const box = this.$el
+      const ipValue = box.querySelector('#styIP').value
+      fetch(ipValue + "/getConfig").then(response => response.json()).then(result => {
+        if (result.err == 0) {
+          addSystem()
+        }
+      }).catch(error => {
+        owo.tool.notice('系统验证失败!')
+        console.log('error', error)
+      });
     }
   }
 </script>
@@ -67,7 +79,7 @@
 }
 .add-box {
   width: 560px;
-  height: 360px;
+  height: 390px;
   background-color: white;
   box-shadow: 1px 1px 8px #847373;
   position: absolute;

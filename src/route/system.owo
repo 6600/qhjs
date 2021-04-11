@@ -1,9 +1,10 @@
 <template lang="pug">
 .system
   .list
-    .back-title
-      .icon(o-tap="hideInfo()") &#xe618;
+    .moudle-title
       h4 管理系统列表
+      .tool-bar
+        a(href="/") 退出登录
     plug(_name="sysCard" _src="./src/page/sysCard.owo")
   .sys-info.hide-box
     .back-title
@@ -64,7 +65,7 @@
     },
     notice: {
       changeConfig: function () {
-        // console.log('sd')
+        console.log('sd')
         fetch(serverIP + "/getSystemConfig", {
           method: 'POST',
           body: JSON.stringify({

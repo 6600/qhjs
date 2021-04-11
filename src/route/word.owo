@@ -3,6 +3,8 @@
   .list
     .moudle-title
       h4 匹配系统列表
+      .tool-bar
+        a(href="/") 退出登录
     plug(_name="sysCard" _src="./src/page/sysCard.owo")
   .word-list.hide-box
     .back-title

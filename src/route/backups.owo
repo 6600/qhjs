@@ -2,6 +2,8 @@
 .system
   .moudle-title
     h4 备份管理
+    .tool-bar
+      a(href="/") 退出登录
   .panel
     .no-data
       .icon-box

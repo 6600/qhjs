@@ -1,0 +1,9 @@
+{
+  "dataBase": {
+    "server": "bj-cynosdbmysql-grp-kqvvbnw0.sql.tencentcdb.com",
+    "port": 28556,
+    "user": "ceshi",
+    "password": "ceshi",
+    "name": "QHealthier"
+  }
+}

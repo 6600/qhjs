@@ -2,6 +2,8 @@
 .power
   .moudle-title
     h4 权限管理
+    .tool-bar
+      a(href="/") 退出登录
   .panel
     .title
       .icon &#xe602;

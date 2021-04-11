@@ -315,3 +315,8 @@ input {
 .pure-table tr {
   border-bottom: 1px solid #ccc;
 }
+
+.moudle-title .tool-bar {
+  position: absolute;
+  right: 15px;
+}
