@@ -12,7 +12,7 @@
           .address IP: {value.ip}
           .time {value.remark}
       .bottom
-        .item(o-tap="swiInfo({value.id})")
+        .item(o-tap="swiInfo({value.id}, '{value.ip}')")
           .icon &#xe614;
           span 管理
         .item(o-tap="deleteSys({value.id}, '{value.name}')")
@@ -30,12 +30,17 @@
     show: function () {
       this.getSystem()
     },
-    swiInfo: function (id) {
-      owo.state.systemID = id
-      console.log(owo.script.page.view.content._list[owo.script.page.view.content._activeIndex])
+    swiInfo: function (id, ip) {
+      if (owo.state.style == 'guanli') {
+        owo.state.systemID = id
+        owo.state.systemIP = ip
+        console.log(owo.script.page.view.content._list[owo.script.page.view.content._activeIndex])
+        owo.notice('changeConfig')
+      } else if (owo.state.style == 'lianjie') {
+        owo.notice('lianjie')
+      }
       owo.script.page.view.content._list[owo.script.page.view.content._activeIndex].$el.querySelector('.hide-box').style.display = 'block'
-      owo.script.page.view.content._list[owo.script.page.view.content._activeIndex].$el.querySelector('.list').style.display = 'none'
-      owo.notice('changeConfig')
+        owo.script.page.view.content._list[owo.script.page.view.content._activeIndex].$el.querySelector('.list').style.display = 'none'
     },
     getSystem: function () {
       fetch(serverIP + "/getSystem", {

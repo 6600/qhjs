@@ -50,7 +50,7 @@
       const ipValue = box.querySelector('#styIP').value
       fetch(ipValue + "/getConfig").then(response => response.json()).then(result => {
         if (result.err == 0) {
-          addSystem()
+          this.addSystem()
         }
       }).catch(error => {
         owo.tool.notice('系统验证失败!')

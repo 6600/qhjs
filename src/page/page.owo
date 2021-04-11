@@ -77,7 +77,7 @@
   height: 100%;
 }
 .system-card {
-  width: 230px;
+  width: 260px;
   background-color: #fbfbfb;
   border-radius: 5px;
   padding: 5px 10px;

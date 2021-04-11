@@ -27,6 +27,21 @@
     show: function () {
       owo.state.style = 'lianjie'
     },
+    notice: {
+      lianjie: function () {
+        console.log('sd')
+        fetch(serverIP + "/getLianjie").then(response => response.json()).then(result => {
+          if (result.err == 0) {
+            console.log(result)
+            let newHtml = `<tr><th>ID</th><th>系统名称</th><th>数据分类</th><th>提交时间</th><th>操作</th></tr>`
+            result.data.forEach(element => {
+              newHtml += `<tr><td>${element.id}</td><td>${element.system}</td><td>${element.type}</td><td>${new Date(parseInt(element.time) * 1000)}</td><td>操作</td></tr>`
+            });
+            this.query('.pure-table').innerHTML = newHtml
+          }
+        }).catch(error => console.log('error', error));
+      }
+    }
   }
 </script>
 
@@ -42,6 +57,6 @@ td,th {
   padding: 0;
 }
 tr {
-  background-color: aquamarine;
+  background-color: white;
 }
 </style>

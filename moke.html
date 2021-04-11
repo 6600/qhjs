@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <!-- import CSS -->
+  <title>模拟表单提交</title>
+  <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+  <style>
+    body, html {
+      margin: 0;
+      padding: 0;
+    }
+    .box {
+      margin-bottom: 20px;
+      padding: 10px;
+    }
+    .title {
+      height: 40px;
+      line-height: 40px;
+      background-color: beige;
+      color: #333;
+      padding: 0 10px;
+    }
+  </style>
+</head>
+<body>
+  <div id="app">
+    <div class="title">单选输入框</div>
+    <div class="box">
+      <el-radio-group v-model="radio">
+        <el-radio :label="3">老人</el-radio>
+        <el-radio :label="6">小孩</el-radio>
+        <el-radio :label="9">成人</el-radio>
+      </el-radio-group>
+    </div>
+    <div class="title">多选输入框</div>
+    <div class="box">
+      <el-checkbox-group v-model="checkList">
+        <el-checkbox label="效果好"></el-checkbox>
+        <el-checkbox label="价格低"></el-checkbox>
+        <el-checkbox label="副作用小"></el-checkbox>
+        <el-checkbox label="康复快" disabled></el-checkbox>
+        <el-checkbox label="见效快" disabled></el-checkbox>
+      </el-checkbox-group>
+    </div>
+    <div class="title">文字输入框</div>
+    <div class="box">
+      <el-input v-model="input" placeholder="请输入内容"></el-input>
+    </div>
+    <div class="title">选择输入框</div>
+    <div class="box">
+      <el-select v-model="value" placeholder="请选择">
+        <el-option
+          v-for="item in options"
+          :key="item.value"
+          :label="item.label"
+          :value="item.value">
+        </el-option>
+      </el-select>
+    </div>
+    <div class="title">时间输入框</div>
+    <div class="box">
+      <el-time-select
+        v-model="time"
+        :picker-options="{
+          start: '08:30',
+          step: '00:15',
+          end: '18:30'
+        }"
+        placeholder="选择时间">
+      </el-time-select>
+    </div>
+    <div class="box">
+      <span class="demonstration">为效果打分</span>
+      <el-rate
+        v-model="value2"
+        :colors="colors">
+      </el-rate>
+    </div>
+    <el-button @click="send()">生成方案</el-button>
+  </div>
+</body>
+  <!-- import Vue before Element -->
+  <script src="https://unpkg.com/vue/dist/vue.js"></script>
+  <!-- import JavaScript -->
+  <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+  <script>
+    new Vue({
+      el: '#app',
+      data: function() {
+        return {
+          input: '',
+          radio: 3,
+          checkList: ['选中且禁用','复选框 A'],
+          colors: ['#99A9BF', '#F7BA2A', '#FF9900'],
+          options: [{
+            value: '选项1',
+            label: '腰腿疼'
+          }, {
+            value: '选项2',
+            label: '头疼'
+          }, {
+            value: '选项3',
+            label: '乏力'
+          }, {
+            value: '选项4',
+            label: '恶心'
+          }, {
+            value: '选项5',
+            label: '血压高'
+          }],
+          value: '',
+          time: '',
+          value2: null
+        }
+      },
+      methods: {
+        send: function () {
+          const data = JSON.stringify(this.$data)
+          console.log(data)
+          fetch("http://154.8.196.163:8181/newTask", {
+            method: 'POST',
+            body: JSON.stringify({
+              type: 'test',
+              system: '健康管理系统',
+              data: data
+            }),
+            redirect: 'follow'
+          }).then(response => response.json()).then(result => {
+            
+            if (result.err == 0) {
+              alert('提交成功，稍后为您生成针对方案!')
+            }
+          }).catch(error => console.log('error', error));
+        }
+      }
+    })
+  </script>
+</html>

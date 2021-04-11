@@ -460,7 +460,7 @@ li {
 }
 
 .system tr {
-  background-color: aquamarine;
+  background-color: white;
 }
 .power .system-box {
   padding: 10px;
@@ -549,7 +549,7 @@ li {
 }
 
 .home .system-card {
-  width: 230px;
+  width: 260px;
   background-color: #fbfbfb;
   border-radius: 5px;
   padding: 5px 10px;
